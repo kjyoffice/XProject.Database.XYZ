@@ -8,7 +8,7 @@ Compare SQL Server database schema.
 
 - [VisualStudio 2022 Community or Higher](https://visualstudio.com/)
 - Open sln file
-- Set ~~~.UI as Startup Project
+- Set XProject.SQLServer.SchemaCompare.UI as Startup Project
 - Build
 - Run
 
