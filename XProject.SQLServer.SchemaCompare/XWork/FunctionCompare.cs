@@ -10,7 +10,7 @@ namespace XProject.SQLServer.SchemaCompare.XWork
 {
     public class FunctionCompare
     {
-        public static void ExecuteNow(XData.SQLWork sourceSQL, XData.SQLWork targetSQL, Action<string> workResult, string schemaDirectory)
+        public static void ExecuteNow(XData.SQLWork sourceSQL, XData.SQLWork targetSQL, Action<string> workResult, string schemaDirectory, bool isKoreaHanGulLanguage)
         {
             // 함수 리스트 가져와서 소스를 기준으로 LEFT OUTER JOIN
             // Get Function List and LEFT OUTER JOIN with source
@@ -34,8 +34,7 @@ namespace XProject.SQLServer.SchemaCompare.XWork
             // 존재하지 않는 함수만
             // Not exist function
             workResult(string.Empty);
-            workResult("<<<<<<<<<< 존재하지 않는 함수 >>>>>>>>>>");
-            workResult("<<<<<<<<<< Not exist function >>>>>>>>>>");
+            workResult(((isKoreaHanGulLanguage == true) ? "<<<<<<<<<< 존재하지 않는 함수 >>>>>>>>>>" : "<<<<<<<<<< Not exist function >>>>>>>>>>"));
             workResult(string.Join(Environment.NewLine, notExistFunctionList.Select(x => x.Source.FUNCTION_NAME_Original)));
 
             // CREATE FUNCTION 스키마 내보내기
@@ -45,15 +44,15 @@ namespace XProject.SQLServer.SchemaCompare.XWork
                 ExportWork.ExportSchema(
                     Path.Combine(schemaDirectory, "FUNCTION", "CREATE"),
                     x.Source.FUNCTION_NAME_Original,
-                    x.Source.FUNCTION_DEFINITION_Original
+                    x.Source.FUNCTION_DEFINITION_Original,
+                    isKoreaHanGulLanguage
                 )
             );
 
             // 존재하지만 다른 함수
             // Exist function but different
             workResult(string.Empty);
-            workResult("<<<<<<<<<< 존재하지만 스키마가 다른 함수 >>>>>>>>>>");
-            workResult("<<<<<<<<<< Exist function but different >>>>>>>>>>");
+            workResult(((isKoreaHanGulLanguage == true) ? "<<<<<<<<<< 존재하지만 스키마가 다른 함수 >>>>>>>>>>" : "<<<<<<<<<< Exist function but different >>>>>>>>>>"));
             workResult(string.Join(Environment.NewLine, existFunctionList.Select(x => x.Source.FUNCTION_NAME_Original)));
 
             // CREATE FUNCTION 스키마 내보내기
@@ -64,7 +63,8 @@ namespace XProject.SQLServer.SchemaCompare.XWork
                     Path.Combine(schemaDirectory, "FUNCTION", "ALTER"),
                     x.Source.FUNCTION_NAME_Original,
                     x.Source.FUNCTION_DEFINITION_Original,
-                    x.Target.FUNCTION_DEFINITION_Original
+                    x.Target.FUNCTION_DEFINITION_Original,
+                    isKoreaHanGulLanguage
                 )
             );
         }
