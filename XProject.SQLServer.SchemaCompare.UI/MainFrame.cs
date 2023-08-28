@@ -701,6 +701,7 @@ namespace XProject.SQLServer.SchemaCompare.UI
 
         private void ExecuteCompare_Click(object sender, EventArgs e)
         {
+            var isViewCommand = (((sender as Button)?.Tag ?? string.Empty).ToString().ToUpper() == "TRUE");
             var isUIKorLang = this.IsUIKoreanLanguage;
             var isSSGSuccess = this.ConnectionValueCheck(this.SSG_DataSource, this.SSG_UserID, this.SSG_Password, this.SSG_InitialCatalog, this.SSG_RawConnectionString, this.SSG_UserManualConnectionString, this.SSG_TrustedConnection, isUIKorLang);
             var isTSGSuccess = ((isSSGSuccess == true) && this.ConnectionValueCheck(this.TSG_DataSource, this.TSG_UserID, this.TSG_Password, this.TSG_InitialCatalog, this.TSG_RawConnectionString, this.TSG_UserManualConnectionString, this.TSG_TrustedConnection, isUIKorLang) == true);
@@ -720,12 +721,33 @@ namespace XProject.SQLServer.SchemaCompare.UI
 
                         if (File.Exists(appPath) == true)
                         {
-                            var message = ((isUIKorLang.Checked == true) ? "스키마 비교를 시작 하시겠습니까?" : "Start schema compare?");
+                            var appParameter = $"\"{ssgCS}\" \"{tsgCS}\" \"{reportPath}\" \"{isUIKorLang.Checked}\"";
 
-                            if (MessageBox.Show(message, this.AppTitle, MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                            if (isViewCommand == true)
                             {
-                                // 실행
-                                Process.Start(appPath, $"\"{ssgCS}\" \"{tsgCS}\" \"{reportPath}\" \"{isUIKorLang}\"");
+                                var message = (
+                                    (
+                                        (isUIKorLang.Checked == true) ?
+                                        "Ctrl + C 눌러서 현재 대화상자 내용을 복사할 수 있습니다." :
+                                        "Press Ctrl + C, copy to this dialog content"
+                                    ) + 
+                                    Environment.NewLine +
+                                    "--------------------------------------------------" + 
+                                    Environment.NewLine +
+                                    (appPath + " " + appParameter)
+                                );
+
+                                MessageBox.Show(message, this.AppTitle, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            }
+                            else
+                            {
+                                var message = ((isUIKorLang.Checked == true) ? "스키마 비교를 시작 하시겠습니까?" : "Start schema compare?");
+
+                                if (MessageBox.Show(message, this.AppTitle, MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                                {
+                                    // 실행
+                                    Process.Start(appPath, appParameter);
+                                }
                             }
                         }
                         else
@@ -790,6 +812,7 @@ namespace XProject.SQLServer.SchemaCompare.UI
                 this.RDG_OpenReportDirectory.Text = "열기";
                 this.SwapSourceAndTargetServer.Text = "바꾸기";
                 this.ExecuteCompare.Text = "비교 시작";
+                this.ViewExecuteCompareCommand.Text = "비교 시작 명령";
                 this.MTSB_OpenWorkSourceFileOpenDialog.Title = "열기";
                 this.MTSB_SaveWorkSourceSaveDialog.Title = "저장";
 
@@ -827,6 +850,7 @@ namespace XProject.SQLServer.SchemaCompare.UI
                 this.RDG_OpenReportDirectory.Text = "Open";
                 this.SwapSourceAndTargetServer.Text = "Swap";
                 this.ExecuteCompare.Text = "Start Compare";
+                this.ViewExecuteCompareCommand.Text = "Start Compare Command";
                 this.MTSB_OpenWorkSourceFileOpenDialog.Title = "Open";
                 this.MTSB_SaveWorkSourceSaveDialog.Title = "Save";
 

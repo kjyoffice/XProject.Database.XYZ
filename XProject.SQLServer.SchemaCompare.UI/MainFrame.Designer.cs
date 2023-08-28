@@ -76,6 +76,7 @@
             MTSB_SaveWorkSourceSaveDialog = new SaveFileDialog();
             MTSB_OpenWorkSourceFileOpenDialog = new OpenFileDialog();
             IsUIKoreanLanguage = new CheckBox();
+            ViewExecuteCompareCommand = new Button();
             ReportDirectoryGroup.SuspendLayout();
             MainToolStripBar.SuspendLayout();
             SourceServerGroup.SuspendLayout();
@@ -508,7 +509,7 @@
             JustNotify1.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
             JustNotify1.AutoSize = true;
             JustNotify1.ForeColor = Color.Blue;
-            JustNotify1.Location = new Point(670, 389);
+            JustNotify1.Location = new Point(666, 407);
             JustNotify1.Margin = new Padding(0);
             JustNotify1.Name = "JustNotify1";
             JustNotify1.Size = new Size(67, 15);
@@ -531,10 +532,10 @@
             // ExecuteCompare
             // 
             ExecuteCompare.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
-            ExecuteCompare.Location = new Point(670, 408);
+            ExecuteCompare.Location = new Point(670, 426);
             ExecuteCompare.Margin = new Padding(3, 4, 3, 4);
             ExecuteCompare.Name = "ExecuteCompare";
-            ExecuteCompare.Size = new Size(502, 70);
+            ExecuteCompare.Size = new Size(502, 83);
             ExecuteCompare.TabIndex = 110;
             ExecuteCompare.Text = "Start";
             ExecuteCompare.TextImageRelation = TextImageRelation.ImageBeforeText;
@@ -557,7 +558,7 @@
             // 
             IsUIKoreanLanguage.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
             IsUIKoreanLanguage.AutoSize = true;
-            IsUIKoreanLanguage.Location = new Point(12, 459);
+            IsUIKoreanLanguage.Location = new Point(12, 529);
             IsUIKoreanLanguage.Margin = new Padding(3, 4, 3, 4);
             IsUIKoreanLanguage.Name = "IsUIKoreanLanguage";
             IsUIKoreanLanguage.Size = new Size(115, 19);
@@ -566,12 +567,25 @@
             IsUIKoreanLanguage.UseVisualStyleBackColor = true;
             IsUIKoreanLanguage.Click += IsUIKoreanLanguage_Click;
             // 
+            // ViewExecuteCompareCommand
+            // 
+            ViewExecuteCompareCommand.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+            ViewExecuteCompareCommand.Location = new Point(670, 516);
+            ViewExecuteCompareCommand.Name = "ViewExecuteCompareCommand";
+            ViewExecuteCompareCommand.Size = new Size(502, 33);
+            ViewExecuteCompareCommand.TabIndex = 112;
+            ViewExecuteCompareCommand.Tag = "TRUE";
+            ViewExecuteCompareCommand.Text = "ViewStartCommand";
+            ViewExecuteCompareCommand.UseVisualStyleBackColor = true;
+            ViewExecuteCompareCommand.Click += ExecuteCompare_Click;
+            // 
             // MainFrame
             // 
             AllowDrop = true;
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1184, 491);
+            ClientSize = new Size(1184, 561);
+            Controls.Add(ViewExecuteCompareCommand);
             Controls.Add(IsUIKoreanLanguage);
             Controls.Add(ExecuteCompare);
             Controls.Add(SwapSourceAndTargetServer);
@@ -583,7 +597,7 @@
             Icon = (Icon)resources.GetObject("$this.Icon");
             KeyPreview = true;
             Margin = new Padding(3, 4, 3, 4);
-            MinimumSize = new Size(1200, 530);
+            MinimumSize = new Size(1200, 600);
             Name = "MainFrame";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "MainTitle";
@@ -653,6 +667,7 @@
         private ToolStripSeparator MTSB_CutBar2;
         private ToolStripButton MTSB_AboutApplication;
         private CheckBox IsUIKoreanLanguage;
+        private Button ViewExecuteCompareCommand;
     }
 }
 
