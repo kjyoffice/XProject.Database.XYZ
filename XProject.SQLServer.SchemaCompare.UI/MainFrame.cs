@@ -67,7 +67,7 @@ namespace XProject.SQLServer.SchemaCompare.UI
             }
         }
 
-        private void ConnectTest(TextBox dataSource, TextBox userID, TextBox password, TextBox initialCatalog, TextBox rawConnectionString, CheckBox userManual, CheckBox trust, CheckBox isUIKorLang)
+        private void ConnectTest(TextBox dataSource, TextBox userID, TextBox password, TextBox initialCatalog, TextBox rawConnectionString, CheckBox userManual, CheckBox trust, ToolStripButton isUIKorLang)
         {
             if (this.ConnectionValueCheck(dataSource, userID, password, initialCatalog, rawConnectionString, userManual, trust, isUIKorLang) == true)
             {
@@ -116,7 +116,7 @@ namespace XProject.SQLServer.SchemaCompare.UI
             }
         }
 
-        private bool ConnectionValueCheck(TextBox dataSource, TextBox userID, TextBox password, TextBox initialCatalog, TextBox rawConnectionString, CheckBox userManual, CheckBox trust, CheckBox isUIKorLang)
+        private bool ConnectionValueCheck(TextBox dataSource, TextBox userID, TextBox password, TextBox initialCatalog, TextBox rawConnectionString, CheckBox userManual, CheckBox trust, ToolStripButton isUIKorLang)
         {
             var result = false;
             var isTrust = trust.Checked;
@@ -266,8 +266,8 @@ namespace XProject.SQLServer.SchemaCompare.UI
             this.DefaultWorkSourceDataFilePath = defaultWorkSourceDataFilePath;
 
             this.InitializeComponent();
-            this.IsUIKoreanLanguage.Checked = XAppConfig.AppSettings.IsStartAppKoreaHanGulLanguage;
-            this.IsUIKoreanLanguage_Click(null, null);
+            this.MTSB_IsUIKoreanLanguage.Checked = !XAppConfig.AppSettings.IsStartAppKoreaHanGulLanguage;
+            this.MTSB_IsUIKoreanLanguage_Click(null, null);
             this.MTSB_NewWorkSource_Click(null, null);
         }
 
@@ -291,7 +291,7 @@ namespace XProject.SQLServer.SchemaCompare.UI
 
         private void MainFrame_DragDrop(object sender, DragEventArgs e)
         {
-            var isUIKorLang = this.IsUIKoreanLanguage;
+            var isUIKorLang = this.MTSB_IsUIKoreanLanguage;
             var dndFiles = (e.Data.GetData(DataFormats.FileDrop) as string[]);
 
             if (dndFiles.Length == 1)
@@ -322,7 +322,7 @@ namespace XProject.SQLServer.SchemaCompare.UI
                 e.Cancel = true;
             }
             */
-            var isUIKorLang = this.IsUIKoreanLanguage;
+            var isUIKorLang = this.MTSB_IsUIKoreanLanguage;
             var message = ((isUIKorLang.Checked == true) ? "종료 전 현재 설정을 저장하시겠습니까?" : "Exit program before save this setting?");
 
             if ((XAppConfig.AppSettings.IsAppCloseTimeSaveWorkSourceQuestion == true) && (MessageBox.Show(message, this.AppTitle, MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes))
@@ -333,7 +333,7 @@ namespace XProject.SQLServer.SchemaCompare.UI
 
         private void MTSB_NewWorkSource_Click(object sender, EventArgs e)
         {
-            var isUIKorLang = this.IsUIKoreanLanguage;
+            var isUIKorLang = this.MTSB_IsUIKoreanLanguage;
             var message = ((isUIKorLang.Checked == true) ? "현재 내용을 모두 지우시겠습니까?" : "Clear all this information?");
 
             if ((sender == null) || ((sender != null) && (MessageBox.Show(message, this.AppTitle, MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)))
@@ -405,7 +405,7 @@ namespace XProject.SQLServer.SchemaCompare.UI
 
         private void MTSB_SaveWorkSource_Click(object sender, EventArgs e)
         {
-            var isUIKorLang = this.IsUIKoreanLanguage.Checked;
+            var isUIKorLang = this.MTSB_IsUIKoreanLanguage.Checked;
             var saveFilePath = this.WorkSourceDataFilePath;
 
             // 이미 저장된 파일경로가 있으면 재사용하고 없으면 파일 선택하라고 한다 
@@ -424,7 +424,7 @@ namespace XProject.SQLServer.SchemaCompare.UI
                 // Create save content
                 var wsd = new XModel.WorkSourceData();
                 wsd.ReportDirectoryPath = this.RDG_ReportDirectoryPath.Text.Trim();
-                wsd.IsUIKoreanLanguage = this.IsUIKoreanLanguage.Checked;
+                wsd.IsUIKoreanLanguage = this.MTSB_IsUIKoreanLanguage.Checked;
                 // SSG
                 wsd.SourceServer = new XModel.WorkSourceServer();
                 wsd.SourceServer.DataSource = this.SSG_DataSource.Text.Trim();
@@ -518,7 +518,7 @@ namespace XProject.SQLServer.SchemaCompare.UI
 
         private void MTSB_SaveWorkSource_ClearSaveFilePath_Click(object sender, EventArgs e)
         {
-            var isUIKorLang = this.IsUIKoreanLanguage;
+            var isUIKorLang = this.MTSB_IsUIKoreanLanguage;
             var message = ((isUIKorLang.Checked == true) ? "매번 자동으로 저장되는 정보를 지우겠습니까?" : "Cancel anytime save information?");
 
             if (MessageBox.Show(message, this.AppTitle, MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
@@ -529,7 +529,7 @@ namespace XProject.SQLServer.SchemaCompare.UI
 
         private void MTSB_OpenWorkSource_Click(object sender, EventArgs e)
         {
-            var isUIKorLang = this.IsUIKoreanLanguage;
+            var isUIKorLang = this.MTSB_IsUIKoreanLanguage;
             var isOpenSuccess = false;
 
             // 드래그 앤 드롭으로도 이거 호출되니 파일 체크해야 함
@@ -620,7 +620,7 @@ namespace XProject.SQLServer.SchemaCompare.UI
 
         private void MTSB_AboutApplication_Click(object sender, EventArgs e)
         {
-            var isUIKorLang = this.IsUIKoreanLanguage;
+            var isUIKorLang = this.MTSB_IsUIKoreanLanguage;
 
             using (var aaf = new XFrame.AboutApplicationFrame(isUIKorLang.Checked))
             {
@@ -638,7 +638,7 @@ namespace XProject.SQLServer.SchemaCompare.UI
 
         private void RDG_OpenReportDirectory_Click(object sender, EventArgs e)
         {
-            var isUIKorLang = this.IsUIKoreanLanguage;
+            var isUIKorLang = this.MTSB_IsUIKoreanLanguage;
             var reportPath = this.RDG_ReportDirectoryPath.Text;
 
             if (Directory.Exists(reportPath) == true)
@@ -665,7 +665,7 @@ namespace XProject.SQLServer.SchemaCompare.UI
 
         private void SSG_ConnectTest_Click(object sender, EventArgs e)
         {
-            this.ConnectTest(this.SSG_DataSource, this.SSG_UserID, this.SSG_Password, this.SSG_InitialCatalog, this.SSG_RawConnectionString, this.SSG_UserManualConnectionString, this.SSG_TrustedConnection, this.IsUIKoreanLanguage);
+            this.ConnectTest(this.SSG_DataSource, this.SSG_UserID, this.SSG_Password, this.SSG_InitialCatalog, this.SSG_RawConnectionString, this.SSG_UserManualConnectionString, this.SSG_TrustedConnection, this.MTSB_IsUIKoreanLanguage);
         }
 
         private void TSG_UserManualConnectionString_Click(object sender, EventArgs e)
@@ -680,7 +680,7 @@ namespace XProject.SQLServer.SchemaCompare.UI
 
         private void TSG_ConnectTest_Click(object sender, EventArgs e)
         {
-            this.ConnectTest(this.TSG_DataSource, this.TSG_UserID, this.TSG_Password, this.TSG_InitialCatalog, this.TSG_RawConnectionString, this.TSG_UserManualConnectionString, this.TSG_TrustedConnection, this.IsUIKoreanLanguage);
+            this.ConnectTest(this.TSG_DataSource, this.TSG_UserID, this.TSG_Password, this.TSG_InitialCatalog, this.TSG_RawConnectionString, this.TSG_UserManualConnectionString, this.TSG_TrustedConnection, this.MTSB_IsUIKoreanLanguage);
         }
 
         private void SwapSourceAndTargetServer_Click(object sender, EventArgs e)
@@ -720,7 +720,7 @@ namespace XProject.SQLServer.SchemaCompare.UI
         private void ExecuteCompare_Click(object sender, EventArgs e)
         {
             var isViewCommand = (((sender as Button)?.Tag ?? string.Empty).ToString().ToUpper() == "TRUE");
-            var isUIKorLang = this.IsUIKoreanLanguage;
+            var isUIKorLang = this.MTSB_IsUIKoreanLanguage;
             var isSSGSuccess = this.ConnectionValueCheck(this.SSG_DataSource, this.SSG_UserID, this.SSG_Password, this.SSG_InitialCatalog, this.SSG_RawConnectionString, this.SSG_UserManualConnectionString, this.SSG_TrustedConnection, isUIKorLang);
             var isTSGSuccess = ((isSSGSuccess == true) && this.ConnectionValueCheck(this.TSG_DataSource, this.TSG_UserID, this.TSG_Password, this.TSG_InitialCatalog, this.TSG_RawConnectionString, this.TSG_UserManualConnectionString, this.TSG_TrustedConnection, isUIKorLang) == true);
 
@@ -791,13 +791,18 @@ namespace XProject.SQLServer.SchemaCompare.UI
             }
         }
 
-        private void IsUIKoreanLanguage_Click(object sender, EventArgs e)
+        private void MTSB_IsUIKoreanLanguage_Click(object sender, EventArgs e)
         {
-            var isUIKorLang = this.IsUIKoreanLanguage;
+            var isUIKorLang = this.MTSB_IsUIKoreanLanguage;
+
+            // 얘는 체크박스가 아니지만 체크박스 처럼 돌아야 한다 그로인해 클릭시 체크 먼저 바꿔줌
+            isUIKorLang.Checked = !isUIKorLang.Checked;
+
             var appTitle = ((isUIKorLang.Checked == true) ? "SQL Server 스키마 비교" : "SQL Server Schema Compare");
 
             this.AppTitle = appTitle;
             this.Text = appTitle;
+
 
             if (isUIKorLang.Checked == true)
             {
@@ -830,7 +835,7 @@ namespace XProject.SQLServer.SchemaCompare.UI
                 this.RDG_OpenReportDirectory.Text = "열기";
                 this.SwapSourceAndTargetServer.Text = "바꾸기";
                 this.ExecuteCompare.Text = "비교 시작";
-                this.ViewExecuteCompareCommand.Text = "비교 시작 명령";
+                this.ViewExecuteCompareCommand.Text = "비교 시작 명령 보기";
                 this.MTSB_OpenWorkSourceFileOpenDialog.Title = "열기";
                 this.MTSB_SaveWorkSourceSaveDialog.Title = "저장";
 
@@ -868,7 +873,7 @@ namespace XProject.SQLServer.SchemaCompare.UI
                 this.RDG_OpenReportDirectory.Text = "Open";
                 this.SwapSourceAndTargetServer.Text = "Swap";
                 this.ExecuteCompare.Text = "Start Compare";
-                this.ViewExecuteCompareCommand.Text = "Start Compare Command";
+                this.ViewExecuteCompareCommand.Text = "View Start Compare Command";
                 this.MTSB_OpenWorkSourceFileOpenDialog.Title = "Open";
                 this.MTSB_SaveWorkSourceSaveDialog.Title = "Save";
 

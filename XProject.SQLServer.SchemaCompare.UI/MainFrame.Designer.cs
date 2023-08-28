@@ -44,6 +44,8 @@
             MTSB_CutBar2 = new ToolStripSeparator();
             MTSB_AboutApplication = new ToolStripButton();
             MTSB_CloseApplication = new ToolStripButton();
+            MTSB_CutBar3 = new ToolStripSeparator();
+            MTSB_IsUIKoreanLanguage = new ToolStripButton();
             SourceServerGroup = new GroupBox();
             SSG_RawConnectionString = new TextBox();
             SSG_UserManualConnectionString = new CheckBox();
@@ -75,7 +77,6 @@
             RDG_ChangeReportDirectoryDialog = new FolderBrowserDialog();
             MTSB_SaveWorkSourceSaveDialog = new SaveFileDialog();
             MTSB_OpenWorkSourceFileOpenDialog = new OpenFileDialog();
-            IsUIKoreanLanguage = new CheckBox();
             ViewExecuteCompareCommand = new Button();
             ReportDirectoryGroup.SuspendLayout();
             MainToolStripBar.SuspendLayout();
@@ -164,7 +165,7 @@
             // MainToolStripBar
             // 
             MainToolStripBar.GripStyle = ToolStripGripStyle.Hidden;
-            MainToolStripBar.Items.AddRange(new ToolStripItem[] { MTSB_NewWorkSource, MTSB_CutBar1, MTSB_OpenWorkSource, MTSB_SaveWorkSource, MTSB_CutBar2, MTSB_AboutApplication, MTSB_CloseApplication });
+            MainToolStripBar.Items.AddRange(new ToolStripItem[] { MTSB_NewWorkSource, MTSB_CutBar1, MTSB_OpenWorkSource, MTSB_SaveWorkSource, MTSB_CutBar2, MTSB_AboutApplication, MTSB_CloseApplication, MTSB_CutBar3, MTSB_IsUIKoreanLanguage });
             MainToolStripBar.Location = new Point(0, 0);
             MainToolStripBar.Name = "MainToolStripBar";
             MainToolStripBar.Size = new Size(1184, 25);
@@ -220,6 +221,23 @@
             MTSB_CloseApplication.Size = new Size(30, 22);
             MTSB_CloseApplication.Text = "Exit";
             MTSB_CloseApplication.Click += MTSB_CloseApplication_Click;
+            // 
+            // MTSB_CutBar3
+            // 
+            MTSB_CutBar3.Alignment = ToolStripItemAlignment.Right;
+            MTSB_CutBar3.Name = "MTSB_CutBar3";
+            MTSB_CutBar3.Size = new Size(6, 25);
+            // 
+            // MTSB_IsUIKoreanLanguage
+            // 
+            MTSB_IsUIKoreanLanguage.Alignment = ToolStripItemAlignment.Right;
+            MTSB_IsUIKoreanLanguage.DisplayStyle = ToolStripItemDisplayStyle.Text;
+            MTSB_IsUIKoreanLanguage.Image = (Image)resources.GetObject("MTSB_IsUIKoreanLanguage.Image");
+            MTSB_IsUIKoreanLanguage.ImageTransparentColor = Color.Magenta;
+            MTSB_IsUIKoreanLanguage.Name = "MTSB_IsUIKoreanLanguage";
+            MTSB_IsUIKoreanLanguage.Size = new Size(100, 22);
+            MTSB_IsUIKoreanLanguage.Text = "KoreanLanguage";
+            MTSB_IsUIKoreanLanguage.Click += MTSB_IsUIKoreanLanguage_Click;
             // 
             // SourceServerGroup
             // 
@@ -506,10 +524,10 @@
             // 
             // JustNotify1
             // 
-            JustNotify1.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+            JustNotify1.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
             JustNotify1.AutoSize = true;
             JustNotify1.ForeColor = Color.Blue;
-            JustNotify1.Location = new Point(666, 407);
+            JustNotify1.Location = new Point(12, 407);
             JustNotify1.Margin = new Padding(0);
             JustNotify1.Name = "JustNotify1";
             JustNotify1.Size = new Size(67, 15);
@@ -531,11 +549,11 @@
             // 
             // ExecuteCompare
             // 
-            ExecuteCompare.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
-            ExecuteCompare.Location = new Point(670, 426);
+            ExecuteCompare.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            ExecuteCompare.Location = new Point(12, 426);
             ExecuteCompare.Margin = new Padding(3, 4, 3, 4);
             ExecuteCompare.Name = "ExecuteCompare";
-            ExecuteCompare.Size = new Size(502, 83);
+            ExecuteCompare.Size = new Size(1160, 83);
             ExecuteCompare.TabIndex = 110;
             ExecuteCompare.Text = "Start";
             ExecuteCompare.TextImageRelation = TextImageRelation.ImageBeforeText;
@@ -554,25 +572,12 @@
             MTSB_OpenWorkSourceFileOpenDialog.Filter = "JSON (*.json)|*.json";
             MTSB_OpenWorkSourceFileOpenDialog.Title = "열기";
             // 
-            // IsUIKoreanLanguage
-            // 
-            IsUIKoreanLanguage.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
-            IsUIKoreanLanguage.AutoSize = true;
-            IsUIKoreanLanguage.Location = new Point(12, 529);
-            IsUIKoreanLanguage.Margin = new Padding(3, 4, 3, 4);
-            IsUIKoreanLanguage.Name = "IsUIKoreanLanguage";
-            IsUIKoreanLanguage.Size = new Size(115, 19);
-            IsUIKoreanLanguage.TabIndex = 111;
-            IsUIKoreanLanguage.Text = "KoreanLanguage";
-            IsUIKoreanLanguage.UseVisualStyleBackColor = true;
-            IsUIKoreanLanguage.Click += IsUIKoreanLanguage_Click;
-            // 
             // ViewExecuteCompareCommand
             // 
-            ViewExecuteCompareCommand.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
-            ViewExecuteCompareCommand.Location = new Point(670, 516);
+            ViewExecuteCompareCommand.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            ViewExecuteCompareCommand.Location = new Point(12, 516);
             ViewExecuteCompareCommand.Name = "ViewExecuteCompareCommand";
-            ViewExecuteCompareCommand.Size = new Size(502, 33);
+            ViewExecuteCompareCommand.Size = new Size(1160, 33);
             ViewExecuteCompareCommand.TabIndex = 112;
             ViewExecuteCompareCommand.Tag = "TRUE";
             ViewExecuteCompareCommand.Text = "ViewStartCommand";
@@ -586,7 +591,6 @@
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1184, 561);
             Controls.Add(ViewExecuteCompareCommand);
-            Controls.Add(IsUIKoreanLanguage);
             Controls.Add(ExecuteCompare);
             Controls.Add(SwapSourceAndTargetServer);
             Controls.Add(JustNotify1);
@@ -666,8 +670,9 @@
         private OpenFileDialog MTSB_OpenWorkSourceFileOpenDialog;
         private ToolStripSeparator MTSB_CutBar2;
         private ToolStripButton MTSB_AboutApplication;
-        private CheckBox IsUIKoreanLanguage;
         private Button ViewExecuteCompareCommand;
+        private ToolStripButton MTSB_IsUIKoreanLanguage;
+        private ToolStripSeparator MTSB_CutBar3;
     }
 }
 
