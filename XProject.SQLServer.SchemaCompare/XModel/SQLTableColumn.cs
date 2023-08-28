@@ -118,7 +118,7 @@ namespace XProject.SQLServer.SchemaCompare.XModel
             );
             var identitySchema_Description = (
                 (identitySchema != string.Empty) ? 
-                $"/* {identitySchema} 수동으로 해주셔용 */" : 
+                $"/* {identitySchema} - Please manual */" : 
                 string.Empty
             );
 
