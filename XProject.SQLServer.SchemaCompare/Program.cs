@@ -29,6 +29,7 @@ namespace XProject.SQLServer.SchemaCompare
             var sourceServerConnectionString = ((args.Length > 0) ? args[0].Trim() : string.Empty);
             var targetServerConnectionString = ((args.Length > 1) ? args[1].Trim() : string.Empty);
             var reportDirectoryPathSource = ((args.Length > 2) ? args[2].Trim() : string.Empty);
+            var isKoreaHanGulLanguage = (((args.Length > 3) ? args[3].Trim() : string.Empty).ToUpper() == "TRUE");
             var isRight = ((sourceServerConnectionString != string.Empty) || (targetServerConnectionString != string.Empty));
 
             Console.Out.WriteLine("<<< XProject.SQLServer.SchemaCompare >>>");
