@@ -21,7 +21,7 @@ namespace XProject.SQLServer.SchemaCompare.UI
 
         // ------------------------------------------------------------------------------------------------
 
-        private void ChangeUserManualConnectionString(CheckBox userManual, TextBox rawConnectionString, Label dataSourceTitle, Label userIDTitle, Label passwordTitle, Label initialCatalogTitle, Label rawConnectionStringTitle, CheckBox trust)
+        private void ChangeUserManualConnectionString(CheckBox userManual, TextBox rawConnectionString, Label dataSourceTitle, TextBox dataSource, Label userIDTitle, Label passwordTitle, Label initialCatalogTitle, Label rawConnectionStringTitle, CheckBox trust)
         {
             var isManualCS = userManual.Checked;
 
@@ -33,9 +33,18 @@ namespace XProject.SQLServer.SchemaCompare.UI
 
             rawConnectionStringTitle.Visible = isManualCS;
             rawConnectionString.Visible = isManualCS;
+
+            if (isManualCS == true)
+            {
+                rawConnectionString.Focus();
+            }
+            else
+            {
+                dataSource.Focus();
+            }
         }
 
-        private void ChangeTrustedConnectionStatus(TextBox userID, TextBox password, CheckBox trust, bool isClearValue)
+        private void ChangeTrustedConnectionStatus(TextBox userID, TextBox password, CheckBox trust, TextBox initialCatalog, bool isClearValue)
         {
             var isUnTrust = !trust.Checked;
 
@@ -47,6 +56,15 @@ namespace XProject.SQLServer.SchemaCompare.UI
 
             userID.Enabled = isUnTrust;
             password.Enabled = isUnTrust;
+
+            if (isUnTrust == true)
+            {
+                userID.Focus();
+            }
+            else
+            {
+                initialCatalog.Focus();
+            }
         }
 
         private void ConnectTest(TextBox dataSource, TextBox userID, TextBox password, TextBox initialCatalog, TextBox rawConnectionString, CheckBox userManual, CheckBox trust, CheckBox isUIKorLang)
@@ -210,22 +228,22 @@ namespace XProject.SQLServer.SchemaCompare.UI
 
         private void ChangeUserManualConnectionString_SSG()
         {
-            this.ChangeUserManualConnectionString(this.SSG_UserManualConnectionString, this.SSG_RawConnectionString, this.SSG_DataSourceTitle, this.SSG_UserIDTitle, this.SSG_PasswordTitle, this.SSG_InitialCatalogTitle, this.SSG_RawConnectionStringTitle, this.SSG_TrustedConnection);
+            this.ChangeUserManualConnectionString(this.SSG_UserManualConnectionString, this.SSG_RawConnectionString, this.SSG_DataSourceTitle, this.SSG_DataSource, this.SSG_UserIDTitle, this.SSG_PasswordTitle, this.SSG_InitialCatalogTitle, this.SSG_RawConnectionStringTitle, this.SSG_TrustedConnection);
         }
 
         private void ChangeUserManualConnectionString_TSG()
         {
-            this.ChangeUserManualConnectionString(this.TSG_UserManualConnectionString, this.TSG_RawConnectionString, this.TSG_DataSourceTitle, this.TSG_UserIDTitle, this.TSG_PasswordTitle, this.TSG_InitialCatalogTitle, this.TSG_RawConnectionStringTitle, this.TSG_TrustedConnection);
+            this.ChangeUserManualConnectionString(this.TSG_UserManualConnectionString, this.TSG_RawConnectionString, this.TSG_DataSourceTitle, this.TSG_DataSource, this.TSG_UserIDTitle, this.TSG_PasswordTitle, this.TSG_InitialCatalogTitle, this.TSG_RawConnectionStringTitle, this.TSG_TrustedConnection);
         }
 
         private void ChangeTrustedConnectionStatus_SSG(bool isClearValue)
         {
-            this.ChangeTrustedConnectionStatus(this.SSG_UserID, this.SSG_Password, this.SSG_TrustedConnection, isClearValue);
+            this.ChangeTrustedConnectionStatus(this.SSG_UserID, this.SSG_Password, this.SSG_TrustedConnection, this.SSG_InitialCatalog, isClearValue);
         }
 
         private void ChangeTrustedConnectionStatus_TSG(bool isClearValue)
         {
-            this.ChangeTrustedConnectionStatus(this.TSG_UserID, this.TSG_Password, this.TSG_TrustedConnection, isClearValue);
+            this.ChangeTrustedConnectionStatus(this.TSG_UserID, this.TSG_Password, this.TSG_TrustedConnection, this.TSG_InitialCatalog, isClearValue);
         }
 
         private void AppLoadingTimeOpenDefaultWorkSourceDataFile()
@@ -730,9 +748,9 @@ namespace XProject.SQLServer.SchemaCompare.UI
                                         (isUIKorLang.Checked == true) ?
                                         "Ctrl + C 눌러서 현재 대화상자 내용을 복사할 수 있습니다." :
                                         "Press Ctrl + C, copy to this dialog content"
-                                    ) + 
+                                    ) +
                                     Environment.NewLine +
-                                    "--------------------------------------------------" + 
+                                    "--------------------------------------------------" +
                                     Environment.NewLine +
                                     (appPath + " " + appParameter)
                                 );
