@@ -9,7 +9,7 @@ namespace XProject.SQLServer.SchemaCompare.XWork
 {
     public class ExportWork
     {
-        public static void ExportSchema(string directoryPath, string fileName, string sourceContent, string targetContent)
+        public static void ExportSchema(string directoryPath, string fileName, string sourceContent, string targetContent, bool isKoreaHanGulLanguage)
         {
             if (Directory.Exists(directoryPath) == false)
             {
@@ -48,12 +48,25 @@ namespace XProject.SQLServer.SchemaCompare.XWork
 
                 // 타겟 파일의 실행하지 말라는 경고추가
                 // Add a warning not to run the target file
-                var doNotExecute = (
-                    "-- 이 스키마를 실행하지 마세요" + Environment.NewLine +
-                    "-- 이 스키마는 타겟 스키마로 소스 스키마와 변경부분을 비교하기 위함입니다." + Environment.NewLine +
-                    "-- Do not run this schema" + Environment.NewLine +
-                    "-- This schema is for comparing the source schema with the target schema and the changes." + Environment.NewLine +
-                    string.Empty + Environment.NewLine
+                var doNotExecute = string.Join(
+                    Environment.NewLine, 
+                    (
+                        (isKoreaHanGulLanguage == true) ?
+                        (
+                            new string[] {
+                                "-- 이 스키마를 실행하지 마세요",
+                                "-- 이 스키마는 타겟 스키마로 소스 스키마와 변경부분을 비교하기 위함입니다.",
+                                string.Empty
+                            }
+                        ) :
+                        (
+                            new string[] {
+                                "-- Do not run this schema",
+                                "-- This schema is for comparing the source schema with the target schema and the changes.",
+                                string.Empty
+                            }
+                        )
+                    )
                 );
 
                 // 저장
@@ -72,20 +85,37 @@ namespace XProject.SQLServer.SchemaCompare.XWork
                 // 배치파일 만들기
                 // Create a batch file
                 var batFilePath = Path.Combine(directoryPath, (fileName + " - Diff.bat"));
+                var batContentKor = new string[]
+                {
+                    string.Empty,
+                    $"echo ----------------------------",
+                    $"echo VisualStudio Code를 통해 스키마를 비교합니다.",
+                    $"echo ----------------------------",
+                    $"echo {fileName}",
+                    $"echo ----------------------------",
+                    $"echo 소스 : {sourceFilePath}",
+                    $"echo ----------------------------",
+                    $"echo 타겟 : {targetFilePath}",
+                    $"echo ----------------------------",
+                    string.Empty
+                };
+                var batContentEng = new string[]
+                {
+                    string.Empty,
+                    $"echo ----------------------------",
+                    $"echo Compare schemas through VisualStudio Code.",
+                    $"echo ----------------------------",
+                    $"echo {fileName}",
+                    $"echo ----------------------------",
+                    $"echo Source : {sourceFilePath}",
+                    $"echo ----------------------------",
+                    $"echo Target : {targetFilePath}",
+                    $"echo ----------------------------",
+                    string.Empty
+                };
                 var batContent = (
                     "@echo off" + Environment.NewLine +
-                    string.Empty + Environment.NewLine +
-                    "echo ----------------------------" + Environment.NewLine +
-                    "echo VisualStudio Code를 통해 스키마를 비교합니다." + Environment.NewLine +
-                    "echo Compare schemas through VisualStudio Code." + Environment.NewLine +
-                    "echo ----------------------------" + Environment.NewLine +
-                    "echo " + fileName + Environment.NewLine +
-                    "echo ----------------------------" + Environment.NewLine +
-                    "echo 소스(Source) : " + sourceFilePath + Environment.NewLine +
-                    "echo ----------------------------" + Environment.NewLine +
-                    "echo 타겟(Target) : " + targetFilePath + Environment.NewLine +
-                    "echo ----------------------------" + Environment.NewLine +
-                    string.Empty + Environment.NewLine +
+                    string.Join(Environment.NewLine, ((isKoreaHanGulLanguage == true) ? batContentKor : batContentEng)) +
                     $"code -d \"{sourceFilePath}\" \"{targetFilePath}\"" + Environment.NewLine
                 );
 
@@ -97,9 +127,9 @@ namespace XProject.SQLServer.SchemaCompare.XWork
             }
         }
 
-        public static void ExportSchema(string directoryPath, string fileName, string sourceContent)
+        public static void ExportSchema(string directoryPath, string fileName, string sourceContent, bool isKoreaHanGulLanguage)
         {
-            ExportWork.ExportSchema(directoryPath, fileName, sourceContent, string.Empty);
+            ExportWork.ExportSchema(directoryPath, fileName, sourceContent, string.Empty, isKoreaHanGulLanguage);
         }
     }
 }
