@@ -725,7 +725,7 @@ namespace XProject.SQLServer.SchemaCompare.UI
                             if (MessageBox.Show(message, this.AppTitle, MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
                             {
                                 // 실행
-                                Process.Start(appPath, $"\"{ssgCS}\" \"{tsgCS}\" \"{reportPath}\"");
+                                Process.Start(appPath, $"\"{ssgCS}\" \"{tsgCS}\" \"{reportPath}\" \"{isUIKorLang}\"");
                             }
                         }
                         else
