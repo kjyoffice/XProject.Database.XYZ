@@ -138,7 +138,7 @@ namespace XProject.SQLServer.SchemaCompare.XWork
                         x.Source.COLUMN_NAME_Original + " : " + 
                         (
                             (x.Target == null) ? 
-                            (((isKoreaHanGulLanguage == true) ? "컬럼 없음" : "Not exist column") + x.Source.ColumnSchema) : 
+                            (((isKoreaHanGulLanguage == true) ? "컬럼 없음" : "Not exist column") + " : " + x.Source.ColumnSchema) : 
                             (
                                 ((isKoreaHanGulLanguage == true) ? "컬럼이 다름" : "Different column") + Environment.NewLine + 
                                 "- " + ((isKoreaHanGulLanguage == true) ? "소스" : "Source") + " : " + x.Source.ColumnSchema + Environment.NewLine +
