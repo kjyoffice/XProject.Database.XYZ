@@ -114,14 +114,6 @@
     <Content Include="MainFrameIcon.ico" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\XProject.Database.SchemaCompare.MySQL\XProject.Database.SchemaCompare.MySQL.csproj">
-      <Project>{dc389e63-b2f7-4902-a54d-335c578fdaf2}</Project>
-      <Name>XProject.Database.SchemaCompare.MySQL</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\XProject.Database.SchemaCompare.PostgreSQL\XProject.Database.SchemaCompare.PostgreSQL.csproj">
-      <Project>{3191c46b-1e62-4d17-9910-58f814746b5a}</Project>
-      <Name>XProject.Database.SchemaCompare.PostgreSQL</Name>
-    </ProjectReference>
     <ProjectReference Include="..\XProject.Database.SchemaCompare.SQLServer\XProject.Database.SchemaCompare.SQLServer.csproj">
       <Project>{bab5785b-5eda-48b5-9df6-4f5ecd6ab612}</Project>
       <Name>XProject.Database.SchemaCompare.SQLServer</Name>
