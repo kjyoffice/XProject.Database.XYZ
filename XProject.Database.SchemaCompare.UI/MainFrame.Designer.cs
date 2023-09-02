@@ -48,6 +48,9 @@
             this.MTSB_IsUIKoreanLanguage = new System.Windows.Forms.ToolStripButton();
             this.SourceServerGroup = new System.Windows.Forms.GroupBox();
             this.SSG_RawConnectionString = new System.Windows.Forms.TextBox();
+            this.SSG_PortNoDescription = new System.Windows.Forms.Label();
+            this.SSG_PortNoTitle = new System.Windows.Forms.Label();
+            this.SSG_PortNo = new System.Windows.Forms.TextBox();
             this.SSG_CopyToTSG = new System.Windows.Forms.Button();
             this.SSG_UserManualConnectionString = new System.Windows.Forms.CheckBox();
             this.SSG_InitialCatalogTitle = new System.Windows.Forms.Label();
@@ -60,6 +63,9 @@
             this.SSG_RawConnectionStringTitle = new System.Windows.Forms.Label();
             this.TargetServerGroup = new System.Windows.Forms.GroupBox();
             this.TSG_RawConnectionString = new System.Windows.Forms.TextBox();
+            this.TSG_PortNoDescription = new System.Windows.Forms.Label();
+            this.TSG_PortNoTitle = new System.Windows.Forms.Label();
+            this.TSG_PortNo = new System.Windows.Forms.TextBox();
             this.TSG_CopyToSSG = new System.Windows.Forms.Button();
             this.TSG_UserManualConnectionString = new System.Windows.Forms.CheckBox();
             this.TSG_InitialCatalogTitle = new System.Windows.Forms.Label();
@@ -84,10 +90,6 @@
             this.DLG_PostgreSQL = new System.Windows.Forms.RadioButton();
             this.DLG_MySQL = new System.Windows.Forms.RadioButton();
             this.DLG_SQLServer = new System.Windows.Forms.RadioButton();
-            this.SSG_PortNo = new System.Windows.Forms.TextBox();
-            this.TSG_PortNo = new System.Windows.Forms.TextBox();
-            this.SSG_PortNoTitle = new System.Windows.Forms.Label();
-            this.TSG_PortNoTitle = new System.Windows.Forms.Label();
             this.ReportDirectoryGroup.SuspendLayout();
             this.MainToolStripBar.SuspendLayout();
             this.SourceServerGroup.SuspendLayout();
@@ -257,6 +259,7 @@
             // SourceServerGroup
             // 
             this.SourceServerGroup.Controls.Add(this.SSG_RawConnectionString);
+            this.SourceServerGroup.Controls.Add(this.SSG_PortNoDescription);
             this.SourceServerGroup.Controls.Add(this.SSG_PortNoTitle);
             this.SourceServerGroup.Controls.Add(this.SSG_PortNo);
             this.SourceServerGroup.Controls.Add(this.SSG_CopyToTSG);
@@ -290,6 +293,33 @@
             this.SSG_RawConnectionString.ScrollBars = System.Windows.Forms.ScrollBars.Both;
             this.SSG_RawConnectionString.Size = new System.Drawing.Size(386, 172);
             this.SSG_RawConnectionString.TabIndex = 10;
+            // 
+            // SSG_PortNoDescription
+            // 
+            this.SSG_PortNoDescription.AutoSize = true;
+            this.SSG_PortNoDescription.ForeColor = System.Drawing.Color.Blue;
+            this.SSG_PortNoDescription.Location = new System.Drawing.Point(192, 76);
+            this.SSG_PortNoDescription.Name = "SSG_PortNoDescription";
+            this.SSG_PortNoDescription.Size = new System.Drawing.Size(106, 12);
+            this.SSG_PortNoDescription.TabIndex = 114;
+            this.SSG_PortNoDescription.Text = "PortNoDescription";
+            // 
+            // SSG_PortNoTitle
+            // 
+            this.SSG_PortNoTitle.AutoSize = true;
+            this.SSG_PortNoTitle.Location = new System.Drawing.Point(6, 76);
+            this.SSG_PortNoTitle.Name = "SSG_PortNoTitle";
+            this.SSG_PortNoTitle.Size = new System.Drawing.Size(43, 12);
+            this.SSG_PortNoTitle.TabIndex = 114;
+            this.SSG_PortNoTitle.Text = "PortNo";
+            // 
+            // SSG_PortNo
+            // 
+            this.SSG_PortNo.Location = new System.Drawing.Point(108, 73);
+            this.SSG_PortNo.MaxLength = 6;
+            this.SSG_PortNo.Name = "SSG_PortNo";
+            this.SSG_PortNo.Size = new System.Drawing.Size(78, 21);
+            this.SSG_PortNo.TabIndex = 114;
             // 
             // SSG_CopyToTSG
             // 
@@ -397,6 +427,7 @@
             // 
             this.TargetServerGroup.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.TargetServerGroup.Controls.Add(this.TSG_RawConnectionString);
+            this.TargetServerGroup.Controls.Add(this.TSG_PortNoDescription);
             this.TargetServerGroup.Controls.Add(this.TSG_PortNoTitle);
             this.TargetServerGroup.Controls.Add(this.TSG_PortNo);
             this.TargetServerGroup.Controls.Add(this.TSG_CopyToSSG);
@@ -430,6 +461,33 @@
             this.TSG_RawConnectionString.ScrollBars = System.Windows.Forms.ScrollBars.Both;
             this.TSG_RawConnectionString.Size = new System.Drawing.Size(386, 172);
             this.TSG_RawConnectionString.TabIndex = 10;
+            // 
+            // TSG_PortNoDescription
+            // 
+            this.TSG_PortNoDescription.AutoSize = true;
+            this.TSG_PortNoDescription.ForeColor = System.Drawing.Color.Blue;
+            this.TSG_PortNoDescription.Location = new System.Drawing.Point(192, 76);
+            this.TSG_PortNoDescription.Name = "TSG_PortNoDescription";
+            this.TSG_PortNoDescription.Size = new System.Drawing.Size(106, 12);
+            this.TSG_PortNoDescription.TabIndex = 115;
+            this.TSG_PortNoDescription.Text = "PortNoDescription";
+            // 
+            // TSG_PortNoTitle
+            // 
+            this.TSG_PortNoTitle.AutoSize = true;
+            this.TSG_PortNoTitle.Location = new System.Drawing.Point(6, 76);
+            this.TSG_PortNoTitle.Name = "TSG_PortNoTitle";
+            this.TSG_PortNoTitle.Size = new System.Drawing.Size(43, 12);
+            this.TSG_PortNoTitle.TabIndex = 115;
+            this.TSG_PortNoTitle.Text = "PortNo";
+            // 
+            // TSG_PortNo
+            // 
+            this.TSG_PortNo.Location = new System.Drawing.Point(108, 73);
+            this.TSG_PortNo.MaxLength = 6;
+            this.TSG_PortNo.Name = "TSG_PortNo";
+            this.TSG_PortNo.Size = new System.Drawing.Size(78, 21);
+            this.TSG_PortNo.TabIndex = 114;
             // 
             // TSG_CopyToSSG
             // 
@@ -671,38 +729,6 @@
             this.DLG_SQLServer.UseVisualStyleBackColor = true;
             this.DLG_SQLServer.Click += new System.EventHandler(this.DLG_DatabaseTypeX_Click);
             // 
-            // SSG_PortNo
-            // 
-            this.SSG_PortNo.Location = new System.Drawing.Point(108, 73);
-            this.SSG_PortNo.Name = "SSG_PortNo";
-            this.SSG_PortNo.Size = new System.Drawing.Size(386, 21);
-            this.SSG_PortNo.TabIndex = 114;
-            // 
-            // TSG_PortNo
-            // 
-            this.TSG_PortNo.Location = new System.Drawing.Point(108, 73);
-            this.TSG_PortNo.Name = "TSG_PortNo";
-            this.TSG_PortNo.Size = new System.Drawing.Size(386, 21);
-            this.TSG_PortNo.TabIndex = 114;
-            // 
-            // SSG_PortNoTitle
-            // 
-            this.SSG_PortNoTitle.AutoSize = true;
-            this.SSG_PortNoTitle.Location = new System.Drawing.Point(6, 76);
-            this.SSG_PortNoTitle.Name = "SSG_PortNoTitle";
-            this.SSG_PortNoTitle.Size = new System.Drawing.Size(43, 12);
-            this.SSG_PortNoTitle.TabIndex = 114;
-            this.SSG_PortNoTitle.Text = "PortNo";
-            // 
-            // TSG_PortNoTitle
-            // 
-            this.TSG_PortNoTitle.AutoSize = true;
-            this.TSG_PortNoTitle.Location = new System.Drawing.Point(6, 76);
-            this.TSG_PortNoTitle.Name = "TSG_PortNoTitle";
-            this.TSG_PortNoTitle.Size = new System.Drawing.Size(43, 12);
-            this.TSG_PortNoTitle.TabIndex = 115;
-            this.TSG_PortNoTitle.Text = "PortNo";
-            // 
             // MainFrame
             // 
             this.AllowDrop = true;
@@ -805,6 +831,8 @@
         private System.Windows.Forms.TextBox TSG_PortNo;
         private System.Windows.Forms.Label SSG_PortNoTitle;
         private System.Windows.Forms.Label TSG_PortNoTitle;
+        private System.Windows.Forms.Label SSG_PortNoDescription;
+        private System.Windows.Forms.Label TSG_PortNoDescription;
     }
 }
 

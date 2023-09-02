@@ -21,7 +21,7 @@ namespace XProject.Database.SchemaCompare.UI
 
         // ------------------------------------------------------------------------------------------------
 
-        private void ChangeUserManualConnectionString(CheckBox userManual, TextBox rawConnectionString, Label dataSourceTitle, TextBox dataSource, Label portNoTitle, TextBox portNo, Label userIDTitle, Label passwordTitle, Label initialCatalogTitle, Label rawConnectionStringTitle, CheckBox trust)
+        private void ChangeUserManualConnectionString(CheckBox userManual, TextBox rawConnectionString, Label dataSourceTitle, TextBox dataSource, Label portNoTitle, Label userIDTitle, Label passwordTitle, Label initialCatalogTitle, Label rawConnectionStringTitle, CheckBox trust)
         {
             var isManualCS = userManual.Checked;
 
@@ -397,12 +397,12 @@ namespace XProject.Database.SchemaCompare.UI
 
         private void ChangeUserManualConnectionString_SSG()
         {
-            this.ChangeUserManualConnectionString(this.SSG_UserManualConnectionString, this.SSG_RawConnectionString, this.SSG_DataSourceTitle, this.SSG_DataSource, this.SSG_PortNoTitle, this.SSG_PortNo, this.SSG_UserIDTitle, this.SSG_PasswordTitle, this.SSG_InitialCatalogTitle, this.SSG_RawConnectionStringTitle, this.SSG_TrustedConnection);
+            this.ChangeUserManualConnectionString(this.SSG_UserManualConnectionString, this.SSG_RawConnectionString, this.SSG_DataSourceTitle, this.SSG_DataSource, this.SSG_PortNoTitle, this.SSG_UserIDTitle, this.SSG_PasswordTitle, this.SSG_InitialCatalogTitle, this.SSG_RawConnectionStringTitle, this.SSG_TrustedConnection);
         }
 
         private void ChangeUserManualConnectionString_TSG()
         {
-            this.ChangeUserManualConnectionString(this.TSG_UserManualConnectionString, this.TSG_RawConnectionString, this.TSG_DataSourceTitle, this.TSG_DataSource, this.TSG_PortNoTitle, this.TSG_PortNo, this.TSG_UserIDTitle, this.TSG_PasswordTitle, this.TSG_InitialCatalogTitle, this.TSG_RawConnectionStringTitle, this.TSG_TrustedConnection);
+            this.ChangeUserManualConnectionString(this.TSG_UserManualConnectionString, this.TSG_RawConnectionString, this.TSG_DataSourceTitle, this.TSG_DataSource, this.TSG_PortNoTitle, this.TSG_UserIDTitle, this.TSG_PasswordTitle, this.TSG_InitialCatalogTitle, this.TSG_RawConnectionStringTitle, this.TSG_TrustedConnection);
         }
 
         private void ChangeTrustedConnectionStatus_SSG(bool isClearValue)
@@ -428,15 +428,29 @@ namespace XProject.Database.SchemaCompare.UI
 
         private void ChangeDatabaseType(bool isSQLServer)
         {
+            this.SSG_PortNo.Enabled = !isSQLServer;
+            this.SSG_PortNoDescription.Visible = !isSQLServer;
             this.SSG_TrustedConnection.Checked = false;
             this.SSG_TrustedConnection.Enabled = isSQLServer;
             this.SSG_UserID.Enabled = true;
             this.SSG_Password.Enabled = true;
 
+            if (isSQLServer == true)
+            {
+                this.SSG_PortNo.Clear();
+            }
+
+            this.TSG_PortNo.Enabled = !isSQLServer;
+            this.TSG_PortNoDescription.Visible = !isSQLServer;
             this.TSG_TrustedConnection.Checked = false;
             this.TSG_TrustedConnection.Enabled = isSQLServer;
             this.TSG_UserID.Enabled = true;
             this.TSG_Password.Enabled = true;
+
+            if (isSQLServer == true)
+            {
+                this.TSG_PortNo.Clear();
+            }
         }
 
         private string GetSelectedDatabaseType()
@@ -1144,6 +1158,7 @@ namespace XProject.Database.SchemaCompare.UI
                 this.SourceServerGroup.Text = "소스서버";
                 this.SSG_DataSourceTitle.Text = "서버";
                 this.SSG_PortNoTitle.Text = "포트";
+                this.SSG_PortNoDescription.Text = "(** 기본포트면 비워도 됩니다.)";
                 this.SSG_RawConnectionStringTitle.Text = "연결문자열";
                 this.SSG_UserIDTitle.Text = "아이디";
                 this.SSG_PasswordTitle.Text = "비밀번호";
@@ -1156,6 +1171,7 @@ namespace XProject.Database.SchemaCompare.UI
                 this.TargetServerGroup.Text = "타겟서버";
                 this.TSG_DataSourceTitle.Text = "서버";
                 this.TSG_PortNoTitle.Text = "포트";
+                this.TSG_PortNoDescription.Text = "(** 기본포트면 비워도 됩니다.)";
                 this.TSG_RawConnectionStringTitle.Text = "연결문자열";
                 this.TSG_UserIDTitle.Text = "아이디";
                 this.TSG_PasswordTitle.Text = "비밀번호";
@@ -1187,6 +1203,7 @@ namespace XProject.Database.SchemaCompare.UI
                 this.SourceServerGroup.Text = "SourceServer";
                 this.SSG_DataSourceTitle.Text = "Server";
                 this.SSG_PortNoTitle.Text = "Port";
+                this.SSG_PortNoDescription.Text = "(** Default port is allow empty)";
                 this.SSG_RawConnectionStringTitle.Text = $"Connection{Environment.NewLine}String";
                 this.SSG_UserIDTitle.Text = "ID";
                 this.SSG_PasswordTitle.Text = "Password";
@@ -1199,6 +1216,7 @@ namespace XProject.Database.SchemaCompare.UI
                 this.TargetServerGroup.Text = "TargetServer";
                 this.TSG_DataSourceTitle.Text = "Server";
                 this.TSG_PortNoTitle.Text = "Port";
+                this.TSG_PortNoDescription.Text = "(** Default port is allow empty)";
                 this.TSG_RawConnectionStringTitle.Text = $"Connection{Environment.NewLine}String";
                 this.TSG_UserIDTitle.Text = "ID";
                 this.TSG_PasswordTitle.Text = "Password";
