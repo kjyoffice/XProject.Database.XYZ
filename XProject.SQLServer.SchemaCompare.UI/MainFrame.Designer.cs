@@ -47,6 +47,7 @@
             MTSB_CutBar3 = new ToolStripSeparator();
             MTSB_IsUIKoreanLanguage = new ToolStripButton();
             SourceServerGroup = new GroupBox();
+            SSG_CopyToTSG = new Button();
             SSG_RawConnectionString = new TextBox();
             SSG_UserManualConnectionString = new CheckBox();
             SSG_InitialCatalogTitle = new Label();
@@ -58,6 +59,7 @@
             SSG_UserID = new TextBox();
             SSG_RawConnectionStringTitle = new Label();
             TargetServerGroup = new GroupBox();
+            TSG_CopyToSSG = new Button();
             TSG_RawConnectionString = new TextBox();
             TSG_UserManualConnectionString = new CheckBox();
             TSG_InitialCatalogTitle = new Label();
@@ -121,7 +123,6 @@
             RDG_ChangeReportDirectory.Size = new Size(100, 32);
             RDG_ChangeReportDirectory.TabIndex = 0;
             RDG_ChangeReportDirectory.Text = "...";
-            RDG_ChangeReportDirectory.TextImageRelation = TextImageRelation.ImageBeforeText;
             RDG_ChangeReportDirectory.UseVisualStyleBackColor = true;
             RDG_ChangeReportDirectory.Click += RDG_ChangeReportDirectory_Click;
             // 
@@ -134,7 +135,6 @@
             RDG_OpenReportDirectory.Size = new Size(100, 32);
             RDG_OpenReportDirectory.TabIndex = 0;
             RDG_OpenReportDirectory.Text = "Open";
-            RDG_OpenReportDirectory.TextImageRelation = TextImageRelation.ImageBeforeText;
             RDG_OpenReportDirectory.UseVisualStyleBackColor = true;
             RDG_OpenReportDirectory.Click += RDG_OpenReportDirectory_Click;
             // 
@@ -242,6 +242,7 @@
             // SourceServerGroup
             // 
             SourceServerGroup.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left;
+            SourceServerGroup.Controls.Add(SSG_CopyToTSG);
             SourceServerGroup.Controls.Add(SSG_RawConnectionString);
             SourceServerGroup.Controls.Add(SSG_UserManualConnectionString);
             SourceServerGroup.Controls.Add(SSG_InitialCatalogTitle);
@@ -259,20 +260,30 @@
             SourceServerGroup.Margin = new Padding(3, 4, 3, 4);
             SourceServerGroup.Name = "SourceServerGroup";
             SourceServerGroup.Padding = new Padding(3, 4, 3, 4);
-            SourceServerGroup.Size = new Size(500, 272);
+            SourceServerGroup.Size = new Size(500, 304);
             SourceServerGroup.TabIndex = 6;
             SourceServerGroup.TabStop = false;
             SourceServerGroup.Text = "SourceServer";
             // 
+            // SSG_CopyToTSG
+            // 
+            SSG_CopyToTSG.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            SSG_CopyToTSG.Location = new Point(108, 261);
+            SSG_CopyToTSG.Name = "SSG_CopyToTSG";
+            SSG_CopyToTSG.Size = new Size(386, 30);
+            SSG_CopyToTSG.TabIndex = 105;
+            SSG_CopyToTSG.Text = "CopyToTarget";
+            SSG_CopyToTSG.UseVisualStyleBackColor = true;
+            // 
             // SSG_RawConnectionString
             // 
             SSG_RawConnectionString.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            SSG_RawConnectionString.Location = new Point(108, 52);
+            SSG_RawConnectionString.Location = new Point(108, 51);
             SSG_RawConnectionString.Margin = new Padding(3, 4, 3, 4);
             SSG_RawConnectionString.Multiline = true;
             SSG_RawConnectionString.Name = "SSG_RawConnectionString";
             SSG_RawConnectionString.ScrollBars = ScrollBars.Both;
-            SSG_RawConnectionString.Size = new Size(386, 143);
+            SSG_RawConnectionString.Size = new Size(386, 145);
             SSG_RawConnectionString.TabIndex = 10;
             // 
             // SSG_UserManualConnectionString
@@ -299,13 +310,12 @@
             // SSG_ConnectTest
             // 
             SSG_ConnectTest.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            SSG_ConnectTest.Location = new Point(108, 214);
+            SSG_ConnectTest.Location = new Point(108, 204);
             SSG_ConnectTest.Margin = new Padding(3, 4, 3, 4);
             SSG_ConnectTest.Name = "SSG_ConnectTest";
             SSG_ConnectTest.Size = new Size(386, 50);
             SSG_ConnectTest.TabIndex = 104;
             SSG_ConnectTest.Text = "ConnTest";
-            SSG_ConnectTest.TextImageRelation = TextImageRelation.ImageBeforeText;
             SSG_ConnectTest.UseVisualStyleBackColor = true;
             SSG_ConnectTest.Click += SSG_ConnectTest_Click;
             // 
@@ -370,6 +380,7 @@
             // TargetServerGroup
             // 
             TargetServerGroup.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Right;
+            TargetServerGroup.Controls.Add(TSG_CopyToSSG);
             TargetServerGroup.Controls.Add(TSG_RawConnectionString);
             TargetServerGroup.Controls.Add(TSG_UserManualConnectionString);
             TargetServerGroup.Controls.Add(TSG_InitialCatalogTitle);
@@ -387,20 +398,30 @@
             TargetServerGroup.Margin = new Padding(3, 4, 3, 4);
             TargetServerGroup.Name = "TargetServerGroup";
             TargetServerGroup.Padding = new Padding(3, 4, 3, 4);
-            TargetServerGroup.Size = new Size(500, 272);
+            TargetServerGroup.Size = new Size(500, 304);
             TargetServerGroup.TabIndex = 6;
             TargetServerGroup.TabStop = false;
             TargetServerGroup.Text = "TargetServer";
             // 
+            // TSG_CopyToSSG
+            // 
+            TSG_CopyToSSG.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            TSG_CopyToSSG.Location = new Point(108, 261);
+            TSG_CopyToSSG.Name = "TSG_CopyToSSG";
+            TSG_CopyToSSG.Size = new Size(386, 30);
+            TSG_CopyToSSG.TabIndex = 110;
+            TSG_CopyToSSG.Text = "CopyToSource";
+            TSG_CopyToSSG.UseVisualStyleBackColor = true;
+            // 
             // TSG_RawConnectionString
             // 
             TSG_RawConnectionString.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            TSG_RawConnectionString.Location = new Point(108, 52);
+            TSG_RawConnectionString.Location = new Point(108, 51);
             TSG_RawConnectionString.Margin = new Padding(3, 4, 3, 4);
             TSG_RawConnectionString.Multiline = true;
             TSG_RawConnectionString.Name = "TSG_RawConnectionString";
             TSG_RawConnectionString.ScrollBars = ScrollBars.Both;
-            TSG_RawConnectionString.Size = new Size(386, 143);
+            TSG_RawConnectionString.Size = new Size(386, 145);
             TSG_RawConnectionString.TabIndex = 10;
             // 
             // TSG_UserManualConnectionString
@@ -427,13 +448,12 @@
             // TSG_ConnectTest
             // 
             TSG_ConnectTest.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            TSG_ConnectTest.Location = new Point(108, 214);
+            TSG_ConnectTest.Location = new Point(108, 204);
             TSG_ConnectTest.Margin = new Padding(3, 4, 3, 4);
             TSG_ConnectTest.Name = "TSG_ConnectTest";
             TSG_ConnectTest.Size = new Size(386, 50);
             TSG_ConnectTest.TabIndex = 109;
             TSG_ConnectTest.Text = "ConnTest";
-            TSG_ConnectTest.TextImageRelation = TextImageRelation.ImageBeforeText;
             TSG_ConnectTest.UseVisualStyleBackColor = true;
             TSG_ConnectTest.Click += TSG_ConnectTest_Click;
             // 
@@ -540,10 +560,9 @@
             SwapSourceAndTargetServer.Location = new Point(542, 99);
             SwapSourceAndTargetServer.Margin = new Padding(3, 4, 3, 4);
             SwapSourceAndTargetServer.Name = "SwapSourceAndTargetServer";
-            SwapSourceAndTargetServer.Size = new Size(100, 272);
+            SwapSourceAndTargetServer.Size = new Size(100, 304);
             SwapSourceAndTargetServer.TabIndex = 8;
             SwapSourceAndTargetServer.Text = "Swap";
-            SwapSourceAndTargetServer.TextImageRelation = TextImageRelation.ImageBeforeText;
             SwapSourceAndTargetServer.UseVisualStyleBackColor = true;
             SwapSourceAndTargetServer.Click += SwapSourceAndTargetServer_Click;
             // 
@@ -556,7 +575,6 @@
             ExecuteCompare.Size = new Size(1160, 83);
             ExecuteCompare.TabIndex = 110;
             ExecuteCompare.Text = "Start";
-            ExecuteCompare.TextImageRelation = TextImageRelation.ImageBeforeText;
             ExecuteCompare.UseVisualStyleBackColor = true;
             ExecuteCompare.Click += ExecuteCompare_Click;
             // 
@@ -673,6 +691,8 @@
         private Button ViewExecuteCompareCommand;
         private ToolStripButton MTSB_IsUIKoreanLanguage;
         private ToolStripSeparator MTSB_CutBar3;
+        private Button SSG_CopyToTSG;
+        private Button TSG_CopyToSSG;
     }
 }
 

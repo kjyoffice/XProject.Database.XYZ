@@ -848,6 +848,7 @@ namespace XProject.SQLServer.SchemaCompare.UI
                 this.SSG_UserManualConnectionString.Text = "직접 입력";
                 this.SSG_TrustedConnection.Text = "윈도우 인증";
                 this.SSG_ConnectTest.Text = "연결 테스트";
+                this.SSG_CopyToTSG.Text = "타겟서버로 복사";
 
                 this.TargetServerGroup.Text = "타겟서버";
                 this.TSG_DataSourceTitle.Text = "서버";
@@ -858,6 +859,7 @@ namespace XProject.SQLServer.SchemaCompare.UI
                 this.TSG_UserManualConnectionString.Text = "직접 입력";
                 this.TSG_TrustedConnection.Text = "윈도우 인증";
                 this.TSG_ConnectTest.Text = "연결 테스트";
+                this.TSG_CopyToSSG.Text = "소스서버로 복사";
             }
             else
             {
@@ -886,6 +888,7 @@ namespace XProject.SQLServer.SchemaCompare.UI
                 this.SSG_UserManualConnectionString.Text = "Manual";
                 this.SSG_TrustedConnection.Text = "Trusted";
                 this.SSG_ConnectTest.Text = "Connect Test";
+                this.SSG_CopyToTSG.Text = "Copy To TargetServer";
 
                 this.TargetServerGroup.Text = "TargetServer";
                 this.TSG_DataSourceTitle.Text = "Server";
@@ -896,6 +899,7 @@ namespace XProject.SQLServer.SchemaCompare.UI
                 this.TSG_UserManualConnectionString.Text = "Manual";
                 this.TSG_TrustedConnection.Text = "Trusted";
                 this.TSG_ConnectTest.Text = "Connect Test";
+                this.TSG_CopyToSSG.Text = "Copy To SourceServer";
             }
         }
 
