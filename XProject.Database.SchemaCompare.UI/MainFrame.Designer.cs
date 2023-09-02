@@ -80,16 +80,20 @@
             this.MTSB_SaveWorkSourceSaveDialog = new System.Windows.Forms.SaveFileDialog();
             this.MTSB_OpenWorkSourceFileOpenDialog = new System.Windows.Forms.OpenFileDialog();
             this.ViewExecuteCompareCommand = new System.Windows.Forms.Button();
+            this.DatabaseListGroup = new System.Windows.Forms.GroupBox();
+            this.DLG_MySQL = new System.Windows.Forms.RadioButton();
+            this.DLG_SQLServer = new System.Windows.Forms.RadioButton();
             this.ReportDirectoryGroup.SuspendLayout();
             this.MainToolStripBar.SuspendLayout();
             this.SourceServerGroup.SuspendLayout();
             this.TargetServerGroup.SuspendLayout();
+            this.DatabaseListGroup.SuspendLayout();
             this.SuspendLayout();
             // 
             // SSG_UserIDTitle
             // 
             this.SSG_UserIDTitle.AutoSize = true;
-            this.SSG_UserIDTitle.Location = new System.Drawing.Point(6, 90);
+            this.SSG_UserIDTitle.Location = new System.Drawing.Point(6, 100);
             this.SSG_UserIDTitle.Name = "SSG_UserIDTitle";
             this.SSG_UserIDTitle.Size = new System.Drawing.Size(16, 12);
             this.SSG_UserIDTitle.TabIndex = 1;
@@ -263,9 +267,9 @@
             this.SourceServerGroup.Controls.Add(this.SSG_UserID);
             this.SourceServerGroup.Controls.Add(this.SSG_DataSource);
             this.SourceServerGroup.Controls.Add(this.SSG_RawConnectionStringTitle);
-            this.SourceServerGroup.Location = new System.Drawing.Point(12, 79);
+            this.SourceServerGroup.Location = new System.Drawing.Point(12, 133);
             this.SourceServerGroup.Name = "SourceServerGroup";
-            this.SourceServerGroup.Size = new System.Drawing.Size(500, 243);
+            this.SourceServerGroup.Size = new System.Drawing.Size(500, 288);
             this.SourceServerGroup.TabIndex = 6;
             this.SourceServerGroup.TabStop = false;
             this.SourceServerGroup.Text = "SourceServer";
@@ -279,17 +283,17 @@
             this.SSG_RawConnectionString.Multiline = true;
             this.SSG_RawConnectionString.Name = "SSG_RawConnectionString";
             this.SSG_RawConnectionString.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.SSG_RawConnectionString.Size = new System.Drawing.Size(386, 117);
+            this.SSG_RawConnectionString.Size = new System.Drawing.Size(386, 138);
             this.SSG_RawConnectionString.TabIndex = 10;
             // 
             // SSG_CopyToTSG
             // 
             this.SSG_CopyToTSG.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.SSG_CopyToTSG.Location = new System.Drawing.Point(108, 209);
+            this.SSG_CopyToTSG.Location = new System.Drawing.Point(108, 253);
             this.SSG_CopyToTSG.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.SSG_CopyToTSG.Name = "SSG_CopyToTSG";
-            this.SSG_CopyToTSG.Size = new System.Drawing.Size(386, 24);
+            this.SSG_CopyToTSG.Size = new System.Drawing.Size(386, 30);
             this.SSG_CopyToTSG.TabIndex = 105;
             this.SSG_CopyToTSG.Text = "CopyToTarget";
             this.SSG_CopyToTSG.UseVisualStyleBackColor = true;
@@ -309,7 +313,7 @@
             // SSG_InitialCatalogTitle
             // 
             this.SSG_InitialCatalogTitle.AutoSize = true;
-            this.SSG_InitialCatalogTitle.Location = new System.Drawing.Point(6, 139);
+            this.SSG_InitialCatalogTitle.Location = new System.Drawing.Point(6, 160);
             this.SSG_InitialCatalogTitle.Name = "SSG_InitialCatalogTitle";
             this.SSG_InitialCatalogTitle.Size = new System.Drawing.Size(55, 12);
             this.SSG_InitialCatalogTitle.TabIndex = 10;
@@ -319,9 +323,9 @@
             // 
             this.SSG_ConnectTest.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.SSG_ConnectTest.Location = new System.Drawing.Point(108, 163);
+            this.SSG_ConnectTest.Location = new System.Drawing.Point(108, 185);
             this.SSG_ConnectTest.Name = "SSG_ConnectTest";
-            this.SSG_ConnectTest.Size = new System.Drawing.Size(386, 40);
+            this.SSG_ConnectTest.Size = new System.Drawing.Size(386, 63);
             this.SSG_ConnectTest.TabIndex = 104;
             this.SSG_ConnectTest.Text = "ConnTest";
             this.SSG_ConnectTest.UseVisualStyleBackColor = true;
@@ -330,7 +334,7 @@
             // SSG_PasswordTitle
             // 
             this.SSG_PasswordTitle.AutoSize = true;
-            this.SSG_PasswordTitle.Location = new System.Drawing.Point(6, 114);
+            this.SSG_PasswordTitle.Location = new System.Drawing.Point(6, 130);
             this.SSG_PasswordTitle.Name = "SSG_PasswordTitle";
             this.SSG_PasswordTitle.Size = new System.Drawing.Size(23, 12);
             this.SSG_PasswordTitle.TabIndex = 1;
@@ -339,7 +343,7 @@
             // SSG_TrustedConnection
             // 
             this.SSG_TrustedConnection.AutoSize = true;
-            this.SSG_TrustedConnection.Location = new System.Drawing.Point(108, 66);
+            this.SSG_TrustedConnection.Location = new System.Drawing.Point(108, 71);
             this.SSG_TrustedConnection.Name = "SSG_TrustedConnection";
             this.SSG_TrustedConnection.Size = new System.Drawing.Size(78, 16);
             this.SSG_TrustedConnection.TabIndex = 3;
@@ -351,7 +355,7 @@
             // 
             this.SSG_Password.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.SSG_Password.Location = new System.Drawing.Point(108, 112);
+            this.SSG_Password.Location = new System.Drawing.Point(108, 127);
             this.SSG_Password.Name = "SSG_Password";
             this.SSG_Password.Size = new System.Drawing.Size(386, 21);
             this.SSG_Password.TabIndex = 102;
@@ -361,7 +365,7 @@
             // 
             this.SSG_InitialCatalog.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.SSG_InitialCatalog.Location = new System.Drawing.Point(108, 137);
+            this.SSG_InitialCatalog.Location = new System.Drawing.Point(108, 157);
             this.SSG_InitialCatalog.Name = "SSG_InitialCatalog";
             this.SSG_InitialCatalog.Size = new System.Drawing.Size(386, 21);
             this.SSG_InitialCatalog.TabIndex = 103;
@@ -370,7 +374,7 @@
             // 
             this.SSG_UserID.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.SSG_UserID.Location = new System.Drawing.Point(108, 87);
+            this.SSG_UserID.Location = new System.Drawing.Point(108, 97);
             this.SSG_UserID.Name = "SSG_UserID";
             this.SSG_UserID.Size = new System.Drawing.Size(386, 21);
             this.SSG_UserID.TabIndex = 101;
@@ -402,9 +406,9 @@
             this.TargetServerGroup.Controls.Add(this.TSG_UserID);
             this.TargetServerGroup.Controls.Add(this.TSG_DataSource);
             this.TargetServerGroup.Controls.Add(this.TSG_RawConnectionStringTitle);
-            this.TargetServerGroup.Location = new System.Drawing.Point(672, 79);
+            this.TargetServerGroup.Location = new System.Drawing.Point(672, 133);
             this.TargetServerGroup.Name = "TargetServerGroup";
-            this.TargetServerGroup.Size = new System.Drawing.Size(500, 243);
+            this.TargetServerGroup.Size = new System.Drawing.Size(500, 288);
             this.TargetServerGroup.TabIndex = 6;
             this.TargetServerGroup.TabStop = false;
             this.TargetServerGroup.Text = "TargetServer";
@@ -418,17 +422,17 @@
             this.TSG_RawConnectionString.Multiline = true;
             this.TSG_RawConnectionString.Name = "TSG_RawConnectionString";
             this.TSG_RawConnectionString.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.TSG_RawConnectionString.Size = new System.Drawing.Size(386, 117);
+            this.TSG_RawConnectionString.Size = new System.Drawing.Size(386, 138);
             this.TSG_RawConnectionString.TabIndex = 10;
             // 
             // TSG_CopyToSSG
             // 
             this.TSG_CopyToSSG.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.TSG_CopyToSSG.Location = new System.Drawing.Point(108, 209);
+            this.TSG_CopyToSSG.Location = new System.Drawing.Point(108, 253);
             this.TSG_CopyToSSG.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.TSG_CopyToSSG.Name = "TSG_CopyToSSG";
-            this.TSG_CopyToSSG.Size = new System.Drawing.Size(386, 24);
+            this.TSG_CopyToSSG.Size = new System.Drawing.Size(386, 30);
             this.TSG_CopyToSSG.TabIndex = 110;
             this.TSG_CopyToSSG.Text = "CopyToSource";
             this.TSG_CopyToSSG.UseVisualStyleBackColor = true;
@@ -448,7 +452,7 @@
             // TSG_InitialCatalogTitle
             // 
             this.TSG_InitialCatalogTitle.AutoSize = true;
-            this.TSG_InitialCatalogTitle.Location = new System.Drawing.Point(6, 139);
+            this.TSG_InitialCatalogTitle.Location = new System.Drawing.Point(6, 160);
             this.TSG_InitialCatalogTitle.Name = "TSG_InitialCatalogTitle";
             this.TSG_InitialCatalogTitle.Size = new System.Drawing.Size(55, 12);
             this.TSG_InitialCatalogTitle.TabIndex = 10;
@@ -458,9 +462,9 @@
             // 
             this.TSG_ConnectTest.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.TSG_ConnectTest.Location = new System.Drawing.Point(108, 163);
+            this.TSG_ConnectTest.Location = new System.Drawing.Point(108, 185);
             this.TSG_ConnectTest.Name = "TSG_ConnectTest";
-            this.TSG_ConnectTest.Size = new System.Drawing.Size(386, 40);
+            this.TSG_ConnectTest.Size = new System.Drawing.Size(386, 63);
             this.TSG_ConnectTest.TabIndex = 109;
             this.TSG_ConnectTest.Text = "ConnTest";
             this.TSG_ConnectTest.UseVisualStyleBackColor = true;
@@ -469,7 +473,7 @@
             // TSG_PasswordTitle
             // 
             this.TSG_PasswordTitle.AutoSize = true;
-            this.TSG_PasswordTitle.Location = new System.Drawing.Point(6, 114);
+            this.TSG_PasswordTitle.Location = new System.Drawing.Point(6, 130);
             this.TSG_PasswordTitle.Name = "TSG_PasswordTitle";
             this.TSG_PasswordTitle.Size = new System.Drawing.Size(23, 12);
             this.TSG_PasswordTitle.TabIndex = 1;
@@ -478,7 +482,7 @@
             // TSG_UserIDTitle
             // 
             this.TSG_UserIDTitle.AutoSize = true;
-            this.TSG_UserIDTitle.Location = new System.Drawing.Point(6, 90);
+            this.TSG_UserIDTitle.Location = new System.Drawing.Point(6, 100);
             this.TSG_UserIDTitle.Name = "TSG_UserIDTitle";
             this.TSG_UserIDTitle.Size = new System.Drawing.Size(16, 12);
             this.TSG_UserIDTitle.TabIndex = 1;
@@ -496,7 +500,7 @@
             // TSG_TrustedConnection
             // 
             this.TSG_TrustedConnection.AutoSize = true;
-            this.TSG_TrustedConnection.Location = new System.Drawing.Point(108, 66);
+            this.TSG_TrustedConnection.Location = new System.Drawing.Point(108, 71);
             this.TSG_TrustedConnection.Name = "TSG_TrustedConnection";
             this.TSG_TrustedConnection.Size = new System.Drawing.Size(78, 16);
             this.TSG_TrustedConnection.TabIndex = 3;
@@ -508,7 +512,7 @@
             // 
             this.TSG_Password.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.TSG_Password.Location = new System.Drawing.Point(108, 112);
+            this.TSG_Password.Location = new System.Drawing.Point(108, 127);
             this.TSG_Password.Name = "TSG_Password";
             this.TSG_Password.Size = new System.Drawing.Size(386, 21);
             this.TSG_Password.TabIndex = 107;
@@ -518,7 +522,7 @@
             // 
             this.TSG_InitialCatalog.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.TSG_InitialCatalog.Location = new System.Drawing.Point(108, 137);
+            this.TSG_InitialCatalog.Location = new System.Drawing.Point(108, 157);
             this.TSG_InitialCatalog.Name = "TSG_InitialCatalog";
             this.TSG_InitialCatalog.Size = new System.Drawing.Size(386, 21);
             this.TSG_InitialCatalog.TabIndex = 108;
@@ -527,7 +531,7 @@
             // 
             this.TSG_UserID.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.TSG_UserID.Location = new System.Drawing.Point(108, 87);
+            this.TSG_UserID.Location = new System.Drawing.Point(108, 97);
             this.TSG_UserID.Name = "TSG_UserID";
             this.TSG_UserID.Size = new System.Drawing.Size(386, 21);
             this.TSG_UserID.TabIndex = 106;
@@ -555,7 +559,7 @@
             this.JustNotify1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.JustNotify1.AutoSize = true;
             this.JustNotify1.ForeColor = System.Drawing.Color.Blue;
-            this.JustNotify1.Location = new System.Drawing.Point(12, 326);
+            this.JustNotify1.Location = new System.Drawing.Point(12, 438);
             this.JustNotify1.Margin = new System.Windows.Forms.Padding(0);
             this.JustNotify1.Name = "JustNotify1";
             this.JustNotify1.Size = new System.Drawing.Size(66, 12);
@@ -565,9 +569,9 @@
             // SwapSourceAndTargetServer
             // 
             this.SwapSourceAndTargetServer.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)));
-            this.SwapSourceAndTargetServer.Location = new System.Drawing.Point(542, 79);
+            this.SwapSourceAndTargetServer.Location = new System.Drawing.Point(542, 133);
             this.SwapSourceAndTargetServer.Name = "SwapSourceAndTargetServer";
-            this.SwapSourceAndTargetServer.Size = new System.Drawing.Size(100, 243);
+            this.SwapSourceAndTargetServer.Size = new System.Drawing.Size(100, 288);
             this.SwapSourceAndTargetServer.TabIndex = 8;
             this.SwapSourceAndTargetServer.Text = "Swap";
             this.SwapSourceAndTargetServer.UseVisualStyleBackColor = true;
@@ -577,7 +581,7 @@
             // 
             this.ExecuteCompare.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.ExecuteCompare.Location = new System.Drawing.Point(12, 341);
+            this.ExecuteCompare.Location = new System.Drawing.Point(12, 453);
             this.ExecuteCompare.Name = "ExecuteCompare";
             this.ExecuteCompare.Size = new System.Drawing.Size(1160, 66);
             this.ExecuteCompare.TabIndex = 110;
@@ -601,7 +605,7 @@
             // 
             this.ViewExecuteCompareCommand.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.ViewExecuteCompareCommand.Location = new System.Drawing.Point(12, 413);
+            this.ViewExecuteCompareCommand.Location = new System.Drawing.Point(12, 525);
             this.ViewExecuteCompareCommand.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.ViewExecuteCompareCommand.Name = "ViewExecuteCompareCommand";
             this.ViewExecuteCompareCommand.Size = new System.Drawing.Size(1160, 26);
@@ -611,12 +615,50 @@
             this.ViewExecuteCompareCommand.UseVisualStyleBackColor = true;
             this.ViewExecuteCompareCommand.Click += new System.EventHandler(this.ExecuteCompare_Click);
             // 
+            // DatabaseListGroup
+            // 
+            this.DatabaseListGroup.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.DatabaseListGroup.Controls.Add(this.DLG_MySQL);
+            this.DatabaseListGroup.Controls.Add(this.DLG_SQLServer);
+            this.DatabaseListGroup.Location = new System.Drawing.Point(12, 79);
+            this.DatabaseListGroup.Name = "DatabaseListGroup";
+            this.DatabaseListGroup.Size = new System.Drawing.Size(1160, 48);
+            this.DatabaseListGroup.TabIndex = 113;
+            this.DatabaseListGroup.TabStop = false;
+            this.DatabaseListGroup.Text = "DatabaseList";
+            // 
+            // DLG_MySQL
+            // 
+            this.DLG_MySQL.AutoSize = true;
+            this.DLG_MySQL.Location = new System.Drawing.Point(97, 20);
+            this.DLG_MySQL.Name = "DLG_MySQL";
+            this.DLG_MySQL.Size = new System.Drawing.Size(65, 16);
+            this.DLG_MySQL.TabIndex = 1;
+            this.DLG_MySQL.TabStop = true;
+            this.DLG_MySQL.Text = "MySQL";
+            this.DLG_MySQL.UseVisualStyleBackColor = true;
+            this.DLG_MySQL.Click += new System.EventHandler(this.DLG_MySQL_Click);
+            // 
+            // DLG_SQLServer
+            // 
+            this.DLG_SQLServer.AutoSize = true;
+            this.DLG_SQLServer.Location = new System.Drawing.Point(8, 20);
+            this.DLG_SQLServer.Name = "DLG_SQLServer";
+            this.DLG_SQLServer.Size = new System.Drawing.Size(83, 16);
+            this.DLG_SQLServer.TabIndex = 0;
+            this.DLG_SQLServer.TabStop = true;
+            this.DLG_SQLServer.Text = "SQLServer";
+            this.DLG_SQLServer.UseVisualStyleBackColor = true;
+            this.DLG_SQLServer.Click += new System.EventHandler(this.DLG_SQLServer_Click);
+            // 
             // MainFrame
             // 
             this.AllowDrop = true;
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1184, 449);
+            this.ClientSize = new System.Drawing.Size(1184, 561);
+            this.Controls.Add(this.DatabaseListGroup);
             this.Controls.Add(this.ViewExecuteCompareCommand);
             this.Controls.Add(this.ExecuteCompare);
             this.Controls.Add(this.SwapSourceAndTargetServer);
@@ -627,7 +669,7 @@
             this.Controls.Add(this.ReportDirectoryGroup);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.KeyPreview = true;
-            this.MinimumSize = new System.Drawing.Size(1200, 488);
+            this.MinimumSize = new System.Drawing.Size(1200, 600);
             this.Name = "MainFrame";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "MainTitle";
@@ -645,6 +687,8 @@
             this.SourceServerGroup.PerformLayout();
             this.TargetServerGroup.ResumeLayout(false);
             this.TargetServerGroup.PerformLayout();
+            this.DatabaseListGroup.ResumeLayout(false);
+            this.DatabaseListGroup.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -702,6 +746,9 @@
         private System.Windows.Forms.ToolStripSeparator MTSB_CutBar3;
         private System.Windows.Forms.Button SSG_CopyToTSG;
         private System.Windows.Forms.Button TSG_CopyToSSG;
+        private System.Windows.Forms.GroupBox DatabaseListGroup;
+        private System.Windows.Forms.RadioButton DLG_SQLServer;
+        private System.Windows.Forms.RadioButton DLG_MySQL;
     }
 }
 

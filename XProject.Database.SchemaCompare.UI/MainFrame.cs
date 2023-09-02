@@ -295,6 +295,23 @@ namespace XProject.Database.SchemaCompare.UI
             }
         }
 
+        private void ChangeTargetDatabase(bool isSQLServer)
+        {
+            this.SSG_TrustedConnection.Checked = false;
+            this.SSG_TrustedConnection.Enabled = isSQLServer;
+            this.SSG_UserID.Text = string.Empty;
+            this.SSG_UserID.Enabled = true;
+            this.SSG_Password.Text = string.Empty;
+            this.SSG_Password.Enabled = true;
+
+            this.TSG_TrustedConnection.Checked = false;
+            this.TSG_TrustedConnection.Enabled = isSQLServer;
+            this.TSG_UserID.Text = string.Empty;
+            this.TSG_UserID.Enabled = true;
+            this.TSG_Password.Text = string.Empty;
+            this.TSG_Password.Enabled = true;
+        }
+
         // ------------------------------------------------------------------------------------------------
 
         public MainFrame(string defaultWorkSourceDataFilePath)
@@ -380,6 +397,10 @@ namespace XProject.Database.SchemaCompare.UI
                 var isDefaultUserManualConnectionStringMode = XAppConfig.AppSettings.IsDefaultUserManualConnectionStringMode;
 
                 this.ChangeWorkSourceDataFilePath(string.Empty);
+
+                this.DLG_MySQL.Checked = false;
+                this.DLG_SQLServer.Checked = true;
+                this.ChangeTargetDatabase(true);
 
                 // RGD
                 this.RDG_ReportDirectoryPath.Text = reportPath;
@@ -909,6 +930,7 @@ namespace XProject.Database.SchemaCompare.UI
                 this.MTSB_CloseApplication.Text = "종료";
                 this.MTSB_AboutApplication.Text = "정보";
                 this.ReportDirectoryGroup.Text = "리포트 디렉토리";
+                this.DatabaseListGroup.Text = "데이터베이스";
                 this.RDG_OpenReportDirectory.Text = "열기";
                 this.SwapSourceAndTargetServer.Text = "바꾸기";
                 this.ExecuteCompare.Text = "비교 시작";
@@ -949,6 +971,7 @@ namespace XProject.Database.SchemaCompare.UI
                 this.MTSB_CloseApplication.Text = "Exit";
                 this.MTSB_AboutApplication.Text = "About";
                 this.ReportDirectoryGroup.Text = "Report directory";
+                this.DatabaseListGroup.Text = "Database";
                 this.RDG_OpenReportDirectory.Text = "Open";
                 this.SwapSourceAndTargetServer.Text = "Swap";
                 this.ExecuteCompare.Text = "Start Compare";
@@ -998,6 +1021,16 @@ namespace XProject.Database.SchemaCompare.UI
             {
                 this.MTSB_CloseApplication_Click(null, null);
             }
+        }
+
+        private void DLG_SQLServer_Click(object sender, EventArgs e)
+        {
+            this.ChangeTargetDatabase(true);
+        }
+
+        private void DLG_MySQL_Click(object sender, EventArgs e)
+        {
+            this.ChangeTargetDatabase(false);
         }
     }
 }
