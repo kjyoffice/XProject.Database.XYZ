@@ -84,7 +84,7 @@ namespace XProject.Database.SchemaCompare.UI
 
                         this.Cursor = Cursors.WaitCursor;
 
-                        if (selDBType == XValue.ProcessValue.DatabaseType_SQLServer)
+                        if (XValue.ProcessValue.DatabaseType_SQLServer.IsMatch(selDBType) == true)
                         {
                             using (var sc = new SqlConnection(connectionString))
                             {
@@ -109,7 +109,7 @@ namespace XProject.Database.SchemaCompare.UI
                                 }
                             }
                         }
-                        else if (selDBType == XValue.ProcessValue.DatabaseType_MySQL)
+                        else if (XValue.ProcessValue.DatabaseType_MySQL.IsMatch(selDBType) == true)
                         {
                             using (var sc = new MySql.Data.MySqlClient.MySqlConnection(connectionString))
                             {
@@ -294,7 +294,7 @@ namespace XProject.Database.SchemaCompare.UI
             }
             else
             {
-                if (selDBType == XValue.ProcessValue.DatabaseType_SQLServer)
+                if (XValue.ProcessValue.DatabaseType_SQLServer.IsMatch(selDBType) == true)
                 {
                     var scsb = new SqlConnectionStringBuilder();
                     scsb.DataSource = dataSource.Text.Trim();
@@ -312,7 +312,7 @@ namespace XProject.Database.SchemaCompare.UI
 
                     result = scsb.ConnectionString;
                 }
-                else if (selDBType == XValue.ProcessValue.DatabaseType_MySQL)
+                else if (XValue.ProcessValue.DatabaseType_MySQL.IsMatch(selDBType) == true)
                 {
                     var scsb = new MySql.Data.MySqlClient.MySqlConnectionStringBuilder();
                     scsb.Server = dataSource.Text.Trim();
@@ -364,7 +364,7 @@ namespace XProject.Database.SchemaCompare.UI
             }
         }
 
-        private void ChangeTargetDatabase(bool isSQLServer)
+        private void ChangeDatabaseType(bool isSQLServer)
         {
             this.SSG_TrustedConnection.Checked = false;
             this.SSG_TrustedConnection.Enabled = isSQLServer;
@@ -379,14 +379,14 @@ namespace XProject.Database.SchemaCompare.UI
 
         private string GetSelectedDatabaseType()
         {
-            var dbTypeList = (new RadioButton[] { this.DLG_SQLServer, this.DLG_MySQL }).Where(x => (x.Checked == true)).ToList();
+            var dbTypeList = (new RadioButton[] { this.DLG_SQLServer, this.DLG_MySQL, this.DLG_PostgreSQL }).Where(x => (x.Checked == true)).ToList();
             var result = string.Empty;
 
             if (dbTypeList.Count == 1)
             {
-                var selDBType = (dbTypeList.First().Tag ?? string.Empty).ToString();
+                var selDBType = (dbTypeList.First().Tag ?? string.Empty).ToString().ToUpper();
 
-                if (XValue.ProcessValue.DatabaseTypeList.Where(x => (x == selDBType)).Count() > 0)
+                if (XValue.ProcessValue.DatabaseTypeList.Where(x => (x.IsMatch(selDBType) == true)).Count() > 0)
                 {
                     result = selDBType;
                 }
@@ -404,11 +404,17 @@ namespace XProject.Database.SchemaCompare.UI
             this.DefaultWorkSourceDataFilePath = defaultWorkSourceDataFilePath;
 
             this.InitializeComponent();
-            this.DLG_SQLServer.Tag = XValue.ProcessValue.DatabaseType_SQLServer;
-            this.DLG_MySQL.Tag = XValue.ProcessValue.DatabaseType_MySQL;
+            this.DLG_SQLServer.Tag = XValue.ProcessValue.DatabaseType_SQLServer.TypeID;
+            this.DLG_MySQL.Tag = XValue.ProcessValue.DatabaseType_MySQL.TypeID;
+            this.DLG_PostgreSQL.Tag = XValue.ProcessValue.DatabaseType_PostgreSQL.TypeID;
             this.MTSB_IsUIKoreanLanguage.Checked = !XAppConfig.AppSettings.IsStartAppKoreaHanGulLanguage;
             this.MTSB_IsUIKoreanLanguage_Click(null, null);
             this.MTSB_NewWorkSource_Click(null, null);
+
+            // TODO : 일단 NotSupport
+            //this.DLG_MySQL.Visible = false; 
+            //this.DLG_PostgreSQL.Visible = false;
+            // 일단 NotSupport
         }
 
         private void MainFrame_Load(object sender, EventArgs e)
@@ -483,9 +489,10 @@ namespace XProject.Database.SchemaCompare.UI
 
                 this.ChangeWorkSourceDataFilePath(string.Empty);
 
+                this.DLG_PostgreSQL.Checked = false;
                 this.DLG_MySQL.Checked = false;
                 this.DLG_SQLServer.Checked = true;
-                this.ChangeTargetDatabase(true);
+                this.ChangeDatabaseType(true);
 
                 // RGD
                 this.RDG_ReportDirectoryPath.Text = reportPath;
@@ -568,6 +575,7 @@ namespace XProject.Database.SchemaCompare.UI
                 // Create save content
                 var wsd = new XModel.WorkSourceData();
                 wsd.ReportDirectoryPath = this.RDG_ReportDirectoryPath.Text.Trim();
+                wsd.DatabaseType = this.GetSelectedDatabaseType();
                 wsd.IsUIKoreanLanguage = this.MTSB_IsUIKoreanLanguage.Checked;
                 // SSG
                 wsd.SourceServer = new XModel.WorkSourceServer();
@@ -697,9 +705,32 @@ namespace XProject.Database.SchemaCompare.UI
                             // 모델에 데이터 넣기
                             // Put data in the model
                             var wsd = Newtonsoft.Json.JsonConvert.DeserializeObject<XModel.WorkSourceData>(json);
+                            var databaseType = wsd.DatabaseType.ToUpper();
 
                             this.RDG_ReportDirectoryPath.Text = wsd.ReportDirectoryPath;
+
+                            // Language
                             isUIKorLang.Checked = wsd.IsUIKoreanLanguage;
+
+                            // Database Type List
+                            this.DLG_SQLServer.Checked = false;
+                            this.DLG_MySQL.Checked = false;
+
+                            if (XValue.ProcessValue.DatabaseType_SQLServer.IsMatch(databaseType) == true)
+                            {
+                                this.DLG_SQLServer.Checked = true;
+                                this.ChangeDatabaseType(true);
+                            }
+                            else if (XValue.ProcessValue.DatabaseType_MySQL.IsMatch(databaseType) == true)
+                            {
+                                this.DLG_MySQL.Checked = true;
+                                this.ChangeDatabaseType(false);
+                            }
+                            else if (XValue.ProcessValue.DatabaseType_PostgreSQL.IsMatch(databaseType) == true)
+                            {
+                                this.DLG_PostgreSQL.Checked = true;
+                                this.ChangeDatabaseType(false);
+                            }
 
                             // SSG
                             this.SSG_DataSource.Text = wsd.SourceServer.DataSource;
@@ -736,7 +767,7 @@ namespace XProject.Database.SchemaCompare.UI
                     }
                     else
                     {
-                        var message = ((isUIKorLang.Checked == true) ? "지원하지 않는 파일형식 입니다." : "Not supported file format.");
+                        var message = ((isUIKorLang.Checked == true) ? "지원하지 않는 파일형식 입니다." : "Not support file format.");
 
                         MessageBox.Show(message, this.AppTitle, MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
@@ -1116,14 +1147,12 @@ namespace XProject.Database.SchemaCompare.UI
             }
         }
 
-        private void DLG_SQLServer_Click(object sender, EventArgs e)
+        private void DLG_DatabaseTypeX_Click(object sender, EventArgs e)
         {
-            this.ChangeTargetDatabase(true);
-        }
+            var dbType = ((sender as RadioButton)?.Tag ?? string.Empty).ToString().ToUpper();
+            var isSQLServer = XValue.ProcessValue.DatabaseType_SQLServer.IsMatch(dbType);
 
-        private void DLG_MySQL_Click(object sender, EventArgs e)
-        {
-            this.ChangeTargetDatabase(false);
+            this.ChangeDatabaseType(isSQLServer);
         }
     }
 }

@@ -81,6 +81,7 @@
             this.MTSB_OpenWorkSourceFileOpenDialog = new System.Windows.Forms.OpenFileDialog();
             this.ViewExecuteCompareCommand = new System.Windows.Forms.Button();
             this.DatabaseListGroup = new System.Windows.Forms.GroupBox();
+            this.DLG_PostgreSQL = new System.Windows.Forms.RadioButton();
             this.DLG_MySQL = new System.Windows.Forms.RadioButton();
             this.DLG_SQLServer = new System.Windows.Forms.RadioButton();
             this.ReportDirectoryGroup.SuspendLayout();
@@ -619,6 +620,7 @@
             // 
             this.DatabaseListGroup.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.DatabaseListGroup.Controls.Add(this.DLG_PostgreSQL);
             this.DatabaseListGroup.Controls.Add(this.DLG_MySQL);
             this.DatabaseListGroup.Controls.Add(this.DLG_SQLServer);
             this.DatabaseListGroup.Location = new System.Drawing.Point(12, 79);
@@ -627,6 +629,18 @@
             this.DatabaseListGroup.TabIndex = 113;
             this.DatabaseListGroup.TabStop = false;
             this.DatabaseListGroup.Text = "DatabaseList";
+            // 
+            // DLG_PostgreSQL
+            // 
+            this.DLG_PostgreSQL.AutoSize = true;
+            this.DLG_PostgreSQL.Location = new System.Drawing.Point(168, 20);
+            this.DLG_PostgreSQL.Name = "DLG_PostgreSQL";
+            this.DLG_PostgreSQL.Size = new System.Drawing.Size(90, 16);
+            this.DLG_PostgreSQL.TabIndex = 2;
+            this.DLG_PostgreSQL.TabStop = true;
+            this.DLG_PostgreSQL.Text = "PostgreSQL";
+            this.DLG_PostgreSQL.UseVisualStyleBackColor = true;
+            this.DLG_PostgreSQL.Click += new System.EventHandler(this.DLG_DatabaseTypeX_Click);
             // 
             // DLG_MySQL
             // 
@@ -638,7 +652,7 @@
             this.DLG_MySQL.TabStop = true;
             this.DLG_MySQL.Text = "MySQL";
             this.DLG_MySQL.UseVisualStyleBackColor = true;
-            this.DLG_MySQL.Click += new System.EventHandler(this.DLG_MySQL_Click);
+            this.DLG_MySQL.Click += new System.EventHandler(this.DLG_DatabaseTypeX_Click);
             // 
             // DLG_SQLServer
             // 
@@ -650,7 +664,7 @@
             this.DLG_SQLServer.TabStop = true;
             this.DLG_SQLServer.Text = "SQLServer";
             this.DLG_SQLServer.UseVisualStyleBackColor = true;
-            this.DLG_SQLServer.Click += new System.EventHandler(this.DLG_SQLServer_Click);
+            this.DLG_SQLServer.Click += new System.EventHandler(this.DLG_DatabaseTypeX_Click);
             // 
             // MainFrame
             // 
@@ -749,6 +763,7 @@
         private System.Windows.Forms.GroupBox DatabaseListGroup;
         private System.Windows.Forms.RadioButton DLG_SQLServer;
         private System.Windows.Forms.RadioButton DLG_MySQL;
+        private System.Windows.Forms.RadioButton DLG_PostgreSQL;
     }
 }
 

@@ -8,30 +8,39 @@ namespace XProject.Database.SchemaCompare.UI.XValue
 {
     public class ProcessValue
     {
-        public static string DatabaseType_SQLServer
+        public static XModel.DatabaseTypeItem DatabaseType_SQLServer
         {
             get
             {
-                return "SQLServer";
+                return new XModel.DatabaseTypeItem("SQLServer");
             }
         }
 
-        public static string DatabaseType_MySQL
+        public static XModel.DatabaseTypeItem DatabaseType_MySQL
         {
             get
             {
-                return "MySQL";
+                return new XModel.DatabaseTypeItem("MySQL");
             }
         }
 
-        public static List<string> DatabaseTypeList
+        public static XModel.DatabaseTypeItem DatabaseType_PostgreSQL
         {
             get
             {
-                return new List<string>()
+                return new XModel.DatabaseTypeItem("PostgreSQL");
+            }
+        }
+
+        public static List<XModel.DatabaseTypeItem> DatabaseTypeList
+        {
+            get
+            {
+                return new List<XModel.DatabaseTypeItem>()
                 {
                     ProcessValue.DatabaseType_SQLServer,
-                    ProcessValue.DatabaseType_MySQL
+                    ProcessValue.DatabaseType_MySQL,
+                    ProcessValue.DatabaseType_PostgreSQL
                 };
             }
         }

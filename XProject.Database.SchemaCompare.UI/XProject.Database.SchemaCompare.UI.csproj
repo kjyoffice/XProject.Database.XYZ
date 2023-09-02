@@ -67,6 +67,7 @@
     <Compile Include="XFrame\AboutApplicationFrame.Designer.cs">
       <DependentUpon>AboutApplicationFrame.cs</DependentUpon>
     </Compile>
+    <Compile Include="XModel\DatabaseTypeItem.cs" />
     <Compile Include="XModel\WorkSourceData.cs" />
     <Compile Include="XModel\WorkSourceServer.cs" />
     <Compile Include="XValue\ProcessValue.cs" />
@@ -104,6 +105,9 @@
     </PackageReference>
     <PackageReference Include="Newtonsoft.Json">
       <Version>13.0.3</Version>
+    </PackageReference>
+    <PackageReference Include="Npgsql">
+      <Version>7.0.4</Version>
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
