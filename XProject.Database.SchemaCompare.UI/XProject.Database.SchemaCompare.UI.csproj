@@ -105,5 +105,11 @@
   <ItemGroup>
     <Content Include="MainFrameIcon.ico" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\XProject.Database.SchemaCompare.SQLServer\XProject.Database.SchemaCompare.SQLServer.csproj">
+      <Project>{bab5785b-5eda-48b5-9df6-4f5ecd6ab612}</Project>
+      <Name>XProject.Database.SchemaCompare.SQLServer</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
