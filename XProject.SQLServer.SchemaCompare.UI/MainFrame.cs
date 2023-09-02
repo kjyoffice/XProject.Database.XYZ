@@ -116,6 +116,45 @@ namespace XProject.SQLServer.SchemaCompare.UI
             }
         }
 
+        private void CopyToConnectionString(
+            CheckBox[] userManualConnectionString,
+            Label[] dataSourceTitle,
+            TextBox[] dataSource, 
+            CheckBox[] trustedConnection,
+            Label[] userIDTitle,
+            TextBox[] userID,
+            Label[] passwordTitle,
+            TextBox[] password,
+            Label[] initialCatalogTitle,
+            TextBox[] initialCatalog,
+            Label[] rawConnectionStringTitle,
+            TextBox[] rawConnectionString
+        )
+        {
+            userManualConnectionString[1].Checked = userManualConnectionString[0].Checked;
+
+            dataSourceTitle[1].Visible = dataSourceTitle[0].Visible;
+            dataSource[1].Text = dataSource[0].Text;
+            
+            trustedConnection[1].Checked = trustedConnection[0].Checked;
+            trustedConnection[1].Visible = trustedConnection[0].Visible;
+
+            userIDTitle[1].Visible = userIDTitle[0].Visible;
+            userID[1].Text = userID[0].Text;
+            userID[1].Enabled = userID[0].Enabled;
+
+            passwordTitle[1].Visible = passwordTitle[0].Visible;
+            password[1].Text = password[0].Text;
+            password[1].Enabled = password[0].Enabled;
+
+            initialCatalogTitle[1].Visible = initialCatalogTitle[0].Visible;
+            initialCatalog[1].Text = initialCatalog[0].Text;
+
+            rawConnectionStringTitle[1].Visible = rawConnectionStringTitle[0].Visible;
+            rawConnectionString[1].Text = rawConnectionString[0].Text;
+            rawConnectionString[1].Visible = rawConnectionString[0].Visible;
+        }
+
         private bool ConnectionValueCheck(TextBox dataSource, TextBox userID, TextBox password, TextBox initialCatalog, TextBox rawConnectionString, CheckBox userManual, CheckBox trust, ToolStripButton isUIKorLang)
         {
             var result = false;
@@ -668,6 +707,24 @@ namespace XProject.SQLServer.SchemaCompare.UI
             this.ConnectTest(this.SSG_DataSource, this.SSG_UserID, this.SSG_Password, this.SSG_InitialCatalog, this.SSG_RawConnectionString, this.SSG_UserManualConnectionString, this.SSG_TrustedConnection, this.MTSB_IsUIKoreanLanguage);
         }
 
+        private void SSG_CopyToTSG_Click(object sender, EventArgs e)
+        {
+            this.CopyToConnectionString(
+                new CheckBox[] { this.SSG_UserManualConnectionString, this.TSG_UserManualConnectionString },
+                new Label[] { this.SSG_DataSourceTitle, this.TSG_DataSourceTitle },
+                new TextBox[] { this.SSG_DataSource, this.TSG_DataSource },
+                new CheckBox[] { this.SSG_TrustedConnection, this.TSG_TrustedConnection },
+                new Label[] { this.SSG_UserIDTitle, this.TSG_UserIDTitle },
+                new TextBox[] { this.SSG_UserID, this.TSG_UserID },
+                new Label[] { this.SSG_PasswordTitle, this.TSG_PasswordTitle },
+                new TextBox[] { this.SSG_Password, this.TSG_Password },
+                new Label[] { this.SSG_InitialCatalogTitle, this.TSG_InitialCatalogTitle },
+                new TextBox[] { this.SSG_InitialCatalog, this.TSG_InitialCatalog },
+                new Label[] { this.SSG_RawConnectionStringTitle, this.TSG_RawConnectionStringTitle },
+                new TextBox[] { this.SSG_RawConnectionString, this.TSG_RawConnectionString }
+            );
+        }
+
         private void TSG_UserManualConnectionString_Click(object sender, EventArgs e)
         {
             this.ChangeUserManualConnectionString_TSG();
@@ -681,6 +738,24 @@ namespace XProject.SQLServer.SchemaCompare.UI
         private void TSG_ConnectTest_Click(object sender, EventArgs e)
         {
             this.ConnectTest(this.TSG_DataSource, this.TSG_UserID, this.TSG_Password, this.TSG_InitialCatalog, this.TSG_RawConnectionString, this.TSG_UserManualConnectionString, this.TSG_TrustedConnection, this.MTSB_IsUIKoreanLanguage);
+        }
+
+        private void TSG_CopyToSSG_Click(object sender, EventArgs e)
+        {
+            this.CopyToConnectionString(
+                new CheckBox[] { this.TSG_UserManualConnectionString, this.SSG_UserManualConnectionString },
+                new Label[] { this.TSG_DataSourceTitle, this.SSG_DataSourceTitle },
+                new TextBox[] { this.TSG_DataSource, this.SSG_DataSource },
+                new CheckBox[] { this.TSG_TrustedConnection, this.SSG_TrustedConnection },
+                new Label[] { this.TSG_UserIDTitle, this.SSG_UserIDTitle },
+                new TextBox[] { this.TSG_UserID, this.SSG_UserID },
+                new Label[] { this.TSG_PasswordTitle, this.SSG_PasswordTitle },
+                new TextBox[] { this.TSG_Password, this.SSG_Password },
+                new Label[] { this.TSG_InitialCatalogTitle, this.SSG_InitialCatalogTitle },
+                new TextBox[] { this.TSG_InitialCatalog, this.SSG_InitialCatalog },
+                new Label[] { this.TSG_RawConnectionStringTitle, this.SSG_RawConnectionStringTitle },
+                new TextBox[] { this.TSG_RawConnectionString, this.SSG_RawConnectionString }
+            );
         }
 
         private void SwapSourceAndTargetServer_Click(object sender, EventArgs e)

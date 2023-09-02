@@ -242,8 +242,8 @@
             // SourceServerGroup
             // 
             SourceServerGroup.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left;
-            SourceServerGroup.Controls.Add(SSG_CopyToTSG);
             SourceServerGroup.Controls.Add(SSG_RawConnectionString);
+            SourceServerGroup.Controls.Add(SSG_CopyToTSG);
             SourceServerGroup.Controls.Add(SSG_UserManualConnectionString);
             SourceServerGroup.Controls.Add(SSG_InitialCatalogTitle);
             SourceServerGroup.Controls.Add(SSG_ConnectTest);
@@ -274,6 +274,7 @@
             SSG_CopyToTSG.TabIndex = 105;
             SSG_CopyToTSG.Text = "CopyToTarget";
             SSG_CopyToTSG.UseVisualStyleBackColor = true;
+            SSG_CopyToTSG.Click += SSG_CopyToTSG_Click;
             // 
             // SSG_RawConnectionString
             // 
@@ -412,6 +413,7 @@
             TSG_CopyToSSG.TabIndex = 110;
             TSG_CopyToSSG.Text = "CopyToSource";
             TSG_CopyToSSG.UseVisualStyleBackColor = true;
+            TSG_CopyToSSG.Click += TSG_CopyToSSG_Click;
             // 
             // TSG_RawConnectionString
             // 
