@@ -488,8 +488,8 @@ namespace XProject.Database.SchemaCompare.UI
             this.MTSB_NewWorkSource_Click(null, null);
 
             // TODO : 일단 NotSupport
-            //this.DLG_MySQL.Visible = false; 
-            //this.DLG_PostgreSQL.Visible = false;
+            this.DLG_MySQL.Visible = false;
+            this.DLG_PostgreSQL.Visible = false;
             // 일단 NotSupport
         }
 
