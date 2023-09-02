@@ -7,6 +7,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XProject.Database.SchemaCom
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XProject.Database.SchemaCompare.SQLServer", "XProject.Database.SchemaCompare.SQLServer\XProject.Database.SchemaCompare.SQLServer.csproj", "{BAB5785B-5EDA-48B5-9DF6-4F5ECD6AB612}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XProject.Database.SchemaCompare.MySQL", "XProject.Database.SchemaCompare.MySQL\XProject.Database.SchemaCompare.MySQL.csproj", "{DC389E63-B2F7-4902-A54D-335C578FDAF2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XProject.Database.SchemaCompare.PostgreSQL", "XProject.Database.SchemaCompare.PostgreSQL\XProject.Database.SchemaCompare.PostgreSQL.csproj", "{3191C46B-1E62-4D17-9910-58F814746B5A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +25,14 @@ Global
 		{BAB5785B-5EDA-48B5-9DF6-4F5ECD6AB612}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BAB5785B-5EDA-48B5-9DF6-4F5ECD6AB612}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BAB5785B-5EDA-48B5-9DF6-4F5ECD6AB612}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DC389E63-B2F7-4902-A54D-335C578FDAF2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DC389E63-B2F7-4902-A54D-335C578FDAF2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DC389E63-B2F7-4902-A54D-335C578FDAF2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DC389E63-B2F7-4902-A54D-335C578FDAF2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3191C46B-1E62-4D17-9910-58F814746B5A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3191C46B-1E62-4D17-9910-58F814746B5A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3191C46B-1E62-4D17-9910-58F814746B5A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3191C46B-1E62-4D17-9910-58F814746B5A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
