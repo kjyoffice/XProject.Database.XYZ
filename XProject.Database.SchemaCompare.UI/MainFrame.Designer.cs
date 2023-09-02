@@ -84,6 +84,10 @@
             this.DLG_PostgreSQL = new System.Windows.Forms.RadioButton();
             this.DLG_MySQL = new System.Windows.Forms.RadioButton();
             this.DLG_SQLServer = new System.Windows.Forms.RadioButton();
+            this.SSG_PortNo = new System.Windows.Forms.TextBox();
+            this.TSG_PortNo = new System.Windows.Forms.TextBox();
+            this.SSG_PortNoTitle = new System.Windows.Forms.Label();
+            this.TSG_PortNoTitle = new System.Windows.Forms.Label();
             this.ReportDirectoryGroup.SuspendLayout();
             this.MainToolStripBar.SuspendLayout();
             this.SourceServerGroup.SuspendLayout();
@@ -94,7 +98,7 @@
             // SSG_UserIDTitle
             // 
             this.SSG_UserIDTitle.AutoSize = true;
-            this.SSG_UserIDTitle.Location = new System.Drawing.Point(6, 100);
+            this.SSG_UserIDTitle.Location = new System.Drawing.Point(6, 134);
             this.SSG_UserIDTitle.Name = "SSG_UserIDTitle";
             this.SSG_UserIDTitle.Size = new System.Drawing.Size(16, 12);
             this.SSG_UserIDTitle.TabIndex = 1;
@@ -252,9 +256,9 @@
             // 
             // SourceServerGroup
             // 
-            this.SourceServerGroup.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left)));
             this.SourceServerGroup.Controls.Add(this.SSG_RawConnectionString);
+            this.SourceServerGroup.Controls.Add(this.SSG_PortNoTitle);
+            this.SourceServerGroup.Controls.Add(this.SSG_PortNo);
             this.SourceServerGroup.Controls.Add(this.SSG_CopyToTSG);
             this.SourceServerGroup.Controls.Add(this.SSG_UserManualConnectionString);
             this.SourceServerGroup.Controls.Add(this.SSG_InitialCatalogTitle);
@@ -270,7 +274,7 @@
             this.SourceServerGroup.Controls.Add(this.SSG_RawConnectionStringTitle);
             this.SourceServerGroup.Location = new System.Drawing.Point(12, 133);
             this.SourceServerGroup.Name = "SourceServerGroup";
-            this.SourceServerGroup.Size = new System.Drawing.Size(500, 288);
+            this.SourceServerGroup.Size = new System.Drawing.Size(500, 322);
             this.SourceServerGroup.TabIndex = 6;
             this.SourceServerGroup.TabStop = false;
             this.SourceServerGroup.Text = "SourceServer";
@@ -284,14 +288,14 @@
             this.SSG_RawConnectionString.Multiline = true;
             this.SSG_RawConnectionString.Name = "SSG_RawConnectionString";
             this.SSG_RawConnectionString.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.SSG_RawConnectionString.Size = new System.Drawing.Size(386, 138);
+            this.SSG_RawConnectionString.Size = new System.Drawing.Size(386, 172);
             this.SSG_RawConnectionString.TabIndex = 10;
             // 
             // SSG_CopyToTSG
             // 
             this.SSG_CopyToTSG.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.SSG_CopyToTSG.Location = new System.Drawing.Point(108, 253);
+            this.SSG_CopyToTSG.Location = new System.Drawing.Point(108, 287);
             this.SSG_CopyToTSG.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.SSG_CopyToTSG.Name = "SSG_CopyToTSG";
             this.SSG_CopyToTSG.Size = new System.Drawing.Size(386, 30);
@@ -314,7 +318,7 @@
             // SSG_InitialCatalogTitle
             // 
             this.SSG_InitialCatalogTitle.AutoSize = true;
-            this.SSG_InitialCatalogTitle.Location = new System.Drawing.Point(6, 160);
+            this.SSG_InitialCatalogTitle.Location = new System.Drawing.Point(6, 194);
             this.SSG_InitialCatalogTitle.Name = "SSG_InitialCatalogTitle";
             this.SSG_InitialCatalogTitle.Size = new System.Drawing.Size(55, 12);
             this.SSG_InitialCatalogTitle.TabIndex = 10;
@@ -324,7 +328,7 @@
             // 
             this.SSG_ConnectTest.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.SSG_ConnectTest.Location = new System.Drawing.Point(108, 185);
+            this.SSG_ConnectTest.Location = new System.Drawing.Point(108, 219);
             this.SSG_ConnectTest.Name = "SSG_ConnectTest";
             this.SSG_ConnectTest.Size = new System.Drawing.Size(386, 63);
             this.SSG_ConnectTest.TabIndex = 104;
@@ -335,7 +339,7 @@
             // SSG_PasswordTitle
             // 
             this.SSG_PasswordTitle.AutoSize = true;
-            this.SSG_PasswordTitle.Location = new System.Drawing.Point(6, 130);
+            this.SSG_PasswordTitle.Location = new System.Drawing.Point(6, 164);
             this.SSG_PasswordTitle.Name = "SSG_PasswordTitle";
             this.SSG_PasswordTitle.Size = new System.Drawing.Size(23, 12);
             this.SSG_PasswordTitle.TabIndex = 1;
@@ -344,7 +348,7 @@
             // SSG_TrustedConnection
             // 
             this.SSG_TrustedConnection.AutoSize = true;
-            this.SSG_TrustedConnection.Location = new System.Drawing.Point(108, 71);
+            this.SSG_TrustedConnection.Location = new System.Drawing.Point(108, 105);
             this.SSG_TrustedConnection.Name = "SSG_TrustedConnection";
             this.SSG_TrustedConnection.Size = new System.Drawing.Size(78, 16);
             this.SSG_TrustedConnection.TabIndex = 3;
@@ -356,7 +360,7 @@
             // 
             this.SSG_Password.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.SSG_Password.Location = new System.Drawing.Point(108, 127);
+            this.SSG_Password.Location = new System.Drawing.Point(108, 161);
             this.SSG_Password.Name = "SSG_Password";
             this.SSG_Password.Size = new System.Drawing.Size(386, 21);
             this.SSG_Password.TabIndex = 102;
@@ -366,7 +370,7 @@
             // 
             this.SSG_InitialCatalog.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.SSG_InitialCatalog.Location = new System.Drawing.Point(108, 157);
+            this.SSG_InitialCatalog.Location = new System.Drawing.Point(108, 191);
             this.SSG_InitialCatalog.Name = "SSG_InitialCatalog";
             this.SSG_InitialCatalog.Size = new System.Drawing.Size(386, 21);
             this.SSG_InitialCatalog.TabIndex = 103;
@@ -375,7 +379,7 @@
             // 
             this.SSG_UserID.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.SSG_UserID.Location = new System.Drawing.Point(108, 97);
+            this.SSG_UserID.Location = new System.Drawing.Point(108, 131);
             this.SSG_UserID.Name = "SSG_UserID";
             this.SSG_UserID.Size = new System.Drawing.Size(386, 21);
             this.SSG_UserID.TabIndex = 101;
@@ -391,9 +395,10 @@
             // 
             // TargetServerGroup
             // 
-            this.TargetServerGroup.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.TargetServerGroup.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.TargetServerGroup.Controls.Add(this.TSG_RawConnectionString);
+            this.TargetServerGroup.Controls.Add(this.TSG_PortNoTitle);
+            this.TargetServerGroup.Controls.Add(this.TSG_PortNo);
             this.TargetServerGroup.Controls.Add(this.TSG_CopyToSSG);
             this.TargetServerGroup.Controls.Add(this.TSG_UserManualConnectionString);
             this.TargetServerGroup.Controls.Add(this.TSG_InitialCatalogTitle);
@@ -409,7 +414,7 @@
             this.TargetServerGroup.Controls.Add(this.TSG_RawConnectionStringTitle);
             this.TargetServerGroup.Location = new System.Drawing.Point(672, 133);
             this.TargetServerGroup.Name = "TargetServerGroup";
-            this.TargetServerGroup.Size = new System.Drawing.Size(500, 288);
+            this.TargetServerGroup.Size = new System.Drawing.Size(500, 322);
             this.TargetServerGroup.TabIndex = 6;
             this.TargetServerGroup.TabStop = false;
             this.TargetServerGroup.Text = "TargetServer";
@@ -423,14 +428,14 @@
             this.TSG_RawConnectionString.Multiline = true;
             this.TSG_RawConnectionString.Name = "TSG_RawConnectionString";
             this.TSG_RawConnectionString.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.TSG_RawConnectionString.Size = new System.Drawing.Size(386, 138);
+            this.TSG_RawConnectionString.Size = new System.Drawing.Size(386, 172);
             this.TSG_RawConnectionString.TabIndex = 10;
             // 
             // TSG_CopyToSSG
             // 
             this.TSG_CopyToSSG.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.TSG_CopyToSSG.Location = new System.Drawing.Point(108, 253);
+            this.TSG_CopyToSSG.Location = new System.Drawing.Point(108, 287);
             this.TSG_CopyToSSG.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.TSG_CopyToSSG.Name = "TSG_CopyToSSG";
             this.TSG_CopyToSSG.Size = new System.Drawing.Size(386, 30);
@@ -453,7 +458,7 @@
             // TSG_InitialCatalogTitle
             // 
             this.TSG_InitialCatalogTitle.AutoSize = true;
-            this.TSG_InitialCatalogTitle.Location = new System.Drawing.Point(6, 160);
+            this.TSG_InitialCatalogTitle.Location = new System.Drawing.Point(6, 194);
             this.TSG_InitialCatalogTitle.Name = "TSG_InitialCatalogTitle";
             this.TSG_InitialCatalogTitle.Size = new System.Drawing.Size(55, 12);
             this.TSG_InitialCatalogTitle.TabIndex = 10;
@@ -463,7 +468,7 @@
             // 
             this.TSG_ConnectTest.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.TSG_ConnectTest.Location = new System.Drawing.Point(108, 185);
+            this.TSG_ConnectTest.Location = new System.Drawing.Point(108, 219);
             this.TSG_ConnectTest.Name = "TSG_ConnectTest";
             this.TSG_ConnectTest.Size = new System.Drawing.Size(386, 63);
             this.TSG_ConnectTest.TabIndex = 109;
@@ -474,7 +479,7 @@
             // TSG_PasswordTitle
             // 
             this.TSG_PasswordTitle.AutoSize = true;
-            this.TSG_PasswordTitle.Location = new System.Drawing.Point(6, 130);
+            this.TSG_PasswordTitle.Location = new System.Drawing.Point(6, 164);
             this.TSG_PasswordTitle.Name = "TSG_PasswordTitle";
             this.TSG_PasswordTitle.Size = new System.Drawing.Size(23, 12);
             this.TSG_PasswordTitle.TabIndex = 1;
@@ -483,7 +488,7 @@
             // TSG_UserIDTitle
             // 
             this.TSG_UserIDTitle.AutoSize = true;
-            this.TSG_UserIDTitle.Location = new System.Drawing.Point(6, 100);
+            this.TSG_UserIDTitle.Location = new System.Drawing.Point(6, 134);
             this.TSG_UserIDTitle.Name = "TSG_UserIDTitle";
             this.TSG_UserIDTitle.Size = new System.Drawing.Size(16, 12);
             this.TSG_UserIDTitle.TabIndex = 1;
@@ -501,7 +506,7 @@
             // TSG_TrustedConnection
             // 
             this.TSG_TrustedConnection.AutoSize = true;
-            this.TSG_TrustedConnection.Location = new System.Drawing.Point(108, 71);
+            this.TSG_TrustedConnection.Location = new System.Drawing.Point(108, 105);
             this.TSG_TrustedConnection.Name = "TSG_TrustedConnection";
             this.TSG_TrustedConnection.Size = new System.Drawing.Size(78, 16);
             this.TSG_TrustedConnection.TabIndex = 3;
@@ -513,7 +518,7 @@
             // 
             this.TSG_Password.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.TSG_Password.Location = new System.Drawing.Point(108, 127);
+            this.TSG_Password.Location = new System.Drawing.Point(108, 161);
             this.TSG_Password.Name = "TSG_Password";
             this.TSG_Password.Size = new System.Drawing.Size(386, 21);
             this.TSG_Password.TabIndex = 107;
@@ -523,7 +528,7 @@
             // 
             this.TSG_InitialCatalog.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.TSG_InitialCatalog.Location = new System.Drawing.Point(108, 157);
+            this.TSG_InitialCatalog.Location = new System.Drawing.Point(108, 191);
             this.TSG_InitialCatalog.Name = "TSG_InitialCatalog";
             this.TSG_InitialCatalog.Size = new System.Drawing.Size(386, 21);
             this.TSG_InitialCatalog.TabIndex = 108;
@@ -532,7 +537,7 @@
             // 
             this.TSG_UserID.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.TSG_UserID.Location = new System.Drawing.Point(108, 97);
+            this.TSG_UserID.Location = new System.Drawing.Point(108, 131);
             this.TSG_UserID.Name = "TSG_UserID";
             this.TSG_UserID.Size = new System.Drawing.Size(386, 21);
             this.TSG_UserID.TabIndex = 106;
@@ -560,7 +565,7 @@
             this.JustNotify1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.JustNotify1.AutoSize = true;
             this.JustNotify1.ForeColor = System.Drawing.Color.Blue;
-            this.JustNotify1.Location = new System.Drawing.Point(12, 438);
+            this.JustNotify1.Location = new System.Drawing.Point(12, 472);
             this.JustNotify1.Margin = new System.Windows.Forms.Padding(0);
             this.JustNotify1.Name = "JustNotify1";
             this.JustNotify1.Size = new System.Drawing.Size(66, 12);
@@ -569,10 +574,10 @@
             // 
             // SwapSourceAndTargetServer
             // 
-            this.SwapSourceAndTargetServer.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)));
+            this.SwapSourceAndTargetServer.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.SwapSourceAndTargetServer.Location = new System.Drawing.Point(542, 133);
             this.SwapSourceAndTargetServer.Name = "SwapSourceAndTargetServer";
-            this.SwapSourceAndTargetServer.Size = new System.Drawing.Size(100, 288);
+            this.SwapSourceAndTargetServer.Size = new System.Drawing.Size(100, 322);
             this.SwapSourceAndTargetServer.TabIndex = 8;
             this.SwapSourceAndTargetServer.Text = "Swap";
             this.SwapSourceAndTargetServer.UseVisualStyleBackColor = true;
@@ -582,7 +587,7 @@
             // 
             this.ExecuteCompare.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.ExecuteCompare.Location = new System.Drawing.Point(12, 453);
+            this.ExecuteCompare.Location = new System.Drawing.Point(12, 487);
             this.ExecuteCompare.Name = "ExecuteCompare";
             this.ExecuteCompare.Size = new System.Drawing.Size(1160, 66);
             this.ExecuteCompare.TabIndex = 110;
@@ -606,7 +611,7 @@
             // 
             this.ViewExecuteCompareCommand.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.ViewExecuteCompareCommand.Location = new System.Drawing.Point(12, 525);
+            this.ViewExecuteCompareCommand.Location = new System.Drawing.Point(12, 559);
             this.ViewExecuteCompareCommand.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.ViewExecuteCompareCommand.Name = "ViewExecuteCompareCommand";
             this.ViewExecuteCompareCommand.Size = new System.Drawing.Size(1160, 26);
@@ -666,12 +671,44 @@
             this.DLG_SQLServer.UseVisualStyleBackColor = true;
             this.DLG_SQLServer.Click += new System.EventHandler(this.DLG_DatabaseTypeX_Click);
             // 
+            // SSG_PortNo
+            // 
+            this.SSG_PortNo.Location = new System.Drawing.Point(108, 73);
+            this.SSG_PortNo.Name = "SSG_PortNo";
+            this.SSG_PortNo.Size = new System.Drawing.Size(386, 21);
+            this.SSG_PortNo.TabIndex = 114;
+            // 
+            // TSG_PortNo
+            // 
+            this.TSG_PortNo.Location = new System.Drawing.Point(108, 73);
+            this.TSG_PortNo.Name = "TSG_PortNo";
+            this.TSG_PortNo.Size = new System.Drawing.Size(386, 21);
+            this.TSG_PortNo.TabIndex = 114;
+            // 
+            // SSG_PortNoTitle
+            // 
+            this.SSG_PortNoTitle.AutoSize = true;
+            this.SSG_PortNoTitle.Location = new System.Drawing.Point(6, 76);
+            this.SSG_PortNoTitle.Name = "SSG_PortNoTitle";
+            this.SSG_PortNoTitle.Size = new System.Drawing.Size(43, 12);
+            this.SSG_PortNoTitle.TabIndex = 114;
+            this.SSG_PortNoTitle.Text = "PortNo";
+            // 
+            // TSG_PortNoTitle
+            // 
+            this.TSG_PortNoTitle.AutoSize = true;
+            this.TSG_PortNoTitle.Location = new System.Drawing.Point(6, 76);
+            this.TSG_PortNoTitle.Name = "TSG_PortNoTitle";
+            this.TSG_PortNoTitle.Size = new System.Drawing.Size(43, 12);
+            this.TSG_PortNoTitle.TabIndex = 115;
+            this.TSG_PortNoTitle.Text = "PortNo";
+            // 
             // MainFrame
             // 
             this.AllowDrop = true;
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1184, 561);
+            this.ClientSize = new System.Drawing.Size(1184, 595);
             this.Controls.Add(this.DatabaseListGroup);
             this.Controls.Add(this.ViewExecuteCompareCommand);
             this.Controls.Add(this.ExecuteCompare);
@@ -764,6 +801,10 @@
         private System.Windows.Forms.RadioButton DLG_SQLServer;
         private System.Windows.Forms.RadioButton DLG_MySQL;
         private System.Windows.Forms.RadioButton DLG_PostgreSQL;
+        private System.Windows.Forms.TextBox SSG_PortNo;
+        private System.Windows.Forms.TextBox TSG_PortNo;
+        private System.Windows.Forms.Label SSG_PortNoTitle;
+        private System.Windows.Forms.Label TSG_PortNoTitle;
     }
 }
 

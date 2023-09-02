@@ -10,6 +10,8 @@ namespace XProject.Database.SchemaCompare.UI.XModel
     {
         [Newtonsoft.Json.JsonProperty("dataSource")]
         public string DataSource { get; set; }
+        [Newtonsoft.Json.JsonProperty("portNo")]
+        public string PortNo { get; set; }
         [Newtonsoft.Json.JsonProperty("userID")]
         public string UserID { get; set; }
         [Newtonsoft.Json.JsonProperty("password")]

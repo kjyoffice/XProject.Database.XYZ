@@ -21,11 +21,12 @@ namespace XProject.Database.SchemaCompare.UI
 
         // ------------------------------------------------------------------------------------------------
 
-        private void ChangeUserManualConnectionString(CheckBox userManual, TextBox rawConnectionString, Label dataSourceTitle, TextBox dataSource, Label userIDTitle, Label passwordTitle, Label initialCatalogTitle, Label rawConnectionStringTitle, CheckBox trust)
+        private void ChangeUserManualConnectionString(CheckBox userManual, TextBox rawConnectionString, Label dataSourceTitle, TextBox dataSource, Label portNoTitle, TextBox portNo, Label userIDTitle, Label passwordTitle, Label initialCatalogTitle, Label rawConnectionStringTitle, CheckBox trust)
         {
             var isManualCS = userManual.Checked;
 
             dataSourceTitle.Visible = !isManualCS;
+            portNoTitle.Visible = !isManualCS;
             userIDTitle.Visible = !isManualCS;
             passwordTitle.Visible = !isManualCS;
             initialCatalogTitle.Visible = !isManualCS;
@@ -67,13 +68,13 @@ namespace XProject.Database.SchemaCompare.UI
             }
         }
 
-        private void ConnectTest(string selDBType, TextBox dataSource, TextBox userID, TextBox password, TextBox initialCatalog, TextBox rawConnectionString, CheckBox userManual, CheckBox trust, ToolStripButton isUIKorLang)
+        private void ConnectTest(string selDBType, TextBox dataSource, TextBox portNo, TextBox userID, TextBox password, TextBox initialCatalog, TextBox rawConnectionString, CheckBox userManual, CheckBox trust, ToolStripButton isUIKorLang)
         {
             if (selDBType != string.Empty)
             {
-                if (this.ConnectionValueCheck(dataSource, userID, password, initialCatalog, rawConnectionString, userManual, trust, isUIKorLang) == true)
+                if (this.ConnectionValueCheck(dataSource, portNo, userID, password, initialCatalog, rawConnectionString, userManual, trust, isUIKorLang) == true)
                 {
-                    var connectionString = this.CreateConnectionString(selDBType, dataSource, userID, password, initialCatalog, rawConnectionString, userManual, trust);
+                    var connectionString = this.CreateConnectionString(selDBType, dataSource, portNo, userID, password, initialCatalog, rawConnectionString, userManual, trust);
 
                     if (connectionString != string.Empty)
                     {
@@ -133,7 +134,32 @@ namespace XProject.Database.SchemaCompare.UI
                                     }
                                 }
                             }
-                        } 
+                        }
+                        else if (XValue.ProcessValue.DatabaseType_PostgreSQL.IsMatch(selDBType) == true)
+                        {
+                            using (var sc = new Npgsql.NpgsqlConnection(connectionString))
+                            {
+                                try
+                                {
+                                    sc.Open();
+
+                                    isSuccess = true;
+                                    errorMessage = string.Empty;
+                                }
+                                catch (Exception ex)
+                                {
+                                    isSuccess = false;
+                                    errorMessage = ex.Message;
+                                }
+                                finally
+                                {
+                                    if (sc.State != ConnectionState.Closed)
+                                    {
+                                        sc.Close();
+                                    }
+                                }
+                            }
+                        }
                         else
                         {
                             isSuccess = false;
@@ -175,7 +201,9 @@ namespace XProject.Database.SchemaCompare.UI
         private void CopyToConnectionString(
             CheckBox[] userManualConnectionString,
             Label[] dataSourceTitle,
-            TextBox[] dataSource, 
+            TextBox[] dataSource,
+            Label[] portNoTitle,
+            TextBox[] portNo,
             CheckBox[] trustedConnection,
             Label[] userIDTitle,
             TextBox[] userID,
@@ -191,7 +219,10 @@ namespace XProject.Database.SchemaCompare.UI
 
             dataSourceTitle[1].Visible = dataSourceTitle[0].Visible;
             dataSource[1].Text = dataSource[0].Text;
-            
+
+            portNoTitle[1].Visible = portNoTitle[0].Visible;
+            portNo[1].Text = portNo[0].Text;
+
             trustedConnection[1].Checked = trustedConnection[0].Checked;
             trustedConnection[1].Visible = trustedConnection[0].Visible;
 
@@ -211,12 +242,13 @@ namespace XProject.Database.SchemaCompare.UI
             rawConnectionString[1].Visible = rawConnectionString[0].Visible;
         }
 
-        private bool ConnectionValueCheck(TextBox dataSource, TextBox userID, TextBox password, TextBox initialCatalog, TextBox rawConnectionString, CheckBox userManual, CheckBox trust, ToolStripButton isUIKorLang)
+        private bool ConnectionValueCheck(TextBox dataSource, TextBox portNo, TextBox userID, TextBox password, TextBox initialCatalog, TextBox rawConnectionString, CheckBox userManual, CheckBox trust, ToolStripButton isUIKorLang)
         {
             var result = false;
             var isTrust = trust.Checked;
 
             dataSource.Text = dataSource.Text.Trim();
+            portNo.Text = portNo.Text.Trim();
             userID.Text = userID.Text.Trim();
             password.Text = password.Text.Trim();
             initialCatalog.Text = initialCatalog.Text.Trim();
@@ -240,36 +272,46 @@ namespace XProject.Database.SchemaCompare.UI
             {
                 if (dataSource.Text != string.Empty)
                 {
-                    if ((isTrust == true) || ((isTrust == false) && (userID.Text != string.Empty)))
+                    if ((portNo.Text == string.Empty)  || ((portNo.Text != string.Empty) && (int.TryParse(portNo.Text, out int portNoUse) == true)))
                     {
-                        if ((isTrust == true) || ((isTrust == false) && (password.Text != string.Empty)))
+                        if ((isTrust == true) || ((isTrust == false) && (userID.Text != string.Empty)))
                         {
-                            if (initialCatalog.Text != string.Empty)
+                            if ((isTrust == true) || ((isTrust == false) && (password.Text != string.Empty)))
                             {
-                                result = true;
+                                if (initialCatalog.Text != string.Empty)
+                                {
+                                    result = true;
+                                }
+                                else
+                                {
+                                    var message = ((isUIKorLang.Checked == true) ? "데이터베이스를 입력하세요." : "Please input database.");
+
+                                    MessageBox.Show(message, this.AppTitle, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                                    initialCatalog.Focus();
+                                }
                             }
                             else
                             {
-                                var message = ((isUIKorLang.Checked == true) ? "데이터베이스를 입력하세요." : "Please input database.");
+                                var message = ((isUIKorLang.Checked == true) ? "서버 로그인 비밀번호를 입력하세요." : "Please input server login password.");
 
                                 MessageBox.Show(message, this.AppTitle, MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                                initialCatalog.Focus();
+                                password.Focus();
                             }
                         }
                         else
                         {
-                            var message = ((isUIKorLang.Checked == true) ? "서버 로그인 비밀번호를 입력하세요." : "Please input server login password.");
+                            var message = ((isUIKorLang.Checked == true) ? "서버 로그인 아이디를 입력하세요." : "Please input server login id.");
 
                             MessageBox.Show(message, this.AppTitle, MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                            password.Focus();
+                            userID.Focus();
                         }
                     }
                     else
                     {
-                        var message = ((isUIKorLang.Checked == true) ? "서버 로그인 아이디를 입력하세요." : "Please input server login id.");
+                        var message = ((isUIKorLang.Checked == true) ? "포트 번호가 올바르지 않습니다." : "wrong port no.");
 
                         MessageBox.Show(message, this.AppTitle, MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                        userID.Focus();
+                        portNo.Select();
                     }
                 }
                 else
@@ -284,7 +326,7 @@ namespace XProject.Database.SchemaCompare.UI
             return result;
         }
 
-        private string CreateConnectionString(string selDBType, TextBox dataSource, TextBox userID, TextBox password, TextBox initialCatalog, TextBox rawConnectionString, CheckBox userManual, CheckBox trust)
+        private string CreateConnectionString(string selDBType, TextBox dataSource, TextBox portNo, TextBox userID, TextBox password, TextBox initialCatalog, TextBox rawConnectionString, CheckBox userManual, CheckBox trust)
         {
             var result = string.Empty;
 
@@ -320,6 +362,26 @@ namespace XProject.Database.SchemaCompare.UI
                     scsb.UserID = userID.Text.Trim();
                     scsb.Password = password.Text.Trim();
 
+                    if ((portNo.Text != string.Empty) && (uint.TryParse(portNo.Text, out uint portNoUse) == true))
+                    {
+                        scsb.Port = portNoUse;
+                    }
+
+                    result = scsb.ConnectionString;
+                }
+                else if (XValue.ProcessValue.DatabaseType_PostgreSQL.IsMatch(selDBType) == true)
+                {
+                    var scsb = new Npgsql.NpgsqlConnectionStringBuilder();
+                    scsb.Host = dataSource.Text.Trim();
+                    scsb.Database = initialCatalog.Text.Trim();
+                    scsb.Username = userID.Text.Trim();
+                    scsb.Password = password.Text.Trim();
+
+                    if ((portNo.Text != string.Empty) && (int.TryParse(portNo.Text, out int portNoUse) == true))
+                    {
+                        scsb.Port = portNoUse;
+                    }
+
                     result = scsb.ConnectionString;
                 }
             }
@@ -335,12 +397,12 @@ namespace XProject.Database.SchemaCompare.UI
 
         private void ChangeUserManualConnectionString_SSG()
         {
-            this.ChangeUserManualConnectionString(this.SSG_UserManualConnectionString, this.SSG_RawConnectionString, this.SSG_DataSourceTitle, this.SSG_DataSource, this.SSG_UserIDTitle, this.SSG_PasswordTitle, this.SSG_InitialCatalogTitle, this.SSG_RawConnectionStringTitle, this.SSG_TrustedConnection);
+            this.ChangeUserManualConnectionString(this.SSG_UserManualConnectionString, this.SSG_RawConnectionString, this.SSG_DataSourceTitle, this.SSG_DataSource, this.SSG_PortNoTitle, this.SSG_PortNo, this.SSG_UserIDTitle, this.SSG_PasswordTitle, this.SSG_InitialCatalogTitle, this.SSG_RawConnectionStringTitle, this.SSG_TrustedConnection);
         }
 
         private void ChangeUserManualConnectionString_TSG()
         {
-            this.ChangeUserManualConnectionString(this.TSG_UserManualConnectionString, this.TSG_RawConnectionString, this.TSG_DataSourceTitle, this.TSG_DataSource, this.TSG_UserIDTitle, this.TSG_PasswordTitle, this.TSG_InitialCatalogTitle, this.TSG_RawConnectionStringTitle, this.TSG_TrustedConnection);
+            this.ChangeUserManualConnectionString(this.TSG_UserManualConnectionString, this.TSG_RawConnectionString, this.TSG_DataSourceTitle, this.TSG_DataSource, this.TSG_PortNoTitle, this.TSG_PortNo, this.TSG_UserIDTitle, this.TSG_PasswordTitle, this.TSG_InitialCatalogTitle, this.TSG_RawConnectionStringTitle, this.TSG_TrustedConnection);
         }
 
         private void ChangeTrustedConnectionStatus_SSG(bool isClearValue)
@@ -502,6 +564,9 @@ namespace XProject.Database.SchemaCompare.UI
                 this.SSG_DataSourceTitle.Visible = true;
                 this.SSG_DataSource.Clear();
 
+                this.SSG_PortNoTitle.Visible = true;
+                this.SSG_PortNo.Clear();
+
                 this.SSG_UserIDTitle.Visible = true;
                 this.SSG_UserID.Clear();
                 this.SSG_UserID.Enabled = true;
@@ -528,6 +593,9 @@ namespace XProject.Database.SchemaCompare.UI
                 // TSG
                 this.TSG_DataSourceTitle.Visible = true;
                 this.TSG_DataSource.Clear();
+
+                this.TSG_PortNoTitle.Visible = true;
+                this.TSG_PortNo.Clear();
 
                 this.TSG_UserIDTitle.Visible = true;
                 this.TSG_UserID.Clear();
@@ -580,6 +648,7 @@ namespace XProject.Database.SchemaCompare.UI
                 // SSG
                 wsd.SourceServer = new XModel.WorkSourceServer();
                 wsd.SourceServer.DataSource = this.SSG_DataSource.Text.Trim();
+                wsd.SourceServer.PortNo = this.SSG_PortNo.Text.Trim();
                 wsd.SourceServer.UserID = this.SSG_UserID.Text.Trim();
                 wsd.SourceServer.Password = this.SSG_Password.Text.Trim();
                 wsd.SourceServer.InitialCatalog = this.SSG_InitialCatalog.Text.Trim();
@@ -589,6 +658,7 @@ namespace XProject.Database.SchemaCompare.UI
                 // TSG
                 wsd.TargetServer = new XModel.WorkSourceServer();
                 wsd.TargetServer.DataSource = this.TSG_DataSource.Text.Trim();
+                wsd.TargetServer.PortNo = this.TSG_PortNo.Text.Trim();
                 wsd.TargetServer.UserID = this.TSG_UserID.Text.Trim();
                 wsd.TargetServer.Password = this.TSG_Password.Text.Trim();
                 wsd.TargetServer.InitialCatalog = this.TSG_InitialCatalog.Text.Trim();
@@ -734,6 +804,7 @@ namespace XProject.Database.SchemaCompare.UI
 
                             // SSG
                             this.SSG_DataSource.Text = wsd.SourceServer.DataSource;
+                            this.SSG_PortNo.Text = wsd.SourceServer.PortNo;
                             this.SSG_UserID.Text = wsd.SourceServer.UserID;
                             this.SSG_Password.Text = wsd.SourceServer.Password;
                             this.SSG_InitialCatalog.Text = wsd.SourceServer.InitialCatalog;
@@ -745,6 +816,7 @@ namespace XProject.Database.SchemaCompare.UI
 
                             // TSG
                             this.TSG_DataSource.Text = wsd.TargetServer.DataSource;
+                            this.TSG_PortNo.Text = wsd.TargetServer.PortNo;
                             this.TSG_UserID.Text = wsd.TargetServer.UserID;
                             this.TSG_Password.Text = wsd.TargetServer.Password;
                             this.TSG_InitialCatalog.Text = wsd.TargetServer.InitialCatalog;
@@ -840,7 +912,7 @@ namespace XProject.Database.SchemaCompare.UI
 
         private void SSG_ConnectTest_Click(object sender, EventArgs e)
         {
-            this.ConnectTest(this.GetSelectedDatabaseType(), this.SSG_DataSource, this.SSG_UserID, this.SSG_Password, this.SSG_InitialCatalog, this.SSG_RawConnectionString, this.SSG_UserManualConnectionString, this.SSG_TrustedConnection, this.MTSB_IsUIKoreanLanguage);
+            this.ConnectTest(this.GetSelectedDatabaseType(), this.SSG_DataSource, this.SSG_PortNo, this.SSG_UserID, this.SSG_Password, this.SSG_InitialCatalog, this.SSG_RawConnectionString, this.SSG_UserManualConnectionString, this.SSG_TrustedConnection, this.MTSB_IsUIKoreanLanguage);
         }
 
         private void SSG_CopyToTSG_Click(object sender, EventArgs e)
@@ -849,6 +921,8 @@ namespace XProject.Database.SchemaCompare.UI
                 new CheckBox[] { this.SSG_UserManualConnectionString, this.TSG_UserManualConnectionString },
                 new Label[] { this.SSG_DataSourceTitle, this.TSG_DataSourceTitle },
                 new TextBox[] { this.SSG_DataSource, this.TSG_DataSource },
+                new Label[] { this.SSG_PortNoTitle, this.TSG_PortNoTitle },
+                new TextBox[] { this.SSG_PortNo, this.TSG_PortNo },
                 new CheckBox[] { this.SSG_TrustedConnection, this.TSG_TrustedConnection },
                 new Label[] { this.SSG_UserIDTitle, this.TSG_UserIDTitle },
                 new TextBox[] { this.SSG_UserID, this.TSG_UserID },
@@ -873,7 +947,7 @@ namespace XProject.Database.SchemaCompare.UI
 
         private void TSG_ConnectTest_Click(object sender, EventArgs e)
         {
-            this.ConnectTest(this.GetSelectedDatabaseType(), this.TSG_DataSource, this.TSG_UserID, this.TSG_Password, this.TSG_InitialCatalog, this.TSG_RawConnectionString, this.TSG_UserManualConnectionString, this.TSG_TrustedConnection, this.MTSB_IsUIKoreanLanguage);
+            this.ConnectTest(this.GetSelectedDatabaseType(), this.TSG_DataSource, this.TSG_PortNo, this.TSG_UserID, this.TSG_Password, this.TSG_InitialCatalog, this.TSG_RawConnectionString, this.TSG_UserManualConnectionString, this.TSG_TrustedConnection, this.MTSB_IsUIKoreanLanguage);
         }
 
         private void TSG_CopyToSSG_Click(object sender, EventArgs e)
@@ -882,6 +956,8 @@ namespace XProject.Database.SchemaCompare.UI
                 new CheckBox[] { this.TSG_UserManualConnectionString, this.SSG_UserManualConnectionString },
                 new Label[] { this.TSG_DataSourceTitle, this.SSG_DataSourceTitle },
                 new TextBox[] { this.TSG_DataSource, this.SSG_DataSource },
+                new Label[] { this.TSG_PortNoTitle, this.SSG_PortNoTitle },
+                new TextBox[] { this.TSG_PortNo, this.SSG_PortNo },
                 new CheckBox[] { this.TSG_TrustedConnection, this.SSG_TrustedConnection },
                 new Label[] { this.TSG_UserIDTitle, this.SSG_UserIDTitle },
                 new TextBox[] { this.TSG_UserID, this.SSG_UserID },
@@ -898,6 +974,7 @@ namespace XProject.Database.SchemaCompare.UI
         {
             // SSG
             var dataSource = this.SSG_DataSource.Text.Trim();
+            var portNo = this.SSG_PortNo.Text.Trim();
             var userID = this.SSG_UserID.Text.Trim();
             var password = this.SSG_Password.Text.Trim();
             var initialCatalog = this.SSG_InitialCatalog.Text.Trim();
@@ -907,6 +984,7 @@ namespace XProject.Database.SchemaCompare.UI
 
             // SSG <- TSG
             this.SSG_DataSource.Text = this.TSG_DataSource.Text.Trim();
+            this.SSG_PortNo.Text = this.TSG_PortNo.Text.Trim();
             this.SSG_UserID.Text = this.TSG_UserID.Text.Trim();
             this.SSG_Password.Text = this.TSG_Password.Text.Trim();
             this.SSG_InitialCatalog.Text = this.TSG_InitialCatalog.Text.Trim();
@@ -918,6 +996,7 @@ namespace XProject.Database.SchemaCompare.UI
 
             // TSG <- SSG
             this.TSG_DataSource.Text = dataSource;
+            this.TSG_PortNo.Text = portNo;
             this.TSG_UserID.Text = userID;
             this.TSG_Password.Text = password;
             this.TSG_InitialCatalog.Text = initialCatalog;
@@ -932,8 +1011,8 @@ namespace XProject.Database.SchemaCompare.UI
         {
             var isViewCommand = (((sender as Button)?.Tag ?? string.Empty).ToString().ToUpper() == "TRUE");
             var isUIKorLang = this.MTSB_IsUIKoreanLanguage;
-            var isSSGSuccess = this.ConnectionValueCheck(this.SSG_DataSource, this.SSG_UserID, this.SSG_Password, this.SSG_InitialCatalog, this.SSG_RawConnectionString, this.SSG_UserManualConnectionString, this.SSG_TrustedConnection, isUIKorLang);
-            var isTSGSuccess = ((isSSGSuccess == true) && this.ConnectionValueCheck(this.TSG_DataSource, this.TSG_UserID, this.TSG_Password, this.TSG_InitialCatalog, this.TSG_RawConnectionString, this.TSG_UserManualConnectionString, this.TSG_TrustedConnection, isUIKorLang) == true);
+            var isSSGSuccess = this.ConnectionValueCheck(this.SSG_DataSource, this.SSG_PortNo, this.SSG_UserID, this.SSG_Password, this.SSG_InitialCatalog, this.SSG_RawConnectionString, this.SSG_UserManualConnectionString, this.SSG_TrustedConnection, isUIKorLang);
+            var isTSGSuccess = ((isSSGSuccess == true) && this.ConnectionValueCheck(this.TSG_DataSource, this.TSG_PortNo, this.TSG_UserID, this.TSG_Password, this.TSG_InitialCatalog, this.TSG_RawConnectionString, this.TSG_UserManualConnectionString, this.TSG_TrustedConnection, isUIKorLang) == true);
 
             if ((isSSGSuccess == true) && (isTSGSuccess == true))
             {
@@ -945,8 +1024,8 @@ namespace XProject.Database.SchemaCompare.UI
 
                     if (selDBType != string.Empty)
                     {
-                        var ssgCS = this.CreateConnectionString(selDBType, this.SSG_DataSource, this.SSG_UserID, this.SSG_Password, this.SSG_InitialCatalog, this.SSG_RawConnectionString, this.SSG_UserManualConnectionString, this.SSG_TrustedConnection);
-                        var tsgCS = this.CreateConnectionString(selDBType, this.TSG_DataSource, this.TSG_UserID, this.TSG_Password, this.TSG_InitialCatalog, this.TSG_RawConnectionString, this.TSG_UserManualConnectionString, this.TSG_TrustedConnection);
+                        var ssgCS = this.CreateConnectionString(selDBType, this.SSG_DataSource, this.SSG_PortNo, this.SSG_UserID, this.SSG_Password, this.SSG_InitialCatalog, this.SSG_RawConnectionString, this.SSG_UserManualConnectionString, this.SSG_TrustedConnection);
+                        var tsgCS = this.CreateConnectionString(selDBType, this.TSG_DataSource, this.TSG_PortNo, this.TSG_UserID, this.TSG_Password, this.TSG_InitialCatalog, this.TSG_RawConnectionString, this.TSG_UserManualConnectionString, this.TSG_TrustedConnection);
 
                         if (ssgCS.ToLower() != tsgCS.ToLower())
                         {
@@ -1064,6 +1143,7 @@ namespace XProject.Database.SchemaCompare.UI
 
                 this.SourceServerGroup.Text = "소스서버";
                 this.SSG_DataSourceTitle.Text = "서버";
+                this.SSG_PortNoTitle.Text = "포트";
                 this.SSG_RawConnectionStringTitle.Text = "연결문자열";
                 this.SSG_UserIDTitle.Text = "아이디";
                 this.SSG_PasswordTitle.Text = "비밀번호";
@@ -1075,6 +1155,7 @@ namespace XProject.Database.SchemaCompare.UI
 
                 this.TargetServerGroup.Text = "타겟서버";
                 this.TSG_DataSourceTitle.Text = "서버";
+                this.TSG_PortNoTitle.Text = "포트";
                 this.TSG_RawConnectionStringTitle.Text = "연결문자열";
                 this.TSG_UserIDTitle.Text = "아이디";
                 this.TSG_PasswordTitle.Text = "비밀번호";
@@ -1105,6 +1186,7 @@ namespace XProject.Database.SchemaCompare.UI
 
                 this.SourceServerGroup.Text = "SourceServer";
                 this.SSG_DataSourceTitle.Text = "Server";
+                this.SSG_PortNoTitle.Text = "Port";
                 this.SSG_RawConnectionStringTitle.Text = $"Connection{Environment.NewLine}String";
                 this.SSG_UserIDTitle.Text = "ID";
                 this.SSG_PasswordTitle.Text = "Password";
@@ -1116,6 +1198,7 @@ namespace XProject.Database.SchemaCompare.UI
 
                 this.TargetServerGroup.Text = "TargetServer";
                 this.TSG_DataSourceTitle.Text = "Server";
+                this.TSG_PortNoTitle.Text = "Port";
                 this.TSG_RawConnectionStringTitle.Text = $"Connection{Environment.NewLine}String";
                 this.TSG_UserIDTitle.Text = "ID";
                 this.TSG_PasswordTitle.Text = "Password";
