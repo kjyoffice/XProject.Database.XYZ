@@ -22,7 +22,6 @@ namespace XProject.Database.SchemaCompare.UI
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new MainFrame(defaultWorkSourceDataFilePath));
-            // Path.Combine(Environment.CurrentDirectory, "XProject.Database.SchemaCompare.SQLServer.exe");
         }
     }
 }

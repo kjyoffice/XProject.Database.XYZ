@@ -67,52 +67,108 @@ namespace XProject.Database.SchemaCompare.UI
             }
         }
 
-        private void ConnectTest(TextBox dataSource, TextBox userID, TextBox password, TextBox initialCatalog, TextBox rawConnectionString, CheckBox userManual, CheckBox trust, ToolStripButton isUIKorLang)
+        private void ConnectTest(string selDBType, TextBox dataSource, TextBox userID, TextBox password, TextBox initialCatalog, TextBox rawConnectionString, CheckBox userManual, CheckBox trust, ToolStripButton isUIKorLang)
         {
-            if (this.ConnectionValueCheck(dataSource, userID, password, initialCatalog, rawConnectionString, userManual, trust, isUIKorLang) == true)
+            if (selDBType != string.Empty)
             {
-                var connectionString = this.CreateConnectionString(dataSource, userID, password, initialCatalog, rawConnectionString, userManual, trust);
-
-                if (connectionString != string.Empty)
+                if (this.ConnectionValueCheck(dataSource, userID, password, initialCatalog, rawConnectionString, userManual, trust, isUIKorLang) == true)
                 {
-                    this.Cursor = Cursors.WaitCursor;
+                    var connectionString = this.CreateConnectionString(selDBType, dataSource, userID, password, initialCatalog, rawConnectionString, userManual, trust);
 
-                    using (var sc = new SqlConnection(connectionString))
+                    if (connectionString != string.Empty)
                     {
                         // 연결 테스트
                         // Connect test
-                        try
+                        var isSuccess = false;
+                        var errorMessage = string.Empty;
+
+                        this.Cursor = Cursors.WaitCursor;
+
+                        if (selDBType == XValue.ProcessValue.DatabaseType_SQLServer)
+                        {
+                            using (var sc = new SqlConnection(connectionString))
+                            {
+                                try
+                                {
+                                    sc.Open();
+
+                                    isSuccess = true;
+                                    errorMessage = string.Empty;
+                                }
+                                catch (Exception ex)
+                                {
+                                    isSuccess = false;
+                                    errorMessage = ex.Message;
+                                }
+                                finally
+                                {
+                                    if (sc.State != ConnectionState.Closed)
+                                    {
+                                        sc.Close();
+                                    }
+                                }
+                            }
+                        }
+                        else if (selDBType == XValue.ProcessValue.DatabaseType_MySQL)
+                        {
+                            using (var sc = new MySql.Data.MySqlClient.MySqlConnection(connectionString))
+                            {
+                                try
+                                {
+                                    sc.Open();
+
+                                    isSuccess = true;
+                                    errorMessage = string.Empty;
+                                }
+                                catch (Exception ex)
+                                {
+                                    isSuccess = false;
+                                    errorMessage = ex.Message;
+                                }
+                                finally
+                                {
+                                    if (sc.State != ConnectionState.Closed)
+                                    {
+                                        sc.Close();
+                                    }
+                                }
+                            }
+                        } 
+                        else
+                        {
+                            isSuccess = false;
+                            errorMessage = "응???????? What??????????";
+                        }
+
+                        // Result
+                        if (isSuccess == true)
                         {
                             var message = ((isUIKorLang.Checked == true) ? "서버에 연결 가능합니다." : "Server connect test OK.");
 
-                            sc.Open();
-
                             MessageBox.Show(message, this.AppTitle, MessageBoxButtons.OK, MessageBoxIcon.Information);
                         }
-                        catch (Exception ex)
+                        else
                         {
-
-                            var message = (((isUIKorLang.Checked == true) ? "서버에 연결할 수 없습니다." : "Server connect is failed") + Environment.NewLine + Environment.NewLine + ex.Message);
+                            var message = (((isUIKorLang.Checked == true) ? "서버에 연결할 수 없습니다." : "Server connect is failed") + Environment.NewLine + Environment.NewLine + errorMessage);
 
                             MessageBox.Show(message, this.AppTitle, MessageBoxButtons.OK, MessageBoxIcon.Error);
                         }
-                        finally
-                        {
-                            if (sc.State != ConnectionState.Closed)
-                            {
-                                sc.Close();
-                            }
-                        }
+
+                        this.Cursor = Cursors.Default;
                     }
+                    else
+                    {
+                        var message = ((isUIKorLang.Checked == true) ? "연결 문자열이 없습니다." : "Not exist connectionstring");
 
-                    this.Cursor = Cursors.Default;
+                        MessageBox.Show(message, this.AppTitle, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
                 }
-                else
-                {
-                    var message = ((isUIKorLang.Checked == true) ? "연결 문자열이 없습니다." : "Not exist connectionstring");
+            }
+            else
+            {
+                var message = ((isUIKorLang.Checked == true) ? "선택된 데이터베이스가 없습니다." : "Selected database is empty.");
 
-                    MessageBox.Show(message, this.AppTitle, MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
+                MessageBox.Show(message, this.AppTitle, MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
 
@@ -228,7 +284,7 @@ namespace XProject.Database.SchemaCompare.UI
             return result;
         }
 
-        private string CreateConnectionString(TextBox dataSource, TextBox userID, TextBox password, TextBox initialCatalog, TextBox rawConnectionString, CheckBox userManual, CheckBox trust)
+        private string CreateConnectionString(string selDBType, TextBox dataSource, TextBox userID, TextBox password, TextBox initialCatalog, TextBox rawConnectionString, CheckBox userManual, CheckBox trust)
         {
             var result = string.Empty;
 
@@ -238,21 +294,34 @@ namespace XProject.Database.SchemaCompare.UI
             }
             else
             {
-                var scsb = new SqlConnectionStringBuilder();
-                scsb.DataSource = dataSource.Text.Trim();
-                scsb.InitialCatalog = initialCatalog.Text.Trim();
+                if (selDBType == XValue.ProcessValue.DatabaseType_SQLServer)
+                {
+                    var scsb = new SqlConnectionStringBuilder();
+                    scsb.DataSource = dataSource.Text.Trim();
+                    scsb.InitialCatalog = initialCatalog.Text.Trim();
 
-                if (trust.Checked == true)
-                {
-                    scsb.IntegratedSecurity = true;
+                    if (trust.Checked == true)
+                    {
+                        scsb.IntegratedSecurity = true;
+                    }
+                    else
+                    {
+                        scsb.UserID = userID.Text.Trim();
+                        scsb.Password = password.Text.Trim();
+                    }
+
+                    result = scsb.ConnectionString;
                 }
-                else
+                else if (selDBType == XValue.ProcessValue.DatabaseType_MySQL)
                 {
+                    var scsb = new MySql.Data.MySqlClient.MySqlConnectionStringBuilder();
+                    scsb.Server = dataSource.Text.Trim();
+                    scsb.Database = initialCatalog.Text.Trim();
                     scsb.UserID = userID.Text.Trim();
                     scsb.Password = password.Text.Trim();
-                }
 
-                result = scsb.ConnectionString;
+                    result = scsb.ConnectionString;
+                }
             }
 
             return result;
@@ -299,17 +368,31 @@ namespace XProject.Database.SchemaCompare.UI
         {
             this.SSG_TrustedConnection.Checked = false;
             this.SSG_TrustedConnection.Enabled = isSQLServer;
-            this.SSG_UserID.Text = string.Empty;
             this.SSG_UserID.Enabled = true;
-            this.SSG_Password.Text = string.Empty;
             this.SSG_Password.Enabled = true;
 
             this.TSG_TrustedConnection.Checked = false;
             this.TSG_TrustedConnection.Enabled = isSQLServer;
-            this.TSG_UserID.Text = string.Empty;
             this.TSG_UserID.Enabled = true;
-            this.TSG_Password.Text = string.Empty;
             this.TSG_Password.Enabled = true;
+        }
+
+        private string GetSelectedDatabaseType()
+        {
+            var dbTypeList = (new RadioButton[] { this.DLG_SQLServer, this.DLG_MySQL }).Where(x => (x.Checked == true)).ToList();
+            var result = string.Empty;
+
+            if (dbTypeList.Count == 1)
+            {
+                var selDBType = (dbTypeList.First().Tag ?? string.Empty).ToString();
+
+                if (XValue.ProcessValue.DatabaseTypeList.Where(x => (x == selDBType)).Count() > 0)
+                {
+                    result = selDBType;
+                }
+            }
+
+            return result;
         }
 
         // ------------------------------------------------------------------------------------------------
@@ -321,6 +404,8 @@ namespace XProject.Database.SchemaCompare.UI
             this.DefaultWorkSourceDataFilePath = defaultWorkSourceDataFilePath;
 
             this.InitializeComponent();
+            this.DLG_SQLServer.Tag = XValue.ProcessValue.DatabaseType_SQLServer;
+            this.DLG_MySQL.Tag = XValue.ProcessValue.DatabaseType_MySQL;
             this.MTSB_IsUIKoreanLanguage.Checked = !XAppConfig.AppSettings.IsStartAppKoreaHanGulLanguage;
             this.MTSB_IsUIKoreanLanguage_Click(null, null);
             this.MTSB_NewWorkSource_Click(null, null);
@@ -724,7 +809,7 @@ namespace XProject.Database.SchemaCompare.UI
 
         private void SSG_ConnectTest_Click(object sender, EventArgs e)
         {
-            this.ConnectTest(this.SSG_DataSource, this.SSG_UserID, this.SSG_Password, this.SSG_InitialCatalog, this.SSG_RawConnectionString, this.SSG_UserManualConnectionString, this.SSG_TrustedConnection, this.MTSB_IsUIKoreanLanguage);
+            this.ConnectTest(this.GetSelectedDatabaseType(), this.SSG_DataSource, this.SSG_UserID, this.SSG_Password, this.SSG_InitialCatalog, this.SSG_RawConnectionString, this.SSG_UserManualConnectionString, this.SSG_TrustedConnection, this.MTSB_IsUIKoreanLanguage);
         }
 
         private void SSG_CopyToTSG_Click(object sender, EventArgs e)
@@ -757,7 +842,7 @@ namespace XProject.Database.SchemaCompare.UI
 
         private void TSG_ConnectTest_Click(object sender, EventArgs e)
         {
-            this.ConnectTest(this.TSG_DataSource, this.TSG_UserID, this.TSG_Password, this.TSG_InitialCatalog, this.TSG_RawConnectionString, this.TSG_UserManualConnectionString, this.TSG_TrustedConnection, this.MTSB_IsUIKoreanLanguage);
+            this.ConnectTest(this.GetSelectedDatabaseType(), this.TSG_DataSource, this.TSG_UserID, this.TSG_Password, this.TSG_InitialCatalog, this.TSG_RawConnectionString, this.TSG_UserManualConnectionString, this.TSG_TrustedConnection, this.MTSB_IsUIKoreanLanguage);
         }
 
         private void TSG_CopyToSSG_Click(object sender, EventArgs e)
@@ -825,57 +910,65 @@ namespace XProject.Database.SchemaCompare.UI
 
                 if (Directory.Exists(reportPath) == true)
                 {
-                    var ssgCS = this.CreateConnectionString(this.SSG_DataSource, this.SSG_UserID, this.SSG_Password, this.SSG_InitialCatalog, this.SSG_RawConnectionString, this.SSG_UserManualConnectionString, this.SSG_TrustedConnection);
-                    var tsgCS = this.CreateConnectionString(this.TSG_DataSource, this.TSG_UserID, this.TSG_Password, this.TSG_InitialCatalog, this.TSG_RawConnectionString, this.TSG_UserManualConnectionString, this.TSG_TrustedConnection);
+                    var selDBType = this.GetSelectedDatabaseType();
 
-                    if (ssgCS.ToLower() != tsgCS.ToLower())
+                    if (selDBType != string.Empty)
                     {
-                        MessageBox.Show("Test");
-                        /*
-                        var appPath = Program.SchemaCompareAppPath;
+                        var ssgCS = this.CreateConnectionString(selDBType, this.SSG_DataSource, this.SSG_UserID, this.SSG_Password, this.SSG_InitialCatalog, this.SSG_RawConnectionString, this.SSG_UserManualConnectionString, this.SSG_TrustedConnection);
+                        var tsgCS = this.CreateConnectionString(selDBType, this.TSG_DataSource, this.TSG_UserID, this.TSG_Password, this.TSG_InitialCatalog, this.TSG_RawConnectionString, this.TSG_UserManualConnectionString, this.TSG_TrustedConnection);
 
-                        if (File.Exists(appPath) == true)
+                        if (ssgCS.ToLower() != tsgCS.ToLower())
                         {
-                            var appParameter = $"\"{ssgCS}\" \"{tsgCS}\" \"{reportPath}\" \"{isUIKorLang.Checked}\"";
+                            var appPath = Path.Combine(Environment.CurrentDirectory, $"XProject.Database.SchemaCompare.{selDBType}.exe");
 
-                            if (isViewCommand == true)
+                            if (File.Exists(appPath) == true)
                             {
-                                var message = (
-                                    (
-                                        (isUIKorLang.Checked == true) ?
-                                        "Ctrl + C 눌러서 현재 대화상자 내용을 복사할 수 있습니다." :
-                                        "Press Ctrl + C, copy to this dialog content"
-                                    ) +
-                                    Environment.NewLine +
-                                    "--------------------------------------------------" +
-                                    Environment.NewLine +
-                                    (appPath + " " + appParameter)
-                                );
+                                var appParameter = $"\"{ssgCS}\" \"{tsgCS}\" \"{reportPath}\" \"{isUIKorLang.Checked}\"";
 
-                                MessageBox.Show(message, this.AppTitle, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                if (isViewCommand == true)
+                                {
+                                    var message = (
+                                        (
+                                            (isUIKorLang.Checked == true) ?
+                                            "Ctrl + C 눌러서 현재 대화상자 내용을 복사할 수 있습니다." :
+                                            "Press Ctrl + C, copy to this dialog content"
+                                        ) +
+                                        Environment.NewLine +
+                                        "--------------------------------------------------" +
+                                        Environment.NewLine +
+                                        (appPath + " " + appParameter)
+                                    );
+
+                                    MessageBox.Show(message, this.AppTitle, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                }
+                                else
+                                {
+                                    var message = ((isUIKorLang.Checked == true) ? "스키마 비교를 시작 하시겠습니까?" : "Start schema compare?");
+
+                                    if (MessageBox.Show(message, this.AppTitle, MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                                    {
+                                        // 실행
+                                        Process.Start(appPath, appParameter);
+                                    }
+                                }
                             }
                             else
                             {
-                                var message = ((isUIKorLang.Checked == true) ? "스키마 비교를 시작 하시겠습니까?" : "Start schema compare?");
+                                var message = ((isUIKorLang.Checked == true) ? "스키마 비교 프로그램이 존재하지 않습니다." : "Not exist schema compare program.");
 
-                                if (MessageBox.Show(message, this.AppTitle, MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
-                                {
-                                    // 실행
-                                    Process.Start(appPath, appParameter);
-                                }
+                                MessageBox.Show(message, this.AppTitle, MessageBoxButtons.OK, MessageBoxIcon.Error);
                             }
                         }
                         else
                         {
-                            var message = ((isUIKorLang.Checked == true) ? "스키마 비교 프로그램이 존재하지 않습니다." : "Not exist schema compare program.");
+                            var message = ((isUIKorLang.Checked == true) ? "소스서버와 타겟서버의 연결문자열이 동일합니다." : "Same connectionstring to source server and target server.");
 
-                            MessageBox.Show(message, this.AppTitle, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            MessageBox.Show(message, this.AppTitle, MessageBoxButtons.OK, MessageBoxIcon.Information);
                         }
-                        */
                     }
                     else
                     {
-                        var message = ((isUIKorLang.Checked == true) ? "소스서버와 타겟서버의 연결문자열이 동일합니다." : "Same connectionstring to source server and target server.");
+                        var message = ((isUIKorLang.Checked == true) ? "선택된 데이터베이스가 없습니다." : "Selected database is empty.");
 
                         MessageBox.Show(message, this.AppTitle, MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
