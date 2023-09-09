@@ -16,16 +16,15 @@ namespace XProject.Database.SchemaCompare.SQLServer.XModel
 
         // -----------------------------------------------------
 
-        // 원본 데이터는, 이름이 같고 스키마가 다른 N개의 ROW이다 
-        // 그로인해 데이터를 이름을 기준으로 그룹해서 스키마를 합치고 이 클래스로 넘어온다
-        public SQLProcedure(string routine_Name, string routine_Definition)
+        public SQLProcedure(IEnumerable<XModel_DataOriginal.SQLProcedure> spList)
         {
-            var routine_DefinitionUse = routine_Definition.ToUpper();
+            var original = new XModel_UseOriginal.SQLProcedure(spList);
+            var routine_Definition = original.ROUTINE_DEFINITION.ToUpper();
 
-            this.Original = new XModel_UseOriginal.SQLProcedure(routine_Name, routine_Definition);
-            this.ROUTINE_NAME = routine_Name.ToUpper();
-            this.ROUTINE_DEFINITION = routine_DefinitionUse;
-            this.CheckSource = XValue.HashValue.SHA512Hash(routine_DefinitionUse);
+            this.Original = original;
+            this.ROUTINE_NAME = original.ROUTINE_NAME.ToUpper();
+            this.ROUTINE_DEFINITION = routine_Definition;
+            this.CheckSource = XValue.HashValue.SHA512Hash(routine_Definition);
         }
     }
 }

@@ -15,30 +15,15 @@ namespace XProject.Database.SchemaCompare.SQLServer.XModel
         public string INDEX_TYPE { get; private set; }
         public string CLUSTERED_TYPE { get; private set; }
         public int KEY_ORDINAL { get; private set; }
-        public string COLUMN_NAME { get; private set; }
-        public string ORDERBY_TYPE { get; private set; }
+        public string COLUMN_NAME_And_ORDERBY_TYPE { get; private set; }
         public string CheckSourceHash { get; private set; }
         public string NotifyContent { get; private set; }
 
         // -----------------------------------------------------
 
-        public SQLTableIndex(DataRow dr)
+        public SQLTableIndex(string table_Name, string constraint_Name, IEnumerable<XModel_DataOriginal.SQLTableIndex> stiList)
         {
-            this.Original = new XModel_Original.SQLTableIndex_Original(dr);
-            this.TABLE_NAME = dr["TABLE_NAME"].ToString().ToUpper();
-            this.CONSTRAINT_NAME = dr["CONSTRAINT_NAME"].ToString().ToUpper();
-            this.INDEX_TYPE = dr["INDEX_TYPE"].ToString().ToUpper();
-            this.CLUSTERED_TYPE = dr["CLUSTERED_TYPE"].ToString().ToUpper();
-            this.KEY_ORDINAL = Convert.ToInt32(dr["KEY_ORDINAL"]);
-            this.COLUMN_NAME = dr["COLUMN_NAME"].ToString().ToUpper();
-            this.ORDERBY_TYPE = dr["ORDERBY_TYPE"].ToString().ToUpper();
-            this.CheckSourceHash = string.Empty;
-            this.NotifyContent = string.Empty;
-        }
-
-        public SQLTableIndex(string table_Name, string constraint_Name, string index_Type, string clustered_Type, int key_Ordinal, string column_Name)
-        {
-            var original = new XModel_Original.SQLTableIndex_Original(table_Name, constraint_Name, index_Type, clustered_Type, key_Ordinal, column_Name);
+            var original = new XModel_UseOriginal.SQLTableIndex(table_Name, constraint_Name, stiList);
             var index_TypeUse = index_Type.ToUpper();
             var clustered_TypeUse = clustered_Type.ToUpper();
             var column_NameUse = column_Name.ToUpper();
@@ -49,8 +34,7 @@ namespace XProject.Database.SchemaCompare.SQLServer.XModel
             this.INDEX_TYPE = index_TypeUse;
             this.CLUSTERED_TYPE = clustered_TypeUse;
             this.KEY_ORDINAL = key_Ordinal;
-            this.COLUMN_NAME = column_NameUse;
-            this.ORDERBY_TYPE = string.Empty;
+            this.COLUMN_NAME_And_ORDERBY_TYPE = column_NameUse;
             this.CheckSourceHash = XValue.HashValue.SHA512Hash(index_TypeUse, clustered_TypeUse, column_NameUse);
             this.NotifyContent = $"{original.CONSTRAINT_NAME} / {original.CLUSTERED_TYPE} / {original.INDEX_TYPE} / {original.COLUMN_NAME}";
         }

@@ -20,17 +20,28 @@ namespace XProject.Database.SchemaCompare.SQLServer.XModel
 
         // -----------------------------------------------------
 
-        public SQLTableForeignKey(DataRow dr)
-        {
-            this.Original = new XModel_Original.SQLTableForeignKey_Original(dr);
-            this.TABLE_NAME = dr["TABLE_NAME"].ToString().ToUpper();
-            this.CONSTRAINT_NAME = dr["CONSTRAINT_NAME"].ToString().ToUpper();
-            this.COLUMN_NAME = dr["COLUMN_NAME"].ToString().ToUpper();
-            this.REFERENCE_TABLE_NAME = dr["REFERENCE_TABLE_NAME"].ToString().ToUpper();
-            this.REFERENCE_COLUMN_NAME = dr["REFERENCE_COLUMN_NAME"].ToString().ToUpper();
-            this.CheckSourceHash = string.Empty;
-            this.NotifyContent = string.Empty;
-        }
+        //public SQLTableForeignKey(DataRow dr)
+        //{
+        //    this.Original = new XModel_Original.SQLTableForeignKey_Original(dr);
+        //    this.TABLE_NAME = dr["TABLE_NAME"].ToString().ToUpper();
+        //    this.CONSTRAINT_NAME = dr["CONSTRAINT_NAME"].ToString().ToUpper();
+        //    this.COLUMN_NAME = dr["COLUMN_NAME"].ToString().ToUpper();
+        //    this.REFERENCE_TABLE_NAME = dr["REFERENCE_TABLE_NAME"].ToString().ToUpper();
+        //    this.REFERENCE_COLUMN_NAME = dr["REFERENCE_COLUMN_NAME"].ToString().ToUpper();
+        //    this.CheckSourceHash = string.Empty;
+        //    this.NotifyContent = string.Empty;
+        //}
+
+                //.Select(
+                //    x => new XModel.SQLTableForeignKey(
+                //        x.Key.TABLE_NAME,
+                //        x.Key.CONSTRAINT_NAME,
+                //        string.Join(", ", x.Select(y => y.COLUMN_NAME)),
+                //        x.First().REFERENCE_TABLE_NAME,
+                //        string.Join(", ", x.Select(y => y.REFERENCE_COLUMN_NAME))
+                //    )
+                //)
+                //.ToList();
 
         public SQLTableForeignKey(string table_Name, string constraint_Name, string column_Name, string reference_Table_Name, string reference_Column_Name)
         {

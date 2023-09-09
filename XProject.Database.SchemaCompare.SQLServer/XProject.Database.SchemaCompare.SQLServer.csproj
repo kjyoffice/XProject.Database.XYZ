@@ -77,6 +77,8 @@
     <Compile Include="XModel\TableResult.cs" />
     <Compile Include="XModel_UseOriginal\SQLFunction.cs" />
     <Compile Include="XModel_UseOriginal\SQLProcedure.cs" />
+    <Compile Include="XModel_UseOriginal\SQLTableIndex.cs" />
+    <Compile Include="XModel_UseOriginal\SQLTableTrigger.cs" />
     <Compile Include="XValue\HashValue.cs" />
     <Compile Include="XValue\ProcessValue.cs" />
     <Compile Include="XWork\ExportWork.cs" />

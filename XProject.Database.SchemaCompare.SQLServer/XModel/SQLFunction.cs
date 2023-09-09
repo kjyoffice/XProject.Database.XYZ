@@ -16,16 +16,15 @@ namespace XProject.Database.SchemaCompare.SQLServer.XModel
 
         // -----------------------------------------------------
 
-        // 원본 데이터는, 이름이 같고 스키마가 다른 N개의 ROW이다 
-        // 그로인해 데이터를 이름을 기준으로 그룹해서 스키마를 합치고 이 클래스로 넘어온다
-        public SQLFunction(string function_Name, string function_Definition)
+        public SQLFunction(IEnumerable<XModel_DataOriginal.SQLFunction> sfList)
         {
-            var function_DefinitionUse = function_Definition.ToUpper();
+            var original = new XModel_UseOriginal.SQLFunction(sfList);
+            var function_Definition = original.FUNCTION_DEFINITION.ToUpper();
 
-            this.Original = new XModel_UseOriginal.SQLFunction(function_Name, function_Definition);
-            this.FUNCTION_NAME = function_Name.ToUpper();
-            this.FUNCTION_DEFINITION = function_DefinitionUse;
-            this.CheckSource = XValue.HashValue.SHA512Hash(function_DefinitionUse);
+            this.Original = original;
+            this.FUNCTION_NAME = original.FUNCTION_NAME.ToUpper();
+            this.FUNCTION_DEFINITION = function_Definition;
+            this.CheckSource = XValue.HashValue.SHA512Hash(function_Definition);
         }
     }
 }

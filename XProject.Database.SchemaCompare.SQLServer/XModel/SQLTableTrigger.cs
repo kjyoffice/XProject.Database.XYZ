@@ -9,7 +9,7 @@ namespace XProject.Database.SchemaCompare.SQLServer.XModel
 {
     public class SQLTableTrigger
     {
-        public XModel_Original.SQLTableTrigger_Original Original { get; private set; }
+        public XModel_UseOriginal.SQLTableTrigger Original { get; private set; }
         public string TABLE_NAME { get; private set; }
         public string TRIGGER_NAME { get; private set; }
         public string TRIGGER_SCHEMA { get; private set; }
@@ -17,24 +17,16 @@ namespace XProject.Database.SchemaCompare.SQLServer.XModel
 
         // -----------------------------------------------------
 
-        public SQLTableTrigger(DataRow dr)
+        public SQLTableTrigger(string table_Name, string trigger_Name, IEnumerable<XModel_DataOriginal.SQLTableTrigger> sttList)
         {
-            this.Original = new XModel_Original.SQLTableTrigger_Original(dr);
-            this.TABLE_NAME = dr["TABLE_NAME"].ToString().ToUpper();
-            this.TRIGGER_NAME = dr["TRIGGER_NAME"].ToString().ToUpper();
-            this.TRIGGER_SCHEMA = dr["TRIGGER_SCHEMA"].ToString().ToUpper();
-            this.CheckSource = string.Empty;
-        }
+            var original = new XModel_UseOriginal.SQLTableTrigger(table_Name, trigger_Name, sttList);
+            var trigger_Schema = original.TRIGGER_SCHEMA.ToUpper();
 
-        public SQLTableTrigger(string table_Name, string trigger_Name, string trigger_Schema)
-        {
-            var trigger_SchemaUse = trigger_Schema.ToUpper();
-
-            this.Original = new XModel_Original.SQLTableTrigger_Original(table_Name, trigger_Name, trigger_Schema);
-            this.TABLE_NAME = table_Name.ToUpper();
-            this.TRIGGER_NAME = trigger_Name.ToUpper();
-            this.TRIGGER_SCHEMA = trigger_SchemaUse;
-            this.CheckSource = XValue.HashValue.SHA512Hash(trigger_SchemaUse);
+            this.Original = original;
+            this.TABLE_NAME = original.TABLE_NAME.ToUpper();
+            this.TRIGGER_NAME = original.TRIGGER_NAME.ToUpper();
+            this.TRIGGER_SCHEMA = trigger_Schema;
+            this.CheckSource = XValue.HashValue.SHA512Hash(trigger_Schema);
         }
     }
 }
