@@ -9,7 +9,7 @@ namespace XProject.Database.SchemaCompare.SQLServer.XWork
 {
     public class ExportWork
     {
-        public static void ExportSchema(string directoryPath, string fileName, string sourceContent, string targetContent, bool isKoreaHanGulLanguage)
+        public static void ExportSchema(XModel.ProcessXSupport pxs, string directoryPath, string fileName, string sourceContent, string targetContent)
         {
             if (Directory.Exists(directoryPath) == false)
             {
@@ -42,7 +42,7 @@ namespace XProject.Database.SchemaCompare.SQLServer.XWork
                 var doNotExecute = string.Join(
                     Environment.NewLine, 
                     (
-                        (isKoreaHanGulLanguage == true) ?
+                        (pxs.IsKoreaHanGulLanguage == true) ?
                         (
                             new string[] {
                                 "-- 이 스키마를 실행하지 마세요",
@@ -102,7 +102,7 @@ namespace XProject.Database.SchemaCompare.SQLServer.XWork
                 };
                 var batContent = (
                     "@echo off" + Environment.NewLine +
-                    string.Join(Environment.NewLine, ((isKoreaHanGulLanguage == true) ? batContentKor : batContentEng)) +
+                    string.Join(Environment.NewLine, ((pxs.IsKoreaHanGulLanguage == true) ? batContentKor : batContentEng)) +
                     $"code -d \"{sourceFilePath}\" \"{targetFilePath}\"" + Environment.NewLine
                 );
 
@@ -110,11 +110,6 @@ namespace XProject.Database.SchemaCompare.SQLServer.XWork
                 // 배치파일은 시스템에서 쓰는 인코딩.
                 File.WriteAllText(batFilePath, batContent, Encoding.Default);
             }
-        }
-
-        public static void ExportSchema(string directoryPath, string fileName, string sourceContent, bool isKoreaHanGulLanguage)
-        {
-            ExportWork.ExportSchema(directoryPath, fileName, sourceContent, string.Empty, isKoreaHanGulLanguage);
         }
     }
 }

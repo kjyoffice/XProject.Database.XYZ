@@ -48,6 +48,8 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="XData\SQLWork.cs" />
+    <Compile Include="XModel\ArgumentsXSupport.cs" />
+    <Compile Include="XModel\ProcessXSupport.cs" />
     <Compile Include="XModel\SQLFunction.cs" />
     <Compile Include="XModel\SQLProcedure.cs" />
     <Compile Include="XModel\SQLTable.cs" />

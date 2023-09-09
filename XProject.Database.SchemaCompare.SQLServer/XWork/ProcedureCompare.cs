@@ -10,11 +10,11 @@ namespace XProject.Database.SchemaCompare.SQLServer.XWork
 {
     public class ProcedureCompare
     {
-        public static void ExecuteNow(XData.SQLWork sourceSQL, XData.SQLWork targetSQL, Action<string> workResult, string schemaDirectory, bool isKoreaHanGulLanguage)
+        public static void ExecuteNow(XModel.ProcessXSupport pxs)
         {
             // 프로시저 리스트 가져와서 소스를 기준으로 LEFT OUTER JOIN
-            var compareResult = sourceSQL.ProcedureList().GroupJoin(
-                targetSQL.ProcedureList(),
+            var compareResult = pxs.SourceSQL.ProcedureList().GroupJoin(
+                pxs.TargetSQL.ProcedureList(),
                 x => x.ROUTINE_NAME,
                 y => y.ROUTINE_NAME,
                 (x, y) => new
@@ -29,35 +29,36 @@ namespace XProject.Database.SchemaCompare.SQLServer.XWork
             var notExistProcedureList = compareResult.Where(x => (x.Target == null)).ToList();
 
             // 존재하지 않는 프로시저만
-            workResult(string.Empty);
-            workResult(((isKoreaHanGulLanguage == true) ? "<<<<<<<<<< 존재하지 않는 프로시저 >>>>>>>>>>" : "<<<<<<<<<< Not exist procedure >>>>>>>>>>"));
-            workResult(string.Join(Environment.NewLine, notExistProcedureList.Select(x => x.Source.ROUTINE_NAME_Original)));
+            pxs.WriteReport(string.Empty);
+            pxs.WriteReport(((pxs.IsKoreaHanGulLanguage == true) ? "<<<<<<<<<< 존재하지 않는 프로시저 >>>>>>>>>>" : "<<<<<<<<<< Not exist procedure >>>>>>>>>>"));
+            pxs.WriteReport(string.Join(Environment.NewLine, notExistProcedureList.Select(x => x.Source.ROUTINE_NAME_Original)));
 
             // CREATE PROCEDURE 스키마 내보내기
             notExistProcedureList.ForEach(
                 x =>
                 ExportWork.ExportSchema(
-                    Path.Combine(schemaDirectory, "PROCEDURE", "CREATE"),
+                    pxs,
+                    Path.Combine(pxs.SchemaDirectory, "PROCEDURE", "CREATE"),
                     x.Source.ROUTINE_NAME_Original, 
                     x.Source.ROUTINE_DEFINITION_Original,
-                    isKoreaHanGulLanguage
+                    string.Empty
                 )
             );
 
             // 존재하지만 다른 프로시저
-            workResult(string.Empty);
-            workResult(((isKoreaHanGulLanguage == true) ? "<<<<<<<<<< 존재하지만 스키마가 다른 프로시저 >>>>>>>>>>" : "<<<<<<<<<< Exist procedure but different >>>>>>>>>>"));
-            workResult(string.Join(Environment.NewLine, existProcedureList.Select(x => x.Source.ROUTINE_NAME_Original)));
+            pxs.WriteReport(string.Empty);
+            pxs.WriteReport(((pxs.IsKoreaHanGulLanguage == true) ? "<<<<<<<<<< 존재하지만 스키마가 다른 프로시저 >>>>>>>>>>" : "<<<<<<<<<< Exist procedure but different >>>>>>>>>>"));
+            pxs.WriteReport(string.Join(Environment.NewLine, existProcedureList.Select(x => x.Source.ROUTINE_NAME_Original)));
 
             // CREATE PROCEDURE 스키마 내보내기
             existProcedureList.ForEach(
                 x =>
                 ExportWork.ExportSchema(
-                    Path.Combine(schemaDirectory, "PROCEDURE", "ALTER"),
+                    pxs,
+                    Path.Combine(pxs.SchemaDirectory, "PROCEDURE", "ALTER"),
                     x.Source.ROUTINE_NAME_Original, 
                     x.Source.ROUTINE_DEFINITION_Original,
-                    x.Target.ROUTINE_DEFINITION_Original,
-                    isKoreaHanGulLanguage
+                    x.Target.ROUTINE_DEFINITION_Original
                 )
             );
         }
