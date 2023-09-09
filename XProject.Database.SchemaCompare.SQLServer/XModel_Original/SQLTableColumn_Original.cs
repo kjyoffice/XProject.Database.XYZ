@@ -9,21 +9,21 @@ namespace XProject.Database.SchemaCompare.SQLServer.XModel_Original
 {
     public class SQLTableColumn_Original
     {
-        public string TABLE_NAME_Original { get; private set; }
-        public string COLUMN_NAME_Original { get; private set; }
-        public string IS_NULLABLE_Original { get; private set; }
-        public string DATA_TYPE_Original { get; private set; }
-        public string IS_IDENTITY_Original { get; private set; }
+        public string TABLE_NAME { get; private set; }
+        public string COLUMN_NAME { get; private set; }
+        public string IS_NULLABLE { get; private set; }
+        public string DATA_TYPE { get; private set; }
+        public string IS_IDENTITY { get; private set; }
 
         // -----------------------------------------------------
 
         public SQLTableColumn_Original(DataRow dr) 
         {
-            this.TABLE_NAME_Original = dr["TABLE_NAME"].ToString();
-            this.COLUMN_NAME_Original = dr["COLUMN_NAME"].ToString();
-            this.IS_NULLABLE_Original = dr["IS_NULLABLE"].ToString();
-            this.DATA_TYPE_Original = dr["DATA_TYPE"].ToString();
-            this.IS_IDENTITY_Original = dr["IS_IDENTITY"].ToString();
+            this.TABLE_NAME = dr["TABLE_NAME"].ToString();
+            this.COLUMN_NAME = dr["COLUMN_NAME"].ToString();
+            this.IS_NULLABLE = dr["IS_NULLABLE"].ToString();
+            this.DATA_TYPE = dr["DATA_TYPE"].ToString();
+            this.IS_IDENTITY = dr["IS_IDENTITY"].ToString();
         }
     }
 }

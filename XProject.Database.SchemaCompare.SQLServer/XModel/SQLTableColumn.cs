@@ -36,7 +36,7 @@ namespace XProject.Database.SchemaCompare.SQLServer.XModel
             // MEMBERNAME NVARCHAR(100) NULL
 
             // 컬럼 이름
-            sb.Append((original.COLUMN_NAME_Original + " "));
+            sb.Append((original.COLUMN_NAME + " "));
 
             // 테이터 형식
             if ((data_Type == "NUMERIC") || (data_Type == "DECIMAL"))

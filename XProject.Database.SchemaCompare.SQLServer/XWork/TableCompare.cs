@@ -33,7 +33,7 @@ namespace XProject.Database.SchemaCompare.SQLServer.XWork
             // 존재하지 않는 테이블
             pxs.WriteReport(string.Empty);
             pxs.WriteReport("<<<<<<<<<< 존재하지 않는 테이블 >>>>>>>>>>");
-            pxs.WriteReport(string.Join(Environment.NewLine, tableResult.NotExistTableList.Select(x => x.Original.TABLE_NAME_Original)));
+            pxs.WriteReport(string.Join(Environment.NewLine, tableResult.NotExistTableList.Select(x => x.Original.TABLE_NAME)));
 
             // 테이블 비교
             pxs.WriteReport(string.Empty);
@@ -54,7 +54,7 @@ namespace XProject.Database.SchemaCompare.SQLServer.XWork
                 {
                     // 테이블 이름 뿌리고
                     pxs.WriteReport(string.Empty);
-                    pxs.WriteReport($">>>>>>>>>> {table.Original.TABLE_NAME_Original}");
+                    pxs.WriteReport($">>>>>>>>>> {table.Original.TABLE_NAME}");
 
                     foreach (var kvp in compareResult)
                     {
@@ -115,7 +115,7 @@ namespace XProject.Database.SchemaCompare.SQLServer.XWork
                 )
                 .Select(
                     x => (
-                        x.Source.Original.COLUMN_NAME_Original + " : " + 
+                        x.Source.Original.COLUMN_NAME + " : " + 
                         (
                             (x.Target == null) ? 
                             ("컬럼 없음 : " + x.Source.ColumnSchema) : 
@@ -321,7 +321,7 @@ namespace XProject.Database.SchemaCompare.SQLServer.XWork
                 // 존재하지 않는 트리거
                 sb.AppendLine(string.Empty);
                 sb.AppendLine("***** 존재하지 않음");
-                sb.AppendLine(string.Join(Environment.NewLine, existTriggerList.Select(x => x.Source.Original.TRIGGER_NAME_Original)));
+                sb.AppendLine(string.Join(Environment.NewLine, existTriggerList.Select(x => x.Source.Original.TRIGGER_NAME)));
 
                 // CREATE TRIGGER 스키마 내보내기
                 existTriggerList.ForEach(
@@ -329,8 +329,8 @@ namespace XProject.Database.SchemaCompare.SQLServer.XWork
                     ExportWork.ExportSchema(
                         pxs,
                         new List<string>() { "TRIGGER", tableName, "CREATE" },
-                        x.Source.Original.TRIGGER_NAME_Original, 
-                        x.Source.Original.TRIGGER_SCHEMA_Original,
+                        x.Source.Original.TRIGGER_NAME, 
+                        x.Source.Original.TRIGGER_SCHEMA,
                         string.Empty
                     )
                 );
@@ -341,7 +341,7 @@ namespace XProject.Database.SchemaCompare.SQLServer.XWork
                 // 존재하지만 다른 트리거
                 sb.AppendLine(string.Empty);
                 sb.AppendLine("***** 이름은 같지만 스키마가 다름");
-                sb.AppendLine(string.Join(Environment.NewLine, existTriggerList.Select(x => x.Source.Original.TRIGGER_NAME_Original)));
+                sb.AppendLine(string.Join(Environment.NewLine, existTriggerList.Select(x => x.Source.Original.TRIGGER_NAME)));
 
                 // CREATE TRIGGER 스키마 내보내기
                 existTriggerList.ForEach(
@@ -349,9 +349,9 @@ namespace XProject.Database.SchemaCompare.SQLServer.XWork
                     ExportWork.ExportSchema(
                         pxs,
                         new List<string>() { "TRIGGER", tableName, "ALTER" },
-                        x.Source.Original.TRIGGER_NAME_Original,
-                        x.Source.Original.TRIGGER_SCHEMA_Original,
-                        x.Target.Original.TRIGGER_SCHEMA_Original
+                        x.Source.Original.TRIGGER_NAME,
+                        x.Source.Original.TRIGGER_SCHEMA,
+                        x.Target.Original.TRIGGER_SCHEMA
                     )
                 );
             }
