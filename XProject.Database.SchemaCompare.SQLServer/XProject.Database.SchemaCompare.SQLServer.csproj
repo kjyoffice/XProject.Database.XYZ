@@ -50,6 +50,14 @@
     <Compile Include="XData\SQLWork.cs" />
     <Compile Include="XModel\ArgumentsXSupport.cs" />
     <Compile Include="XModel\ProcessXSupport.cs" />
+    <Compile Include="XModel_DataOriginal\SQLFunction.cs" />
+    <Compile Include="XModel_DataOriginal\SQLProcedure.cs" />
+    <Compile Include="XModel_DataOriginal\SQLTableColumn.cs" />
+    <Compile Include="XModel_DataOriginal\SQLTableConstraints.cs" />
+    <Compile Include="XModel_DataOriginal\SQLTableForeignKey.cs" />
+    <Compile Include="XModel_DataOriginal\SQLTableIndex.cs" />
+    <Compile Include="XModel_DataOriginal\SQLTableTrigger.cs" />
+    <Compile Include="XModel_DataOriginal\SQLTable.cs" />
     <Compile Include="XModel_Original\SQLFunction_Original.cs" />
     <Compile Include="XModel\SQLFunction.cs" />
     <Compile Include="XModel_Original\SQLProcedure_Original.cs" />
