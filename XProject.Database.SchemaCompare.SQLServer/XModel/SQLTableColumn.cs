@@ -19,11 +19,7 @@ namespace XProject.Database.SchemaCompare.SQLServer.XModel
         public string IS_IDENTITY { get; private set; }
         public int SEED_VALUE { get; private set; }
         public int INCREMENT_VALUE { get; private set; }
-        public string TABLE_NAME_Original { get; private set; }
-        public string COLUMN_NAME_Original { get; private set; }
-        public string IS_NULLABLE_Original { get; private set; }
-        public string DATA_TYPE_Original { get; private set; }
-        public string IS_IDENTITY_Original { get; private set; }
+        public SQLTableColumn_Original Original { get; private set; }
         public string CheckSource { get; private set; }
         public string ColumnSchema { get; private set; }
         public string AddColumnSchema { get; private set; }
@@ -40,7 +36,7 @@ namespace XProject.Database.SchemaCompare.SQLServer.XModel
             // MEMBERNAME NVARCHAR(100) NULL
 
             // 컬럼 이름
-            sb.Append((this.COLUMN_NAME_Original + " "));
+            sb.Append((this.Original.COLUMN_NAME_Original + " "));
 
             // 테이터 형식
             var dt = this.DATA_TYPE;
@@ -130,7 +126,6 @@ namespace XProject.Database.SchemaCompare.SQLServer.XModel
 
         public SQLTableColumn(DataRow dr) 
         {
-            // Upper
             this.TABLE_NAME = dr["TABLE_NAME"].ToString().ToUpper();
             this.COLUMN_NAME = dr["COLUMN_NAME"].ToString().ToUpper();
             this.IS_NULLABLE = dr["IS_NULLABLE"].ToString().ToUpper();
@@ -141,12 +136,7 @@ namespace XProject.Database.SchemaCompare.SQLServer.XModel
             this.IS_IDENTITY = dr["IS_IDENTITY"].ToString().ToUpper();
             this.SEED_VALUE = Convert.ToInt32(dr["SEED_VALUE"]);
             this.INCREMENT_VALUE = Convert.ToInt32(dr["INCREMENT_VALUE"]);
-            // Original
-            this.TABLE_NAME_Original = dr["TABLE_NAME"].ToString();
-            this.COLUMN_NAME_Original = dr["COLUMN_NAME"].ToString();
-            this.IS_NULLABLE_Original = dr["IS_NULLABLE"].ToString();
-            this.DATA_TYPE_Original = dr["DATA_TYPE"].ToString();
-            this.IS_IDENTITY_Original = dr["IS_IDENTITY"].ToString();
+            this.Original = new SQLTableColumn_Original(dr);
 
             this.CheckSource = XValue.HashValue.SHA512Hash(
                 this.IS_NULLABLE,

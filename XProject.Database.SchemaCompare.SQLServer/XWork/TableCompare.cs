@@ -115,7 +115,7 @@ namespace XProject.Database.SchemaCompare.SQLServer.XWork
                 )
                 .Select(
                     x => (
-                        x.Source.COLUMN_NAME_Original + " : " + 
+                        x.Source.Original.COLUMN_NAME_Original + " : " + 
                         (
                             (x.Target == null) ? 
                             ("컬럼 없음 : " + x.Source.ColumnSchema) : 
