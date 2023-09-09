@@ -38,7 +38,7 @@ namespace XProject.Database.SchemaCompare.SQLServer.XWork
                 x =>
                 ExportWork.ExportSchema(
                     pxs,
-                    Path.Combine(pxs.SchemaDirectory, "PROCEDURE", "CREATE"),
+                    new List<string>() { "PROCEDURE", "CREATE" },
                     x.Source.ROUTINE_NAME_Original, 
                     x.Source.ROUTINE_DEFINITION_Original,
                     string.Empty
@@ -55,7 +55,7 @@ namespace XProject.Database.SchemaCompare.SQLServer.XWork
                 x =>
                 ExportWork.ExportSchema(
                     pxs,
-                    Path.Combine(pxs.SchemaDirectory, "PROCEDURE", "ALTER"),
+                    new List<string>() { "PROCEDURE", "ALTER" },
                     x.Source.ROUTINE_NAME_Original, 
                     x.Source.ROUTINE_DEFINITION_Original,
                     x.Target.ROUTINE_DEFINITION_Original

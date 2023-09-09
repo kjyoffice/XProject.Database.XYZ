@@ -328,7 +328,7 @@ namespace XProject.Database.SchemaCompare.SQLServer.XWork
                     x =>
                     ExportWork.ExportSchema(
                         pxs,
-                        Path.Combine(pxs.SchemaDirectory, "TRIGGER", tableName, "CREATE"),
+                        new List<string>() { "TRIGGER", tableName, "CREATE" },
                         x.Source.TRIGGER_NAME_Original, 
                         x.Source.TRIGGER_SCHEMA_Original,
                         string.Empty
@@ -348,7 +348,7 @@ namespace XProject.Database.SchemaCompare.SQLServer.XWork
                     x =>
                     ExportWork.ExportSchema(
                         pxs,
-                        Path.Combine(pxs.SchemaDirectory, "TRIGGER", tableName, "ALTER"),
+                        new List<string>() { "TRIGGER", tableName, "ALTER" },
                         x.Source.TRIGGER_NAME_Original,
                         x.Source.TRIGGER_SCHEMA_Original,
                         x.Target.TRIGGER_SCHEMA_Original

@@ -9,15 +9,12 @@ namespace XProject.Database.SchemaCompare.SQLServer.XWork
 {
     public class ExportWork
     {
-        public static void ExportSchema(XModel.ProcessXSupport pxs, string directoryPath, string fileName, string sourceContent, string targetContent)
+        public static void ExportSchema(XModel.ProcessXSupport pxs, List<string> subDirNameList, string fileName, string sourceContent, string targetContent)
         {
-            if (Directory.Exists(directoryPath) == false)
-            {
-                Directory.CreateDirectory(directoryPath);
-            }
-
+            var directoryPath = XValue.ProcessValue.CreateDirectoryPath(pxs.SchemaDirectory, subDirNameList);
             // 소스서버의 스키마
             var sourceFilePath = Path.Combine(directoryPath, (fileName + ".sql"));
+
             // 저장
             File.WriteAllText(sourceFilePath, sourceContent, Encoding.UTF8);
 
@@ -30,13 +27,8 @@ namespace XProject.Database.SchemaCompare.SQLServer.XWork
                 // 타겟서버의 스키마
                 // ** 타겟서버의 스키마는 적용하지 않고 단순 참조로만 사용 할 것이므로 
                 //    따로 폴더를 만들어서 저장, 헷갈리지 않도록 최소화 하는 것을 의도함
-                var targetDirectoryPath = Path.Combine(directoryPath, "_TargetReference");
+                var targetDirectoryPath = XValue.ProcessValue.CreateDirectoryPath(directoryPath, "_TargetReference");
                 var targetFilePath = Path.Combine(targetDirectoryPath, (fileName + " - DO_NOT_EXECUTE.sql"));
-
-                if (Directory.Exists(targetDirectoryPath) == false)
-                {
-                    Directory.CreateDirectory(targetDirectoryPath);
-                }
 
                 // 타겟 파일의 실행하지 말라는 경고추가
                 var doNotExecute = string.Join(

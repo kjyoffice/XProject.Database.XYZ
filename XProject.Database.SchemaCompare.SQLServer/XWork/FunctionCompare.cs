@@ -38,7 +38,7 @@ namespace XProject.Database.SchemaCompare.SQLServer.XWork
                 x =>
                 ExportWork.ExportSchema(
                     pxs,
-                    Path.Combine(pxs.SchemaDirectory, "FUNCTION", "CREATE"),
+                    new List<string>() { "FUNCTION", "CREATE" },
                     x.Source.FUNCTION_NAME_Original,
                     x.Source.FUNCTION_DEFINITION_Original,
                     string.Empty
@@ -55,7 +55,7 @@ namespace XProject.Database.SchemaCompare.SQLServer.XWork
                 x =>
                 ExportWork.ExportSchema(
                     pxs,
-                    Path.Combine(pxs.SchemaDirectory, "FUNCTION", "ALTER"),
+                    new List<string>() { "FUNCTION", "ALTER" },
                     x.Source.FUNCTION_NAME_Original,
                     x.Source.FUNCTION_DEFINITION_Original,
                     x.Target.FUNCTION_DEFINITION_Original

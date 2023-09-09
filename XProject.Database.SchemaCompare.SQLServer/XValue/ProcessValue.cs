@@ -24,5 +24,24 @@ namespace XProject.Database.SchemaCompare.SQLServer.XValue
 
             return result;
         }
+
+        public static string CreateDirectoryPath(string baseDirPath, List<string> subDirNameList)
+        {
+            subDirNameList.Insert(0, baseDirPath);
+
+            var result = Path.Combine(subDirNameList.ToArray());
+
+            if (Directory.Exists(result) == false)
+            {
+                Directory.CreateDirectory(result);
+            }
+
+            return result;
+        }
+
+        public static string CreateDirectoryPath(string baseDirPath, string subDirName)
+        {
+            return ProcessValue.CreateDirectoryPath(baseDirPath, new List<string>() { subDirName });
+        }
     }
 }
