@@ -33,7 +33,7 @@ namespace XProject.Database.SchemaCompare.SQLServer.XWork
             // 존재하지 않는 테이블
             pxs.WriteReport(string.Empty);
             pxs.WriteReport("<<<<<<<<<< 존재하지 않는 테이블 >>>>>>>>>>");
-            pxs.WriteReport(string.Join(Environment.NewLine, tableResult.NotExistTableList.Select(x => x.TABLE_NAME_Original)));
+            pxs.WriteReport(string.Join(Environment.NewLine, tableResult.NotExistTableList.Select(x => x.Original.TABLE_NAME_Original)));
 
             // 테이블 비교
             pxs.WriteReport(string.Empty);
@@ -54,7 +54,7 @@ namespace XProject.Database.SchemaCompare.SQLServer.XWork
                 {
                     // 테이블 이름 뿌리고
                     pxs.WriteReport(string.Empty);
-                    pxs.WriteReport($">>>>>>>>>> {table.TABLE_NAME_Original}");
+                    pxs.WriteReport($">>>>>>>>>> {table.Original.TABLE_NAME_Original}");
 
                     foreach (var kvp in compareResult)
                     {

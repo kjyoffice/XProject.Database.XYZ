@@ -10,16 +10,14 @@ namespace XProject.Database.SchemaCompare.SQLServer.XModel
     public class SQLTable
     {
         public string TABLE_NAME { get; private set; }
-        public string TABLE_NAME_Original { get; private set; }
+        public SQLTable_Original Original { get; private set; }
 
         // ---------------------------------------------------
 
         public SQLTable(DataRow dr)
         {
-            // Upper
             this.TABLE_NAME = dr["TABLE_NAME"].ToString().ToUpper();
-            // Original
-            this.TABLE_NAME_Original = dr["TABLE_NAME"].ToString();
+            this.Original = new SQLTable_Original(dr);
         }
     }
 }
