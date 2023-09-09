@@ -31,7 +31,7 @@ namespace XProject.Database.SchemaCompare.SQLServer.XWork
             // 존재하지 않는 함수만
             pxs.WriteReport(string.Empty);
             pxs.WriteReport("<<<<<<<<<< 존재하지 않는 함수 >>>>>>>>>>");
-            pxs.WriteReport(string.Join(Environment.NewLine, notExistFunctionList.Select(x => x.Source.FUNCTION_NAME_Original)));
+            pxs.WriteReport(string.Join(Environment.NewLine, notExistFunctionList.Select(x => x.Source.Original.FUNCTION_NAME_Original)));
 
             // CREATE FUNCTION 스키마 내보내기
             notExistFunctionList.ForEach(
@@ -39,8 +39,8 @@ namespace XProject.Database.SchemaCompare.SQLServer.XWork
                 ExportWork.ExportSchema(
                     pxs,
                     new List<string>() { "FUNCTION", "CREATE" },
-                    x.Source.FUNCTION_NAME_Original,
-                    x.Source.FUNCTION_DEFINITION_Original,
+                    x.Source.Original.FUNCTION_NAME_Original,
+                    x.Source.Original.FUNCTION_DEFINITION_Original,
                     string.Empty
                 )
             );
@@ -48,7 +48,7 @@ namespace XProject.Database.SchemaCompare.SQLServer.XWork
             // 존재하지만 다른 함수
             pxs.WriteReport(string.Empty);
             pxs.WriteReport("<<<<<<<<<< 존재하지만 스키마가 다른 함수 >>>>>>>>>>");
-            pxs.WriteReport(string.Join(Environment.NewLine, existFunctionList.Select(x => x.Source.FUNCTION_NAME_Original)));
+            pxs.WriteReport(string.Join(Environment.NewLine, existFunctionList.Select(x => x.Source.Original.FUNCTION_NAME_Original)));
 
             // CREATE FUNCTION 스키마 내보내기
             existFunctionList.ForEach(
@@ -56,9 +56,9 @@ namespace XProject.Database.SchemaCompare.SQLServer.XWork
                 ExportWork.ExportSchema(
                     pxs,
                     new List<string>() { "FUNCTION", "ALTER" },
-                    x.Source.FUNCTION_NAME_Original,
-                    x.Source.FUNCTION_DEFINITION_Original,
-                    x.Target.FUNCTION_DEFINITION_Original
+                    x.Source.Original.FUNCTION_NAME_Original,
+                    x.Source.Original.FUNCTION_DEFINITION_Original,
+                    x.Target.Original.FUNCTION_DEFINITION_Original
                 )
             );
         }

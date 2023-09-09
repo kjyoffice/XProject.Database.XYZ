@@ -377,11 +377,11 @@ namespace XProject.Database.SchemaCompare.SQLServer.XData
         public List<XModel.SQLFunction> FunctionList()
         {
             // 함수
-            return this.FunctionData.GroupBy(x => x.FUNCTION_NAME_Original)
+            return this.FunctionData.GroupBy(x => x.Original.FUNCTION_NAME_Original)
                 .Select(
                     x => new XModel.SQLFunction(
                         x.Key,
-                        string.Join(string.Empty, x.Select(y => y.FUNCTION_DEFINITION_Original)).Trim()
+                        string.Join(string.Empty, x.Select(y => y.Original.FUNCTION_DEFINITION_Original)).Trim()
                     )
                 ).ToList();
         }
