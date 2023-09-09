@@ -30,6 +30,11 @@ namespace XProject.Database.SchemaCompare.UI.XFrame
             //>
         }
 
+        private void AboutApplicationFrame_Shown(object sender, EventArgs e)
+        {
+            //>
+        }
+
         private void CloseAboutApp_Click(object sender, EventArgs e)
         {
             this.Close();
@@ -43,11 +48,6 @@ namespace XProject.Database.SchemaCompare.UI.XFrame
         private void SchemaDiffApp_Click(object sender, EventArgs e)
         {
             Process.Start("https://code.visualstudio.com");
-        }
-
-        private void AboutApplicationFrame_Load_1(object sender, EventArgs e)
-        {
-
         }
     }
 }

@@ -113,7 +113,8 @@
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "AboutApplicationFrame";
-            this.Load += new System.EventHandler(this.AboutApplicationFrame_Load_1);
+            this.Load += new System.EventHandler(this.AboutApplicationFrame_Load);
+            this.Shown += new System.EventHandler(this.AboutApplicationFrame_Shown);
             this.ResumeLayout(false);
             this.PerformLayout();
 
