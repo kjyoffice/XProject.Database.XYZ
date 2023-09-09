@@ -35,7 +35,8 @@ namespace XProject.Database.SchemaCompare.SQLServer.XModel_Original
             this.COLUMN_NAME_Original = column_Name;
             this.REFERENCE_TABLE_NAME_Original = reference_Table_Name;
             this.REFERENCE_COLUMN_NAME_Original = reference_Column_Name;
-            this.NotifyContent = $"{this.CONSTRAINT_NAME_Original} / {this.COLUMN_NAME_Original} / {this.REFERENCE_TABLE_NAME_Original} / {this.REFERENCE_COLUMN_NAME_Original}";
+            this.NotifyContent = $"{constraint_Name} / {column_Name} / {reference_Table_Name} / {reference_Column_Name}";
         }
     }
 }
+

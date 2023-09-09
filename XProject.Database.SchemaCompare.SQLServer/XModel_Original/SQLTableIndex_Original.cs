@@ -38,7 +38,8 @@ namespace XProject.Database.SchemaCompare.SQLServer.XModel_Original
             this.CLUSTERED_TYPE_Original = clustered_Type;
             this.COLUMN_NAME_Original = column_Name;
             this.ORDERBY_TYPE_Original = string.Empty;
-            this.NotifyContent = $"{this.CONSTRAINT_NAME_Original} / {this.CLUSTERED_TYPE_Original} / {this.INDEX_TYPE_Original} / {this.COLUMN_NAME_Original}";
+            this.NotifyContent = $"{constraint_Name} / {clustered_Type} / {index_Type} / {column_Name}";
         }
     }
 }
+

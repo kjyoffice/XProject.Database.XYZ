@@ -19,11 +19,16 @@ namespace XProject.Database.SchemaCompare.SQLServer.XModel_Original
 
         public SQLTableConstraints_Original(DataRow dr)
         {
+            var constraint_Name = dr["CONSTRAINT_NAME"].ToString();
+            var type_Desc = dr["TYPE_DESC"].ToString();
+            var constraint_Definition = dr["CONSTRAINT_DEFINITION"].ToString();
+
             this.TABLE_NAME_Original = dr["TABLE_NAME"].ToString();
-            this.CONSTRAINT_NAME_Original = dr["CONSTRAINT_NAME"].ToString();
-            this.TYPE_DESC_Original = dr["TYPE_DESC"].ToString();
-            this.CONSTRAINT_DEFINITION_Original = dr["CONSTRAINT_DEFINITION"].ToString();
-            this.NotifyContent = $"{this.CONSTRAINT_NAME_Original} / {this.TYPE_DESC_Original} / {this.CONSTRAINT_DEFINITION_Original}";
+            this.CONSTRAINT_NAME_Original = constraint_Name;
+            this.TYPE_DESC_Original = type_Desc;
+            this.CONSTRAINT_DEFINITION_Original = constraint_Definition;
+            this.NotifyContent = $"{constraint_Name} / {type_Desc} / {constraint_Definition}";
         }
     }
 }
+
