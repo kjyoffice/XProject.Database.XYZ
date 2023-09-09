@@ -12,7 +12,7 @@ namespace XProject.Database.SchemaCompare.SQLServer.XModel
         public string TABLE_NAME { get; private set; }
         public string TRIGGER_NAME { get; private set; }
         public string TRIGGER_SCHEMA { get; private set; }
-        public SQLTableTrigger_Original Original { get; private set; }
+        public XModel_Original.SQLTableTrigger_Original Original { get; private set; }
         public string CheckSource { get; private set; }
 
         // -----------------------------------------------------
@@ -22,7 +22,7 @@ namespace XProject.Database.SchemaCompare.SQLServer.XModel
             this.TABLE_NAME = dr["TABLE_NAME"].ToString().ToUpper();
             this.TRIGGER_NAME = dr["TRIGGER_NAME"].ToString().ToUpper();
             this.TRIGGER_SCHEMA = dr["TRIGGER_SCHEMA"].ToString().ToUpper();
-            this.Original = new SQLTableTrigger_Original(dr);
+            this.Original = new XModel_Original.SQLTableTrigger_Original(dr);
             this.CheckSource = string.Empty;
         }
 
@@ -31,7 +31,7 @@ namespace XProject.Database.SchemaCompare.SQLServer.XModel
             this.TABLE_NAME = table_Name.ToUpper();
             this.TRIGGER_NAME = trigger_Name.ToUpper();
             this.TRIGGER_SCHEMA = trigger_Schema.ToUpper();
-            this.Original = new SQLTableTrigger_Original(table_Name, trigger_Name, trigger_Schema); 
+            this.Original = new XModel_Original.SQLTableTrigger_Original(table_Name, trigger_Name, trigger_Schema); 
             this.CheckSource = XValue.HashValue.SHA512Hash(this.TRIGGER_SCHEMA);
         }
     }

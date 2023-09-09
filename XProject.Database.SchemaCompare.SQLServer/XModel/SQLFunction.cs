@@ -11,7 +11,7 @@ namespace XProject.Database.SchemaCompare.SQLServer.XModel
     {
         public string FUNCTION_NAME { get; private set; }
         public string FUNCTION_DEFINITION { get; private set; }
-        public SQLFunction_Original Original { get; private set; }
+        public XModel_Original.SQLFunction_Original Original { get; private set; }
         public string CheckSource { get; private set; }
 
         // -----------------------------------------------------
@@ -20,7 +20,7 @@ namespace XProject.Database.SchemaCompare.SQLServer.XModel
         {
             this.FUNCTION_NAME = dr["FUNCTION_NAME"].ToString().ToUpper();
             this.FUNCTION_DEFINITION = dr["FUNCTION_DEFINITION"].ToString().ToUpper();
-            this.Original = new SQLFunction_Original(dr);
+            this.Original = new XModel_Original.SQLFunction_Original(dr);
             this.CheckSource = string.Empty;
         }
 
@@ -28,7 +28,7 @@ namespace XProject.Database.SchemaCompare.SQLServer.XModel
         {
             this.FUNCTION_NAME = function_Name.ToUpper();
             this.FUNCTION_DEFINITION = function_Definition.ToUpper();
-            this.Original = new SQLFunction_Original(function_Name, function_Definition);
+            this.Original = new XModel_Original.SQLFunction_Original(function_Name, function_Definition);
             this.CheckSource = XValue.HashValue.SHA512Hash(this.FUNCTION_DEFINITION);
         }
     }

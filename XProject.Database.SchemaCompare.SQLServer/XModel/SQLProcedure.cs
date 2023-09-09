@@ -11,7 +11,7 @@ namespace XProject.Database.SchemaCompare.SQLServer.XModel
     {
         public string ROUTINE_NAME { get; private set; }
         public string ROUTINE_DEFINITION { get; private set; }
-        public SQLProcedure_Original Original { get; private set; }
+        public XModel_Original.SQLProcedure_Original Original { get; private set; }
         public string CheckSource { get; private set; }
 
         // -----------------------------------------------------
@@ -20,7 +20,7 @@ namespace XProject.Database.SchemaCompare.SQLServer.XModel
         {
             this.ROUTINE_NAME = dr["ROUTINE_NAME"].ToString().ToUpper();
             this.ROUTINE_DEFINITION = dr["ROUTINE_DEFINITION"].ToString().ToUpper();
-            this.Original = new SQLProcedure_Original(dr);
+            this.Original = new XModel_Original.SQLProcedure_Original(dr);
             this.CheckSource = string.Empty;
         }
 
@@ -29,7 +29,7 @@ namespace XProject.Database.SchemaCompare.SQLServer.XModel
             // Upper
             this.ROUTINE_NAME = routine_Name.ToUpper();
             this.ROUTINE_DEFINITION = routine_Definition.ToUpper();
-            this.Original = new SQLProcedure_Original(routine_Name, routine_Definition);
+            this.Original = new XModel_Original.SQLProcedure_Original(routine_Name, routine_Definition);
             this.CheckSource = XValue.HashValue.SHA512Hash(this.ROUTINE_DEFINITION);
         }
     }

@@ -19,7 +19,7 @@ namespace XProject.Database.SchemaCompare.SQLServer.XModel
         public string IS_IDENTITY { get; private set; }
         public int SEED_VALUE { get; private set; }
         public int INCREMENT_VALUE { get; private set; }
-        public SQLTableColumn_Original Original { get; private set; }
+        public XModel_Original.SQLTableColumn_Original Original { get; private set; }
         public string CheckSource { get; private set; }
         public string ColumnSchema { get; private set; }
         public string AddColumnSchema { get; private set; }
@@ -136,7 +136,7 @@ namespace XProject.Database.SchemaCompare.SQLServer.XModel
             this.IS_IDENTITY = dr["IS_IDENTITY"].ToString().ToUpper();
             this.SEED_VALUE = Convert.ToInt32(dr["SEED_VALUE"]);
             this.INCREMENT_VALUE = Convert.ToInt32(dr["INCREMENT_VALUE"]);
-            this.Original = new SQLTableColumn_Original(dr);
+            this.Original = new XModel_Original.SQLTableColumn_Original(dr);
 
             this.CheckSource = XValue.HashValue.SHA512Hash(
                 this.IS_NULLABLE,

@@ -16,7 +16,7 @@ namespace XProject.Database.SchemaCompare.SQLServer.XModel
         public int KEY_ORDINAL { get; private set; }
         public string COLUMN_NAME { get; private set; }
         public string ORDERBY_TYPE { get; private set; }
-        public SQLTableIndex_Original Original { get; private set; }
+        public XModel_Original.SQLTableIndex_Original Original { get; private set; }
         public string CheckSourceHash { get; private set; }
 
         // -----------------------------------------------------
@@ -30,7 +30,7 @@ namespace XProject.Database.SchemaCompare.SQLServer.XModel
             this.KEY_ORDINAL = Convert.ToInt32(dr["KEY_ORDINAL"]);
             this.COLUMN_NAME = dr["COLUMN_NAME"].ToString().ToUpper();
             this.ORDERBY_TYPE = dr["ORDERBY_TYPE"].ToString().ToUpper();
-            this.Original = new SQLTableIndex_Original(dr);
+            this.Original = new XModel_Original.SQLTableIndex_Original(dr);
             this.CheckSourceHash = string.Empty;
         }
 
@@ -43,7 +43,7 @@ namespace XProject.Database.SchemaCompare.SQLServer.XModel
             this.KEY_ORDINAL = key_Ordinal;
             this.COLUMN_NAME = column_Name.ToUpper();
             this.ORDERBY_TYPE = string.Empty;
-            this.Original = new SQLTableIndex_Original(table_Name, constraint_Name, index_Type, clustered_Type, key_Ordinal, column_Name);  
+            this.Original = new XModel_Original.SQLTableIndex_Original(table_Name, constraint_Name, index_Type, clustered_Type, key_Ordinal, column_Name);  
             this.CheckSourceHash = XValue.HashValue.SHA512Hash(this.INDEX_TYPE, this.CLUSTERED_TYPE, this.COLUMN_NAME);
         }
     }

@@ -13,7 +13,7 @@ namespace XProject.Database.SchemaCompare.SQLServer.XModel
         public string CONSTRAINT_NAME { get; private set; }
         public string TYPE_DESC { get; private set; }
         public string CONSTRAINT_DEFINITION { get; private set; }
-        public SQLTableConstraints_Original Original { get; private set; }
+        public XModel_Original.SQLTableConstraints_Original Original { get; private set; }
         public string CheckSourceHash { get; private set; }
 
         // -----------------------------------------------------
@@ -24,7 +24,7 @@ namespace XProject.Database.SchemaCompare.SQLServer.XModel
             this.CONSTRAINT_NAME = dr["CONSTRAINT_NAME"].ToString().ToUpper();
             this.TYPE_DESC = dr["TYPE_DESC"].ToString().ToUpper();
             this.CONSTRAINT_DEFINITION = dr["CONSTRAINT_DEFINITION"].ToString().ToUpper();
-            this.Original = new SQLTableConstraints_Original(dr);
+            this.Original = new XModel_Original.SQLTableConstraints_Original(dr);
             this.CheckSourceHash = XValue.HashValue.SHA512Hash(this.TYPE_DESC, this.CONSTRAINT_DEFINITION);
         }
     }

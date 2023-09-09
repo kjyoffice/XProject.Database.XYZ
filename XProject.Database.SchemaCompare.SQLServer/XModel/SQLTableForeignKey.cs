@@ -14,7 +14,7 @@ namespace XProject.Database.SchemaCompare.SQLServer.XModel
         public string COLUMN_NAME { get; private set; }
         public string REFERENCE_TABLE_NAME { get; private set; }
         public string REFERENCE_COLUMN_NAME { get; private set; }
-        public SQLTableForeignKey_Original Original { get; private set; }
+        public XModel_Original.SQLTableForeignKey_Original Original { get; private set; }
         public string CheckSourceHash { get; private set; }
         
         // -----------------------------------------------------
@@ -27,7 +27,7 @@ namespace XProject.Database.SchemaCompare.SQLServer.XModel
             this.COLUMN_NAME = dr["COLUMN_NAME"].ToString().ToUpper();
             this.REFERENCE_TABLE_NAME = dr["REFERENCE_TABLE_NAME"].ToString().ToUpper();
             this.REFERENCE_COLUMN_NAME = dr["REFERENCE_COLUMN_NAME"].ToString().ToUpper();
-            this.Original = new SQLTableForeignKey_Original(dr);
+            this.Original = new XModel_Original.SQLTableForeignKey_Original(dr);
             this.CheckSourceHash = string.Empty;
         }
 
@@ -39,7 +39,7 @@ namespace XProject.Database.SchemaCompare.SQLServer.XModel
             this.COLUMN_NAME = column_Name.ToUpper();
             this.REFERENCE_TABLE_NAME = reference_Table_Name.ToUpper();
             this.REFERENCE_COLUMN_NAME = reference_Column_Name.ToUpper();
-            this.Original = new SQLTableForeignKey_Original(table_Name, constraint_Name, column_Name, reference_Table_Name, reference_Column_Name);         
+            this.Original = new XModel_Original.SQLTableForeignKey_Original(table_Name, constraint_Name, column_Name, reference_Table_Name, reference_Column_Name);         
             this.CheckSourceHash = XValue.HashValue.SHA512Hash(this.COLUMN_NAME, this.REFERENCE_TABLE_NAME, this.REFERENCE_COLUMN_NAME);
         }
     }

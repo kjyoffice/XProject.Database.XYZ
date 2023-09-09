@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Data;
 
-namespace XProject.Database.SchemaCompare.SQLServer.XModel
+namespace XProject.Database.SchemaCompare.SQLServer.XModel_Original
 {
     public class SQLTableTrigger_Original
     {
