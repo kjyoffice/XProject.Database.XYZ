@@ -16,7 +16,8 @@ namespace XProject.Database.SchemaCompare.SQLServer.XModel
         public string REFERENCE_TABLE_NAME { get; private set; }
         public string REFERENCE_COLUMN_NAME { get; private set; }
         public string CheckSourceHash { get; private set; }
-        
+        public string NotifyContent { get; private set; }
+
         // -----------------------------------------------------
 
         public SQLTableForeignKey(DataRow dr)
@@ -28,21 +29,24 @@ namespace XProject.Database.SchemaCompare.SQLServer.XModel
             this.REFERENCE_TABLE_NAME = dr["REFERENCE_TABLE_NAME"].ToString().ToUpper();
             this.REFERENCE_COLUMN_NAME = dr["REFERENCE_COLUMN_NAME"].ToString().ToUpper();
             this.CheckSourceHash = string.Empty;
+            this.NotifyContent = string.Empty;
         }
 
         public SQLTableForeignKey(string table_Name, string constraint_Name, string column_Name, string reference_Table_Name, string reference_Column_Name)
         {
+            var original = new XModel_Original.SQLTableForeignKey_Original(table_Name, constraint_Name, column_Name, reference_Table_Name, reference_Column_Name);
             var column_NameUse = column_Name.ToUpper();
             var reference_Table_NameUse = reference_Table_Name.ToUpper();
             var reference_Column_NameUse = reference_Column_Name.ToUpper();
 
-            this.Original = new XModel_Original.SQLTableForeignKey_Original(table_Name, constraint_Name, column_Name, reference_Table_Name, reference_Column_Name);
+            this.Original = original;
             this.TABLE_NAME = table_Name.ToUpper();
             this.CONSTRAINT_NAME = constraint_Name.ToUpper();
             this.COLUMN_NAME = column_NameUse;
             this.REFERENCE_TABLE_NAME = reference_Table_NameUse;
             this.REFERENCE_COLUMN_NAME = reference_Column_NameUse;     
             this.CheckSourceHash = XValue.HashValue.SHA512Hash(column_NameUse, reference_Table_NameUse, reference_Column_NameUse);
+            this.NotifyContent = $"{original.CONSTRAINT_NAME} / {original.COLUMN_NAME} / {original.REFERENCE_TABLE_NAME} / {original.REFERENCE_COLUMN_NAME}";
         }
     }
 }

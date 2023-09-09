@@ -18,6 +18,7 @@ namespace XProject.Database.SchemaCompare.SQLServer.XModel
         public string COLUMN_NAME { get; private set; }
         public string ORDERBY_TYPE { get; private set; }
         public string CheckSourceHash { get; private set; }
+        public string NotifyContent { get; private set; }
 
         // -----------------------------------------------------
 
@@ -32,15 +33,17 @@ namespace XProject.Database.SchemaCompare.SQLServer.XModel
             this.COLUMN_NAME = dr["COLUMN_NAME"].ToString().ToUpper();
             this.ORDERBY_TYPE = dr["ORDERBY_TYPE"].ToString().ToUpper();
             this.CheckSourceHash = string.Empty;
+            this.NotifyContent = string.Empty;
         }
 
         public SQLTableIndex(string table_Name, string constraint_Name, string index_Type, string clustered_Type, int key_Ordinal, string column_Name)
         {
+            var original = new XModel_Original.SQLTableIndex_Original(table_Name, constraint_Name, index_Type, clustered_Type, key_Ordinal, column_Name);
             var index_TypeUse = index_Type.ToUpper();
             var clustered_TypeUse = clustered_Type.ToUpper();
             var column_NameUse = column_Name.ToUpper();
 
-            this.Original = new XModel_Original.SQLTableIndex_Original(table_Name, constraint_Name, index_Type, clustered_Type, key_Ordinal, column_Name);
+            this.Original = original;
             this.TABLE_NAME = table_Name.ToUpper();
             this.CONSTRAINT_NAME = constraint_Name.ToUpper();
             this.INDEX_TYPE = index_TypeUse;
@@ -49,6 +52,7 @@ namespace XProject.Database.SchemaCompare.SQLServer.XModel
             this.COLUMN_NAME = column_NameUse;
             this.ORDERBY_TYPE = string.Empty;
             this.CheckSourceHash = XValue.HashValue.SHA512Hash(index_TypeUse, clustered_TypeUse, column_NameUse);
+            this.NotifyContent = $"{original.CONSTRAINT_NAME} / {original.CLUSTERED_TYPE} / {original.INDEX_TYPE} / {original.COLUMN_NAME}";
         }
     }
 }
