@@ -70,7 +70,6 @@ namespace XProject.Database.SchemaCompare.SQLServer.XData
         public void DefaultSetting()
         {
             // 테이블
-            // Table
             var tableList = @"
                 SELECT
                 [NAME] AS TABLE_NAME
@@ -79,7 +78,6 @@ namespace XProject.Database.SchemaCompare.SQLServer.XData
                 ORDER BY [NAME] ASC;
             ";
             // 컬럼
-            // Column
             var tableColumnList = @"
                 SELECT
                 A.[NAME] AS TABLE_NAME,
@@ -117,7 +115,6 @@ namespace XProject.Database.SchemaCompare.SQLServer.XData
                 B.COLUMN_ID ASC;
             ";
             // 인덱스
-            // Index
             var tableIndexList = @"
                 SELECT 
                 D.[NAME] AS TABLE_NAME,
@@ -156,7 +153,6 @@ namespace XProject.Database.SchemaCompare.SQLServer.XData
                 B.KEY_ORDINAL ASC;
             ";
             // 외래키
-            // Foreign Key
             var tableForeignKeyList = @"
                 SELECT 
                 D.[NAME] AS TABLE_NAME,
@@ -185,7 +181,6 @@ namespace XProject.Database.SchemaCompare.SQLServer.XData
                 B.REFERENCED_COLUMN_ID ASC;
             ";
             // 제약조건
-            // Constraint
             var tableConstraintsList = @"
                 SELECT
                 A.TABLE_NAME AS TABLE_NAME,
@@ -220,7 +215,6 @@ namespace XProject.Database.SchemaCompare.SQLServer.XData
                 A.CONSTRAINT_NAME ASC;
             ";
             // 트리거
-            // Trigger
             var tableTriggerList = @"
                 SELECT 
                 B.[NAME] AS TABLE_NAME,
@@ -236,7 +230,6 @@ namespace XProject.Database.SchemaCompare.SQLServer.XData
                 C.COLID ASC;
             ";
             // 프로시저
-            // Procedure
             var procedureList = @"
                 SELECT 
                 A.[NAME] AS ROUTINE_NAME,
@@ -248,7 +241,6 @@ namespace XProject.Database.SchemaCompare.SQLServer.XData
                 B.COLID ASC;
             ";
             // 함수
-            // Function
             var functionList = @"
                 -- FN / SQL_SCALAR_FUNCTION
                 -- IF / SQL_INLINE_TABLE_VALUED_FUNCTION
@@ -265,7 +257,6 @@ namespace XProject.Database.SchemaCompare.SQLServer.XData
                 B.COLID ASC;
             ";
             // 쿼리를 1개로 묶고
-            // All query concat 1
             var query = string.Join(
                 Environment.NewLine,
                 new string[] {
@@ -280,7 +271,6 @@ namespace XProject.Database.SchemaCompare.SQLServer.XData
                 }
             );
             // 쿼리 실행
-            // Execute query
             var eds = this.ExecuteDataSet(query);
             this.TableData = eds.Tables["TABLE1"].Rows.Cast<DataRow>().Select(x => new XModel.SQLTable(x));
             this.TableColumnData = eds.Tables["TABLE11"].Rows.Cast<DataRow>().Select(x => new XModel.SQLTableColumn(x));
@@ -305,7 +295,6 @@ namespace XProject.Database.SchemaCompare.SQLServer.XData
         public List<XModel.SQLTableIndex> TableIndexList()
         {
             // 인덱스 : 기본키, (클러스트/넌클러스트) 인덱스, 유니크
-            // Index : Primary Key, (Clustered/NonClustered) Index, Unique
             return this.TableIndexData.GroupBy(
                     x => new {
                         x.TABLE_NAME_Original,
@@ -327,7 +316,6 @@ namespace XProject.Database.SchemaCompare.SQLServer.XData
         public List<XModel.SQLTableForeignKey> TableForeignKeyList()
         {
             // 외래키
-            // Foreign Key
             return TableForeignKeyData.GroupBy(
                     x => new
                     {
@@ -350,7 +338,6 @@ namespace XProject.Database.SchemaCompare.SQLServer.XData
         public List<XModel.SQLTableConstraints> TableConstraintsList()
         {
             // 제약조건 : 체크, 기본값
-            // Constraints : Check, Default
             return this.TableConstraintsData.ToList();
         }
 
@@ -359,9 +346,6 @@ namespace XProject.Database.SchemaCompare.SQLServer.XData
             // 트리거
             // 긴 트리거 내용인 경우 COLID를 순서대로 n개의 ROW에 스키마가 저장
             // 그로인해 트리거 이름당 1개의 SCHEMA로 만들기 위함
-            // Trigger
-            // If the trigger content is long, the schema is stored in n rows in order of COLID
-            // This is to make one schema per trigger name
             return this.TableTriggerData.GroupBy(
                     x => new
                     {
@@ -381,7 +365,6 @@ namespace XProject.Database.SchemaCompare.SQLServer.XData
         public List<XModel.SQLProcedure> ProcedureList()
         {
             // 프로시저
-            // Procedure
             return this.ProcedureData.GroupBy(x => x.ROUTINE_NAME_Original)
                 .Select(
                     x => new XModel.SQLProcedure(
@@ -394,7 +377,6 @@ namespace XProject.Database.SchemaCompare.SQLServer.XData
         public List<XModel.SQLFunction> FunctionList()
         {
             // 함수
-            // Function
             return this.FunctionData.GroupBy(x => x.FUNCTION_NAME_Original)
                 .Select(
                     x => new XModel.SQLFunction(
