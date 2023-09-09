@@ -13,37 +13,29 @@ namespace XProject.Database.SchemaCompare.SQLServer.XWork
         public static void ExecuteNow(XData.SQLWork sourceSQL, XData.SQLWork targetSQL, Action<string> workResult, string schemaDirectory, bool isKoreaHanGulLanguage)
         {
             // 테이블 리스트 비교 결과
-            // Table list compare result
             var tableResult = TableCompare.Table(sourceSQL.TableList(), targetSQL.TableList());
             // 컬럼 리스트
-            // Column list
             var sourceColumnList = sourceSQL.TableColumnList();
             var targetColumnList = targetSQL.TableColumnList();
             // 인덱스 리스트
-            // Index list
             var sourceIndexList = sourceSQL.TableIndexList();
             var targetIndexList = targetSQL.TableIndexList();
             // 참조키 리스트
-            // Foreign key list
             var sourceForeignKeyList = sourceSQL.TableForeignKeyList();
             var targetForeignKeyList = targetSQL.TableForeignKeyList();
             // 제약조건 리스트
-            // Constraints list
             var sourceConstraintList = sourceSQL.TableConstraintsList();
             var targetConstraintList = targetSQL.TableConstraintsList();
             // 트리거 리스트
-            // Trigger list
             var sourceTriggerList = sourceSQL.TableTriggerList();
             var targetTriggerList = targetSQL.TableTriggerList();
 
             // 존재하지 않는 테이블
-            // Not exist table
             workResult(string.Empty);
             workResult(((isKoreaHanGulLanguage == true) ? "<<<<<<<<<< 존재하지 않는 테이블 >>>>>>>>>>" : "<<<<<<<<<< Not exist table >>>>>>>>>>"));
             workResult(string.Join(Environment.NewLine, tableResult.NotExistTableList.Select(x => x.TABLE_NAME_Original)));
 
             // 테이블 비교
-            // Table compare
             workResult(string.Empty);
             workResult(((isKoreaHanGulLanguage == true) ? "<<<<<<<<<< 존재하는 테이블 >>>>>>>>>>" : "<<<<<<<<<< Exist table >>>>>>>>>>"));
             foreach (var table in tableResult.ExistTableList)
@@ -63,11 +55,9 @@ namespace XProject.Database.SchemaCompare.SQLServer.XWork
                 }.Where(x => (x.Value != string.Empty));
 
                 // 차이가 있는 테이블만 뿌린다
-                // Only show different table
                 if (compareResult.Count() > 0)
                 {
                     // 테이블 이름 뿌리고
-                    // Show table name
                     workResult(string.Empty);
                     workResult($">>>>>>>>>> {table.TABLE_NAME_Original}");
 
@@ -84,7 +74,6 @@ namespace XProject.Database.SchemaCompare.SQLServer.XWork
         private static XModel.TableResult Table(List<XModel.SQLTable> sourceAllDataList, List<XModel.SQLTable> targetAllDataList)
         {
             // 테이블 리스트 가져와서 소스를 기준으로 LEFT OUTER JOIN
-            // Get table list and LEFT OUTER JOIN with source
             var compareResult = sourceAllDataList.GroupJoin(
                 targetAllDataList,
                 x => x.TABLE_NAME,
@@ -97,10 +86,8 @@ namespace XProject.Database.SchemaCompare.SQLServer.XWork
             ).ToList();
             var result = new XModel.TableResult(
                 // 타겟에 존재하는 테이블 - 즉 양쪽 다 있다
-                // Exist table in target - both exist
                 compareResult.Where(x => (x.Target != null)).Select(x => x.Source).ToList(),
                 // 타겟에 존재하지 않는 테이블 리스트
-                // Not exist table in target
                 compareResult.Where(x => (x.Target == null)).Select(x => x.Source).ToList()
             );
 
@@ -110,11 +97,9 @@ namespace XProject.Database.SchemaCompare.SQLServer.XWork
         private static string TableColumn(List<XModel.SQLTableColumn> sourceAllDataList, List<XModel.SQLTableColumn> targetAllDataList, string tableName, bool isKoreaHanGulLanguage)
         {
             // 테이블 이름으로 검색된 컬럼 리스트
-            // Column list searched by table name
             var sourceDataList = sourceAllDataList.Where(x => (x.TABLE_NAME == tableName)).ToList();
             var targetDataList = targetAllDataList.Where(x => (x.TABLE_NAME == tableName)).ToList();
             // 컬럼 정보는 1:1로 매칭되므로 LEFT OUTER JOIN진행
-            // Column information is matched 1:1 so LEFT OUTER JOIN
             var compareResultList = sourceDataList.GroupJoin(
                     targetDataList,
                     x => x.COLUMN_NAME,
@@ -155,7 +140,6 @@ namespace XProject.Database.SchemaCompare.SQLServer.XWork
         private static string TableIndex(List<XModel.SQLTableIndex> sourceAllDataList, List<XModel.SQLTableIndex> targetAllDataList, string tableName, bool isKoreaHanGulLanguage)
         {
             // 테이블 이름으로 검색된 인덱스 리스트
-            // Index list searched by table name
             var sourceDataList = sourceAllDataList.Where(x => (x.TABLE_NAME == tableName));
             var targetDataList = targetAllDataList.Where(x => (x.TABLE_NAME == tableName));
             // INNER JOIN 
@@ -170,11 +154,9 @@ namespace XProject.Database.SchemaCompare.SQLServer.XWork
                 }
             );
             // INNER JOIN된거 이름만 가져오기
-            // Get only name of INNER JOIN
             var matchNameOnlyList = matchNameList.Select(x => x.Source.CONSTRAINT_NAME).Distinct();
             var unMatchNameList = matchNameList.Where(x => (x.Source.CheckSourceHash != x.Target.CheckSourceHash));
             // INNER JOIN에 포함 안된거 가져오기 - NOT IN
-            // Get not included in INNER JOIN - NOT IN
             var sourceNotInNameList = sourceDataList.Where(x => (matchNameOnlyList.Contains(x.CONSTRAINT_NAME) == false));
             var targetNotInNameList = targetDataList.Where(x => (matchNameOnlyList.Contains(x.CONSTRAINT_NAME) == false));
             var sb = new StringBuilder();
@@ -212,7 +194,6 @@ namespace XProject.Database.SchemaCompare.SQLServer.XWork
         private static string TableForeignKey(List<XModel.SQLTableForeignKey> sourceAllDataList, List<XModel.SQLTableForeignKey> targetAllDataList, string tableName, bool isKoreaHanGulLanguage)
         {
             // 테이블 이름으로 외래키 리스트 받기 
-            // Get foreign key list by table name
             var sourceDataList = sourceAllDataList.Where(x => (x.TABLE_NAME == tableName)).ToList();
             var targetDataList = targetAllDataList.Where(x => (x.TABLE_NAME == tableName)).ToList();
             // INNER JOIN 
@@ -228,10 +209,8 @@ namespace XProject.Database.SchemaCompare.SQLServer.XWork
             );
             var unMatchNameList = matchNameList.Where(x => (x.Source.CheckSourceHash != x.Target.CheckSourceHash));
             // INNER JOIN된거 이름만 가져오기
-            // Get only name of INNER JOIN
             var matchNameOnlyList = matchNameList.Select(x => x.Source.CONSTRAINT_NAME).Distinct();
             // INNER JOIN에 포함 안된거 가져오기 - NOT IN
-            // Get not included in INNER JOIN - NOT IN
             var sourceNotInNameList = sourceDataList.Where(x => (matchNameOnlyList.Contains(x.CONSTRAINT_NAME) == false));
             var targetNotInNameList = targetDataList.Where(x => (matchNameOnlyList.Contains(x.CONSTRAINT_NAME) == false));
             var sb = new StringBuilder();
@@ -269,7 +248,6 @@ namespace XProject.Database.SchemaCompare.SQLServer.XWork
         private static string TableConstraints(List<XModel.SQLTableConstraints> sourceAllDataList, List<XModel.SQLTableConstraints> targetAllDataList, string tableName, bool isKoreaHanGulLanguage)
         {
             // 테이블 이름으로 검색된 제약조건 리스트
-            // Constraint list searched by table name
             var sourceDataList = sourceAllDataList.Where(x => (x.TABLE_NAME == tableName)).ToList();
             var targetDataList = targetAllDataList.Where(x => (x.TABLE_NAME == tableName)).ToList();
             // INNER JOIN 
@@ -285,10 +263,8 @@ namespace XProject.Database.SchemaCompare.SQLServer.XWork
             );
             var unMatchNameList = matchNameList.Where(x => (x.Source.CheckSourceHash != x.Target.CheckSourceHash));
             // INNER JOIN된거 이름만 가져오기
-            // Get only name of INNER JOIN
             var matchNameOnlyList = matchNameList.Select(x => x.Source.CONSTRAINT_NAME).Distinct();
             // INNER JOIN에 포함 안된거 가져오기 - NOT IN
-            // Get not included in INNER JOIN - NOT IN
             var sourceNotInNameList = sourceDataList.Where(x => (matchNameOnlyList.Contains(x.CONSTRAINT_NAME) == false));
             var targetNotInNameList = targetDataList.Where(x => (matchNameOnlyList.Contains(x.CONSTRAINT_NAME) == false));
             var sb = new StringBuilder();
@@ -326,11 +302,9 @@ namespace XProject.Database.SchemaCompare.SQLServer.XWork
         private static string TableTrigger(List<XModel.SQLTableTrigger> sourceAllDataList, List<XModel.SQLTableTrigger> targetAllDataList, string tableName, string schemaDirectory, bool isKoreaHanGulLanguage)
         {
             // 테이블 이름으로 검색된 트리거 리스트
-            // Trigger list searched by table name
             var sourceDataList = sourceAllDataList.Where(x => (x.TABLE_NAME == tableName)).ToList();
             var targetDataList = targetAllDataList.Where(x => (x.TABLE_NAME == tableName)).ToList();
             // 트리거 정보는 1:1로 매칭되므로 LEFT OUTER JOIN진행
-            // Trigger information is matched 1:1, so LEFT OUTER JOIN is performed
             var compareResultList = sourceDataList.GroupJoin(
                 targetDataList,
                 x => x.TRIGGER_NAME,
@@ -342,23 +316,19 @@ namespace XProject.Database.SchemaCompare.SQLServer.XWork
                 }
             );
             // 타겟에 존재하는 트리거 - 즉 양쪽 다 있다
-            // Trigger that exists in target - that is, both sides exist
             var existTriggerList = compareResultList.Where(x => ((x.Target != null) && (x.Source.CheckSource != x.Target.CheckSource))).ToList();
             // 타겟에 존재하지 않는 트리거 리스트
-            // Trigger list not existing in target
             var notExistTriggerList = compareResultList.Where(x => (x.Target == null)).ToList();
             var sb = new StringBuilder();
 
             if (notExistTriggerList.Count > 0)
             {
                 // 존재하지 않는 트리거
-                // Trigger that does not exist
                 sb.AppendLine(string.Empty);
                 sb.AppendLine(((isKoreaHanGulLanguage == true) ? "***** 존재하지 않음" : "***** Not exist"));
                 sb.AppendLine(string.Join(Environment.NewLine, existTriggerList.Select(x => x.Source.TRIGGER_NAME_Original)));
 
                 // CREATE TRIGGER 스키마 내보내기
-                // Export CREATE TRIGGER schema
                 existTriggerList.ForEach(
                     x =>
                     ExportWork.ExportSchema(
@@ -373,13 +343,11 @@ namespace XProject.Database.SchemaCompare.SQLServer.XWork
             if (existTriggerList.Count > 0)
             {
                 // 존재하지만 다른 트리거
-                // Trigger that exists but is different
                 sb.AppendLine(string.Empty);
                 sb.AppendLine(((isKoreaHanGulLanguage == true) ? "***** 이름은 같지만 스키마가 다름" : "***** Name is same but schema is different"));
                 sb.AppendLine(string.Join(Environment.NewLine, existTriggerList.Select(x => x.Source.TRIGGER_NAME_Original)));
 
                 // CREATE TRIGGER 스키마 내보내기
-                // Export CREATE TRIGGER schema
                 existTriggerList.ForEach(
                     x =>
                     ExportWork.ExportSchema(

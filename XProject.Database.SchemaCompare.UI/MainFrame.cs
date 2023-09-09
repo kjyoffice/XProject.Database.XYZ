@@ -79,7 +79,6 @@ namespace XProject.Database.SchemaCompare.UI
                     if (connectionString != string.Empty)
                     {
                         // 연결 테스트
-                        // Connect test
                         var isSuccess = false;
                         var errorMessage = string.Empty;
 
@@ -418,7 +417,6 @@ namespace XProject.Database.SchemaCompare.UI
         private void AppLoadingTimeOpenDefaultWorkSourceDataFile()
         {
             // 프로그램 로드시 열어야 할 설정파일이 지정됐다면 열자
-            // Program started with default work source data file path, open it
             if (this.DefaultWorkSourceDataFilePath != string.Empty)
             {
                 this.MTSB_OpenWorkSourceFileOpenDialog.FileName = this.DefaultWorkSourceDataFilePath;
@@ -476,7 +474,6 @@ namespace XProject.Database.SchemaCompare.UI
         public MainFrame(string defaultWorkSourceDataFilePath)
         {
             // 프로그램 실행하며 열어야 할 설정 파일이 지정됐을 수 있으니 경로로 지정
-            // Program started with default work source data file path, set it
             this.DefaultWorkSourceDataFilePath = defaultWorkSourceDataFilePath;
 
             this.InitializeComponent();
@@ -487,10 +484,9 @@ namespace XProject.Database.SchemaCompare.UI
             this.MTSB_IsUIKoreanLanguage_Click(null, null);
             this.MTSB_NewWorkSource_Click(null, null);
 
-            // TODO : 일단 NotSupport
-            this.DLG_MySQL.Visible = false;
-            this.DLG_PostgreSQL.Visible = false;
-            // 일단 NotSupport
+            // 프로그램이 준비되지 않았으니 비활성화
+            this.DLG_MySQL.Enabled = false;
+            this.DLG_PostgreSQL.Enabled = false;
         }
 
         private void MainFrame_Load(object sender, EventArgs e)
@@ -642,7 +638,6 @@ namespace XProject.Database.SchemaCompare.UI
             var saveFilePath = this.WorkSourceDataFilePath;
 
             // 이미 저장된 파일경로가 있으면 재사용하고 없으면 파일 선택하라고 한다 
-            // Already saved file path is reused, or if not, select a file
             if (saveFilePath == string.Empty)
             {
                 if (this.MTSB_SaveWorkSourceSaveDialog.ShowDialog() == DialogResult.OK)
@@ -654,7 +649,6 @@ namespace XProject.Database.SchemaCompare.UI
             if (saveFilePath != string.Empty)
             {
                 // 저장내용 생성
-                // Create save content
                 var wsd = new XModel.WorkSourceData();
                 wsd.ReportDirectoryPath = this.RDG_ReportDirectoryPath.Text.Trim();
                 wsd.DatabaseType = this.GetSelectedDatabaseType();
@@ -681,14 +675,12 @@ namespace XProject.Database.SchemaCompare.UI
                 wsd.TargetServer.TrustedConnection = this.TSG_TrustedConnection.Checked;
 
                 // 비번 저장안한다면 비번 날리기
-                // If you do not save your password, throw your password
                 if (XAppConfig.AppSettings.IsSaveWorkSourceWithPassword == false)
                 {
                     // SSG
                     wsd.SourceServer.Password = string.Empty;
 
                     // 연결 문자열내 비번이 있을 수 있다
-                    // There may be a password in the connection string
                     if (wsd.SourceServer.RawConnectionString != string.Empty)
                     {
                         var scsb = new SqlConnectionStringBuilder(wsd.SourceServer.RawConnectionString);
@@ -701,7 +693,6 @@ namespace XProject.Database.SchemaCompare.UI
                     wsd.TargetServer.Password = string.Empty;
 
                     // 연결 문자열내 비번이 있을 수 있다
-                    // There may be a password in the connection string
                     if (wsd.TargetServer.RawConnectionString != string.Empty)
                     {
                         var scsb = new SqlConnectionStringBuilder(wsd.TargetServer.RawConnectionString);
@@ -723,7 +714,6 @@ namespace XProject.Database.SchemaCompare.UI
                 );
 
                 // 만약 파일이 있으면 백업한다
-                // If there is a file, back it up
                 if ((XAppConfig.AppSettings.IsSaveWorkSourceBeforeBackupWorkSource == true) && (File.Exists(saveFilePath) == true))
                 {
                     var dirPath = Path.Combine(Path.GetDirectoryName(saveFilePath), "WorkSourceBackup");
@@ -739,11 +729,9 @@ namespace XProject.Database.SchemaCompare.UI
                 }
 
                 // 파일 저장
-                // File save
                 File.WriteAllText(saveFilePath, json, Encoding.UTF8);
 
                 // 폼 타이틀에 파일명 표시
-                // Display file name in form title
                 this.ChangeWorkSourceDataFilePath(saveFilePath);
 
                 var message = ((isUIKorLang == true) ? "현재의 설정을 저장했습니다." : "Saved this setting");
@@ -769,7 +757,6 @@ namespace XProject.Database.SchemaCompare.UI
             var isOpenSuccess = false;
 
             // 드래그 앤 드롭으로도 이거 호출되니 파일 체크해야 함
-            // Drag and drop also calls this, so you need to check the file
             if ((sender == null) || ((sender != null) && (this.MTSB_OpenWorkSourceFileOpenDialog.ShowDialog() == DialogResult.OK)))
             {
                 var openFilePath = this.MTSB_OpenWorkSourceFileOpenDialog.FileName;
@@ -779,15 +766,12 @@ namespace XProject.Database.SchemaCompare.UI
                     if (Path.GetExtension(openFilePath).ToLower() == ".json")
                     {
                         // JSON만 지원하지만 엉뚱한 파일 넣을 수도 있다 =_=
-                        // Only JSON is supported, but you can put in the wrong file = _ =
                         try
                         {
                             // JSON 읽기
-                            // Read JSON
                             var json = File.ReadAllText(openFilePath, Encoding.UTF8);
 
                             // 모델에 데이터 넣기
-                            // Put data in the model
                             var wsd = Newtonsoft.Json.JsonConvert.DeserializeObject<XModel.WorkSourceData>(json);
                             var databaseType = wsd.DatabaseType.ToUpper();
 
@@ -867,7 +851,6 @@ namespace XProject.Database.SchemaCompare.UI
             }
 
             // 혹시나 파일열기 실패하면 선택된 파일정보 지우기
-            // If you fail to open the file, delete the selected file information
             if (isOpenSuccess == false)
             {
                 this.MTSB_OpenWorkSourceFileOpenDialog.FileName = string.Empty;
@@ -1122,24 +1105,19 @@ namespace XProject.Database.SchemaCompare.UI
             if (isUIKorLang.Checked == true)
             {
                 // 영문이었다가 한글로 바뀜
-                // English -> Korean
                 // 얘는 이 체크박스 바꾸면 영문으로 바뀐다고 알리기 위한거니 텍스트 반대로 씀
-                // This checkbox is for notifying that the text is changed to English when the checkbox is changed.
                 isUIKorLang.Text = "현재 한글, 영문으로 변경";
             }
             else
             {
                 // 한글이었다가 영문으로 바뀜
-                // Korean -> English
                 // 얘는 이 체크박스 바꾸면 한글로 바뀐다고 알리기 위한거니 텍스트 반대로 씀
-                // This checkbox is for notifying that the text is changed to Korean when the checkbox is changed.
                 isUIKorLang.Text = "Now is english, change to korean";
             }
 
             if (isUIKorLang.Checked == true)
             {
                 // 영문이었다가 한글로 바뀜
-                // English -> Korean
                 this.JustNotify1.Text = "\"소스서버의 스키마가 타겟서버로 적용된다.\"의 개념입니다.";
                 this.MTSB_NewWorkSource.Text = "새 비교";
                 this.MTSB_OpenWorkSource.Text = "열기";
@@ -1184,7 +1162,6 @@ namespace XProject.Database.SchemaCompare.UI
             else
             {
                 // 한글이었다가 영문으로 바뀜
-                // Korean -> English
                 this.JustNotify1.Text = "The schema of the SourceServer is applied to the TargetServer.";
                 this.MTSB_NewWorkSource.Text = "New";
                 this.MTSB_OpenWorkSource.Text = "Open";

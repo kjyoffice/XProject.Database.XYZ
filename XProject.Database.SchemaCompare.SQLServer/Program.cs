@@ -18,16 +18,6 @@ namespace XProject.Database.SchemaCompare.SQLServer
             //  - SourceServer에 Schema가 있고 TargetServer에 Schema가 없음 -> Notify
             //  - SourceServer에 Schema가 있고 TargetServer에 Schema가 있는데 다름 -> Notify
             //  - SourceServer에 Schema가 없고 TargetServer에 Schema가 있음 -> Skip
-            // ------------------------------------------------------------------------------------------------------------
-            // SourceServer information based on TargetServer and Schema comparison
-            //
-            // SourceServer : Latest version of server connection string
-            // TargetServer : Server connection string of comparison target
-            // 
-            // Example>
-            //  - Schema is exist SourceServer, but not exist schema to TargetServer -> Notify
-            //  - Schema is exist SourceServer, and exist schema to TargetServer. but different Schema -> Notify
-            //  - Schema is not exist SourceServer, but exist schema to TargetServer -> Skip
             var sourceServerConnectionString = ((args.Length > 0) ? args[0].Trim() : string.Empty);
             var targetServerConnectionString = ((args.Length > 1) ? args[1].Trim() : string.Empty);
             var reportDirectoryPathSource = ((args.Length > 2) ? args[2].Trim() : string.Empty);
@@ -41,7 +31,6 @@ namespace XProject.Database.SchemaCompare.SQLServer
                 Console.Out.WriteLine(((isKoreaHanGulLanguage == true) ? "잠시만 기다려주세요..." : "Please wait..."));
 
                 // 결과 정보를 저장 할 파일경로 구성
-                // Save the result information to the file path
                 var reportDirectoryPath = XValue.ProcessValue.ReportDirectoryPath(reportDirectoryPathSource);
                 var reportFilePath = Path.Combine(reportDirectoryPath, $"Report - {DateTime.Now.ToString("yyyyMMdd_HHmmss_fffff")}.txt");
 
@@ -90,7 +79,6 @@ namespace XProject.Database.SchemaCompare.SQLServer
                         workResult.WriteLine($"------------------------- END : {DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fffff")} -------------------------");
 
                         // 아웃풋 되는 스키마가 없으면 아예 폴더가 만들어지지 않는다
-                        // If there is no output schema, the folder is not created at all.
                         if (Directory.Exists(schemaDirectory) == true)
                         {
                             workResult.WriteLine(string.Empty);
