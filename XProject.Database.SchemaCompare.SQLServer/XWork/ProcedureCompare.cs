@@ -30,7 +30,7 @@ namespace XProject.Database.SchemaCompare.SQLServer.XWork
 
             // 존재하지 않는 프로시저만
             pxs.WriteReport(string.Empty);
-            pxs.WriteReport(((pxs.IsKoreaHanGulLanguage == true) ? "<<<<<<<<<< 존재하지 않는 프로시저 >>>>>>>>>>" : "<<<<<<<<<< Not exist procedure >>>>>>>>>>"));
+            pxs.WriteReport("<<<<<<<<<< 존재하지 않는 프로시저 >>>>>>>>>>");
             pxs.WriteReport(string.Join(Environment.NewLine, notExistProcedureList.Select(x => x.Source.ROUTINE_NAME_Original)));
 
             // CREATE PROCEDURE 스키마 내보내기
@@ -47,7 +47,7 @@ namespace XProject.Database.SchemaCompare.SQLServer.XWork
 
             // 존재하지만 다른 프로시저
             pxs.WriteReport(string.Empty);
-            pxs.WriteReport(((pxs.IsKoreaHanGulLanguage == true) ? "<<<<<<<<<< 존재하지만 스키마가 다른 프로시저 >>>>>>>>>>" : "<<<<<<<<<< Exist procedure but different >>>>>>>>>>"));
+            pxs.WriteReport("<<<<<<<<<< 존재하지만 스키마가 다른 프로시저 >>>>>>>>>>");
             pxs.WriteReport(string.Join(Environment.NewLine, existProcedureList.Select(x => x.Source.ROUTINE_NAME_Original)));
 
             // CREATE PROCEDURE 스키마 내보내기

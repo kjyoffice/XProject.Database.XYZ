@@ -19,20 +19,6 @@ namespace XProject.Database.SchemaCompare.SQLServer.XModel
 
         // -------------------------------------------------------
 
-        public bool IsKoreaHanGulLanguage
-        {
-            get
-            {
-                return this.AXS.IsKoreaHanGulLanguage;
-            }
-        }
-
-        // -------------------------------------------------------
-
-
-
-        // -------------------------------------------------------
-
         public ProcessXSupport(ArgumentsXSupport axs)
         {
             // 결과 정보를 저장 할 파일경로 구성

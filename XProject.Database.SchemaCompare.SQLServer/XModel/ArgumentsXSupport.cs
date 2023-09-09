@@ -11,7 +11,6 @@ namespace XProject.Database.SchemaCompare.SQLServer.XModel
         public string SourceServerConnectionString { get; private set; }
         public string TargetServerConnectionString { get; private set; }
         public string ReportDirectoryPathSource { get; private set; }
-        public bool IsKoreaHanGulLanguage { get; private set; }
         public bool IsExistServerConnectionString { get; private set; }
 
         // -------------------------------------------------------
@@ -28,7 +27,6 @@ namespace XProject.Database.SchemaCompare.SQLServer.XModel
             this.SourceServerConnectionString = sourceServerConnectionString;
             this.TargetServerConnectionString = targetServerConnectionString;
             this.ReportDirectoryPathSource = argsUse[2];
-            this.IsKoreaHanGulLanguage = (argsUse[3].ToUpper() == "TRUE");
             this.IsExistServerConnectionString = ((sourceServerConnectionString != string.Empty) && (targetServerConnectionString != string.Empty));
         }
     }

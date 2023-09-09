@@ -40,11 +40,9 @@ namespace XProject.Database.SchemaCompare.SQLServer.XModel
             // MEMBERNAME NVARCHAR(100) NULL
 
             // 컬럼 이름
-            // Column name
             sb.Append((this.COLUMN_NAME_Original + " "));
 
             // 테이터 형식
-            // Data Type
             var dt = this.DATA_TYPE;
 
             if ((dt == "NUMERIC") || (dt == "DECIMAL"))
@@ -125,7 +123,6 @@ namespace XProject.Database.SchemaCompare.SQLServer.XModel
             this.ColumnSchema = (columnSchema + identitySchema);
             this.AddColumnSchema = $"ALTER TABLE {this.TABLE_NAME} ADD {this.ColumnSchema};";
             // 컬럼을 변경할 땐 IDENTITY가 다른 방법으로 해야하는데.. 코드가 길다 -> 직접 하게끔 하자
-            // Change column, but IDENTITY is different way.. code is long -> do it yourself
             this.AlterColumnSchema = $"ALTER TABLE {this.TABLE_NAME} ALTER COLUMN {columnSchema}; {identitySchema_Description}";
         }
 

@@ -40,28 +40,17 @@ namespace XProject.Database.SchemaCompare.SQLServer.XWork
 
                 // 타겟 파일의 실행하지 말라는 경고추가
                 var doNotExecute = string.Join(
-                    Environment.NewLine, 
-                    (
-                        (pxs.IsKoreaHanGulLanguage == true) ?
-                        (
-                            new string[] {
-                                "-- 이 스키마를 실행하지 마세요",
-                                "-- 이 스키마는 타겟 스키마로 소스 스키마와 변경부분을 비교하기 위함입니다.",
-                                string.Empty
-                            }
-                        ) :
-                        (
-                            new string[] {
-                                "-- Do not run this schema",
-                                "-- This schema is for comparing the source schema with the target schema and the changes.",
-                                string.Empty
-                            }
-                        )
-                    )
+                    Environment.NewLine,
+                    new string[] {
+                        "-- 이 스키마를 실행하지 마세요",
+                        "-- 이 스키마는 타겟 스키마로 소스 스키마와 변경부분을 비교하기 위함입니다.",
+                        string.Empty,
+                        targetContent
+                    }
                 );
 
                 // 저장
-                File.WriteAllText(targetFilePath, (doNotExecute + targetContent), Encoding.UTF8);
+                File.WriteAllText(targetFilePath, doNotExecute, Encoding.UTF8);
 
                 // 이제 VisualStudio Code의 파일 비교기능을 이용해서 뭐가 바뀌었는지 알 수 있도록 하기
                 // 이것을 하기 위해 bat파일을 하나 만들어서 저장, 실행하면 VSC에서 파일 비교가 보일것임
@@ -72,38 +61,24 @@ namespace XProject.Database.SchemaCompare.SQLServer.XWork
 
                 // 배치파일 만들기
                 var batFilePath = Path.Combine(directoryPath, (fileName + " - Diff.bat"));
-                var batContentKor = new string[]
-                {
-                    string.Empty,
-                    $"echo ----------------------------",
-                    $"echo VisualStudio Code를 통해 스키마를 비교합니다.",
-                    $"echo ----------------------------",
-                    $"echo {fileName}",
-                    $"echo ----------------------------",
-                    $"echo 소스 : {sourceFilePath}",
-                    $"echo ----------------------------",
-                    $"echo 타겟 : {targetFilePath}",
-                    $"echo ----------------------------",
-                    string.Empty
-                };
-                var batContentEng = new string[]
-                {
-                    string.Empty,
-                    $"echo ----------------------------",
-                    $"echo Compare schemas through VisualStudio Code.",
-                    $"echo ----------------------------",
-                    $"echo {fileName}",
-                    $"echo ----------------------------",
-                    $"echo Source : {sourceFilePath}",
-                    $"echo ----------------------------",
-                    $"echo Target : {targetFilePath}",
-                    $"echo ----------------------------",
-                    string.Empty
-                };
-                var batContent = (
-                    "@echo off" + Environment.NewLine +
-                    string.Join(Environment.NewLine, ((pxs.IsKoreaHanGulLanguage == true) ? batContentKor : batContentEng)) +
-                    $"code -d \"{sourceFilePath}\" \"{targetFilePath}\"" + Environment.NewLine
+                var batContent = string.Join(
+                    Environment.NewLine,
+                    new string[]
+                    {
+                        "@echo off",
+                        string.Empty,
+                        $"echo ----------------------------",
+                        $"echo VisualStudio Code를 통해 스키마를 비교합니다.",
+                        $"echo ----------------------------",
+                        $"echo {fileName}",
+                        $"echo ----------------------------",
+                        $"echo 소스 : {sourceFilePath}",
+                        $"echo ----------------------------",
+                        $"echo 타겟 : {targetFilePath}",
+                        $"echo ----------------------------",
+                        string.Empty,
+                        $"code -d \"{sourceFilePath}\" \"{targetFilePath}\""
+                    }
                 );
 
                 // 저장

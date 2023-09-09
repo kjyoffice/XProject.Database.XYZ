@@ -30,7 +30,7 @@ namespace XProject.Database.SchemaCompare.SQLServer.XWork
 
             // 존재하지 않는 함수만
             pxs.WriteReport(string.Empty);
-            pxs.WriteReport(((pxs.IsKoreaHanGulLanguage == true) ? "<<<<<<<<<< 존재하지 않는 함수 >>>>>>>>>>" : "<<<<<<<<<< Not exist function >>>>>>>>>>"));
+            pxs.WriteReport("<<<<<<<<<< 존재하지 않는 함수 >>>>>>>>>>");
             pxs.WriteReport(string.Join(Environment.NewLine, notExistFunctionList.Select(x => x.Source.FUNCTION_NAME_Original)));
 
             // CREATE FUNCTION 스키마 내보내기
@@ -47,7 +47,7 @@ namespace XProject.Database.SchemaCompare.SQLServer.XWork
 
             // 존재하지만 다른 함수
             pxs.WriteReport(string.Empty);
-            pxs.WriteReport(((pxs.IsKoreaHanGulLanguage == true) ? "<<<<<<<<<< 존재하지만 스키마가 다른 함수 >>>>>>>>>>" : "<<<<<<<<<< Exist function but different >>>>>>>>>>"));
+            pxs.WriteReport("<<<<<<<<<< 존재하지만 스키마가 다른 함수 >>>>>>>>>>");
             pxs.WriteReport(string.Join(Environment.NewLine, existFunctionList.Select(x => x.Source.FUNCTION_NAME_Original)));
 
             // CREATE FUNCTION 스키마 내보내기

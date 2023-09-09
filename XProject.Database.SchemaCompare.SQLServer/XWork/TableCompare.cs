@@ -32,26 +32,21 @@ namespace XProject.Database.SchemaCompare.SQLServer.XWork
 
             // 존재하지 않는 테이블
             pxs.WriteReport(string.Empty);
-            pxs.WriteReport(((pxs.IsKoreaHanGulLanguage == true) ? "<<<<<<<<<< 존재하지 않는 테이블 >>>>>>>>>>" : "<<<<<<<<<< Not exist table >>>>>>>>>>"));
+            pxs.WriteReport("<<<<<<<<<< 존재하지 않는 테이블 >>>>>>>>>>");
             pxs.WriteReport(string.Join(Environment.NewLine, tableResult.NotExistTableList.Select(x => x.TABLE_NAME_Original)));
 
             // 테이블 비교
             pxs.WriteReport(string.Empty);
-            pxs.WriteReport(((pxs.IsKoreaHanGulLanguage == true) ? "<<<<<<<<<< 존재하는 테이블 >>>>>>>>>>" : "<<<<<<<<<< Exist table >>>>>>>>>>"));
+            pxs.WriteReport("<<<<<<<<<< 존재하는 테이블 >>>>>>>>>>");
+
             foreach (var table in tableResult.ExistTableList)
             {
-                // crt : Compare Result Text
-                var crtColumn = ((pxs.IsKoreaHanGulLanguage == true) ? "컬럼 (COLUMN)" : "Column (COLUMN)");
-                var crtIndex = ((pxs.IsKoreaHanGulLanguage == true) ? "인덱스 (PRIMARY KEY / INDEX / UNIQUE)" : "Index (PRIMARY KEY / INDEX / UNIQUE)");
-                var crtFK = ((pxs.IsKoreaHanGulLanguage == true) ? "외래키 (FOREIGN KEY)" : "Foreign Key (FOREIGN KEY)");
-                var crtConstraint = ((pxs.IsKoreaHanGulLanguage == true) ? "제약조건 (CHECK, DEFAULT)" : "Constraint (CHECK, DEFAULT)");
-                var crtTrigger = ((pxs.IsKoreaHanGulLanguage == true) ? "트리거 (TRIGGER)" : "Trigger (TRIGGER)");
                 var compareResult = new Dictionary<string, string>() {
-                    { crtColumn, TableCompare.TableColumn(sourceColumnList, targetColumnList, table.TABLE_NAME, pxs) },
-                    { crtIndex, TableCompare.TableIndex(sourceIndexList, targetIndexList, table.TABLE_NAME, pxs) },
-                    { crtFK, TableCompare.TableForeignKey(sourceForeignKeyList, targetForeignKeyList, table.TABLE_NAME, pxs) },
-                    { crtConstraint, TableCompare.TableConstraints(sourceConstraintList, targetConstraintList, table.TABLE_NAME, pxs) },
-                    { crtTrigger, TableCompare.TableTrigger(sourceTriggerList, targetTriggerList, table.TABLE_NAME, pxs) }
+                    { "컬럼 (COLUMN)", TableCompare.TableColumn(sourceColumnList, targetColumnList, table.TABLE_NAME, pxs) },
+                    { "인덱스 (PRIMARY KEY / INDEX / UNIQUE)", TableCompare.TableIndex(sourceIndexList, targetIndexList, table.TABLE_NAME, pxs) },
+                    { "외래키 (FOREIGN KEY)", TableCompare.TableForeignKey(sourceForeignKeyList, targetForeignKeyList, table.TABLE_NAME, pxs) },
+                    { "제약조건 (CHECK, DEFAULT)", TableCompare.TableConstraints(sourceConstraintList, targetConstraintList, table.TABLE_NAME, pxs) },
+                    { "트리거 (TRIGGER)", TableCompare.TableTrigger(sourceTriggerList, targetTriggerList, table.TABLE_NAME, pxs) }
                 }.Where(x => (x.Value != string.Empty));
 
                 // 차이가 있는 테이블만 뿌린다
@@ -123,11 +118,11 @@ namespace XProject.Database.SchemaCompare.SQLServer.XWork
                         x.Source.COLUMN_NAME_Original + " : " + 
                         (
                             (x.Target == null) ? 
-                            (((pxs.IsKoreaHanGulLanguage == true) ? "컬럼 없음" : "Not exist column") + " : " + x.Source.ColumnSchema) : 
+                            ("컬럼 없음 : " + x.Source.ColumnSchema) : 
                             (
-                                ((pxs.IsKoreaHanGulLanguage == true) ? "컬럼이 다름" : "Different column") + Environment.NewLine + 
-                                "- " + ((pxs.IsKoreaHanGulLanguage == true) ? "소스" : "Source") + " : " + x.Source.ColumnSchema + Environment.NewLine +
-                                "- " + ((pxs.IsKoreaHanGulLanguage == true) ? "타겟" : "Target") + " : " + x.Target.ColumnSchema
+                                "컬럼이 다름" + Environment.NewLine + 
+                                "- 소스 : " + x.Source.ColumnSchema + Environment.NewLine +
+                                "- 타겟 : " + x.Target.ColumnSchema
                             )
                         )
                     )
@@ -163,14 +158,14 @@ namespace XProject.Database.SchemaCompare.SQLServer.XWork
 
             if (unMatchNameList.Count() > 0)
             {
-                sb.AppendLine(((pxs.IsKoreaHanGulLanguage == true) ? "***** 이름은 같지만 속성이 다름" : "***** Name is same but attribute is different"));
+                sb.AppendLine("***** 이름은 같지만 속성이 다름");
                 sb.AppendLine(
                     string.Join(
                         Environment.NewLine,
                         unMatchNameList.Select(
                             x => (
-                                "- " + ((pxs.IsKoreaHanGulLanguage == true) ? "소스" : "Source") + " : " + x.Source.NotifyContent + Environment.NewLine +
-                                "- " + ((pxs.IsKoreaHanGulLanguage == true) ? "타겟" : "Target") + " : " + x.Target.NotifyContent + Environment.NewLine
+                                "- 소스 : " + x.Source.NotifyContent + Environment.NewLine +
+                                "- 타겟 : " + x.Target.NotifyContent + Environment.NewLine
                             )
                         )
                     )
@@ -179,10 +174,10 @@ namespace XProject.Database.SchemaCompare.SQLServer.XWork
 
             if ((sourceNotInNameList.Count() > 0) || (targetNotInNameList.Count() > 0))
             {
-                sb.AppendLine(((pxs.IsKoreaHanGulLanguage == true) ? "***** 이름이 다름 (같은거지만 랜덤의 이름으로 다를 수 있음)" : "***** Name is different (same but can be different with random name)"));
-                sb.AppendLine(((pxs.IsKoreaHanGulLanguage == true) ? "*** 소스" : "*** Source"));
+                sb.AppendLine("***** 이름이 다름 (같은거지만 랜덤의 이름으로 다를 수 있음)");
+                sb.AppendLine("*** 소스");
                 sb.AppendLine(string.Join(Environment.NewLine, sourceNotInNameList.Select(x => ("- " + x.NotifyContent))));
-                sb.AppendLine(((pxs.IsKoreaHanGulLanguage == true) ? "*** 타겟" : "*** Target"));
+                sb.AppendLine("*** 타겟");
                 sb.AppendLine(string.Join(Environment.NewLine, targetNotInNameList.Select(x => ("- "+ x.NotifyContent))));
             }
 
@@ -217,14 +212,14 @@ namespace XProject.Database.SchemaCompare.SQLServer.XWork
 
             if (unMatchNameList.Count() > 0)
             {
-                sb.AppendLine(((pxs.IsKoreaHanGulLanguage == true) ? "***** 이름은 같지만 속성이 다름" : "***** Name is same but attribute is different"));
+                sb.AppendLine("***** 이름은 같지만 속성이 다름");
                 sb.AppendLine(
                     string.Join(
                         Environment.NewLine,
                         unMatchNameList.Select(
                             x => (
-                                "- " + ((pxs.IsKoreaHanGulLanguage == true) ? "소스 속성" : "Source attribute") + " : " + x.Source.NotifyContent + Environment.NewLine +
-                                "- " + ((pxs.IsKoreaHanGulLanguage == true) ? "타겟 속성" : "Target attribute") + " : " + x.Target.NotifyContent + Environment.NewLine
+                                "- 소스 속성 : " + x.Source.NotifyContent + Environment.NewLine +
+                                "- 타겟 속성 : " + x.Target.NotifyContent + Environment.NewLine
                             )
                         )
                     )
@@ -233,10 +228,10 @@ namespace XProject.Database.SchemaCompare.SQLServer.XWork
 
             if ((sourceNotInNameList.Count() > 0) || (targetNotInNameList.Count() > 0))
             {
-                sb.AppendLine((pxs.IsKoreaHanGulLanguage == true) ? "***** 이름이 다름 (같은거지만 랜덤의 이름으로 다를 수 있음)" : "***** Name is different (same but can be different with random name)");
-                sb.AppendLine(((pxs.IsKoreaHanGulLanguage == true) ? "*** 소스" : "*** Source"));
+                sb.AppendLine("***** 이름이 다름 (같은거지만 랜덤의 이름으로 다를 수 있음)");
+                sb.AppendLine("*** 소스");
                 sb.AppendLine(string.Join(Environment.NewLine, sourceNotInNameList.Select(x => ("- " + x.NotifyContent))));
-                sb.AppendLine(((pxs.IsKoreaHanGulLanguage == true) ? "*** 타겟" : "*** Target"));
+                sb.AppendLine("*** 타겟");
                 sb.AppendLine(string.Join(Environment.NewLine, targetNotInNameList.Select(x => ("- " + x.NotifyContent))));
             }
 
@@ -271,14 +266,14 @@ namespace XProject.Database.SchemaCompare.SQLServer.XWork
 
             if (unMatchNameList.Count() > 0)
             {
-                sb.AppendLine(((pxs.IsKoreaHanGulLanguage == true) ? "***** 이름은 같지만 속성이 다름" : "***** Name is same but attribute is different"));
+                sb.AppendLine("***** 이름은 같지만 속성이 다름");
                 sb.AppendLine(
                     string.Join(
                         Environment.NewLine,
                         unMatchNameList.Select(
                             x => (
-                                $"- " + ((pxs.IsKoreaHanGulLanguage == true) ? "소스 속성" : "Source attribute") + " : " + x.Source.NotifyContent + Environment.NewLine +
-                                $"- " + ((pxs.IsKoreaHanGulLanguage == true) ? "타겟 속성" : "Target attribute") + " : " + x.Target.NotifyContent + Environment.NewLine
+                                $"- 소스 속성 : " + x.Source.NotifyContent + Environment.NewLine +
+                                $"- 타겟 속성 : " + x.Target.NotifyContent + Environment.NewLine
                             )
                         )
                     )
@@ -287,10 +282,10 @@ namespace XProject.Database.SchemaCompare.SQLServer.XWork
 
             if ((sourceNotInNameList.Count() > 0) || (targetNotInNameList.Count() > 0))
             {
-                sb.AppendLine(((pxs.IsKoreaHanGulLanguage == true) ? "***** 이름이 다름 (같은거지만 랜덤의 이름으로 다를 수 있음)" : "***** Name is different (same but can be different with random name)"));
-                sb.AppendLine(((pxs.IsKoreaHanGulLanguage == true) ? "소스" : "Source"));
+                sb.AppendLine("***** 이름이 다름 (같은거지만 랜덤의 이름으로 다를 수 있음)");
+                sb.AppendLine("소스");
                 sb.AppendLine(string.Join(Environment.NewLine, sourceNotInNameList.Select(x => ("- " + x.NotifyContent))));
-                sb.AppendLine(((pxs.IsKoreaHanGulLanguage == true) ? "타겟" : "Target"));
+                sb.AppendLine("타겟");
                 sb.AppendLine(string.Join(Environment.NewLine, targetNotInNameList.Select(x => ("- " + x.NotifyContent))));
             }
 
@@ -325,7 +320,7 @@ namespace XProject.Database.SchemaCompare.SQLServer.XWork
             {
                 // 존재하지 않는 트리거
                 sb.AppendLine(string.Empty);
-                sb.AppendLine(((pxs.IsKoreaHanGulLanguage == true) ? "***** 존재하지 않음" : "***** Not exist"));
+                sb.AppendLine("***** 존재하지 않음");
                 sb.AppendLine(string.Join(Environment.NewLine, existTriggerList.Select(x => x.Source.TRIGGER_NAME_Original)));
 
                 // CREATE TRIGGER 스키마 내보내기
@@ -345,7 +340,7 @@ namespace XProject.Database.SchemaCompare.SQLServer.XWork
             {
                 // 존재하지만 다른 트리거
                 sb.AppendLine(string.Empty);
-                sb.AppendLine(((pxs.IsKoreaHanGulLanguage == true) ? "***** 이름은 같지만 스키마가 다름" : "***** Name is same but schema is different"));
+                sb.AppendLine("***** 이름은 같지만 스키마가 다름");
                 sb.AppendLine(string.Join(Environment.NewLine, existTriggerList.Select(x => x.Source.TRIGGER_NAME_Original)));
 
                 // CREATE TRIGGER 스키마 내보내기
