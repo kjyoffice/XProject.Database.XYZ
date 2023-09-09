@@ -13,16 +13,13 @@ namespace XProject.Database.SchemaCompare.UI.XFrame
 {
     public partial class AboutApplicationFrame : Form
     {
-        public AboutApplicationFrame(bool isHanGulLanguage)
+        public AboutApplicationFrame()
         {
-            var mainTitle = ((isHanGulLanguage == true) ? "정보" : "About");
-
             this.InitializeComponent();
-
-            this.Text = mainTitle;
-            this.MainTitle.Text = mainTitle;
-            this.SchemaDiffApp.Text = (((isHanGulLanguage == true) ? "스키마 비교" : "Compare schema") + " : VisualStudio Code");
-            this.CloseAboutApp.Text = ((isHanGulLanguage == true) ? "확인" : "OK");
+            this.Text = "정보";
+            this.MainTitle.Text = "정보";
+            this.SchemaDiffApp.Text = "스키마 비교 : VisualStudio Code";
+            this.CloseAboutApp.Text = "확인";
         }
 
         private void AboutApplicationFrame_Load(object sender, EventArgs e)

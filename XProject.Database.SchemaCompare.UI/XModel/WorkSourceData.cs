@@ -12,8 +12,6 @@ namespace XProject.Database.SchemaCompare.UI.XModel
         public string ReportDirectoryPath { get; set; }
         [Newtonsoft.Json.JsonProperty("databaseType")]
         public string DatabaseType { get; set; }
-        [Newtonsoft.Json.JsonProperty("isUIKoreanLanguage")]
-        public bool IsUIKoreanLanguage { get; set; }
         [Newtonsoft.Json.JsonProperty("sourceServer")]
         public WorkSourceServer SourceServer { get; set; }
         [Newtonsoft.Json.JsonProperty("targetServer")]

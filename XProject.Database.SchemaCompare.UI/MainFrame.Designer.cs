@@ -44,8 +44,6 @@
             this.MTSB_CutBar2 = new System.Windows.Forms.ToolStripSeparator();
             this.MTSB_AboutApplication = new System.Windows.Forms.ToolStripButton();
             this.MTSB_CloseApplication = new System.Windows.Forms.ToolStripButton();
-            this.MTSB_CutBar3 = new System.Windows.Forms.ToolStripSeparator();
-            this.MTSB_IsUIKoreanLanguage = new System.Windows.Forms.ToolStripButton();
             this.SourceServerGroup = new System.Windows.Forms.GroupBox();
             this.SSG_RawConnectionString = new System.Windows.Forms.TextBox();
             this.SSG_PortNoDescription = new System.Windows.Forms.Label();
@@ -180,9 +178,7 @@
             this.MTSB_SaveWorkSource,
             this.MTSB_CutBar2,
             this.MTSB_AboutApplication,
-            this.MTSB_CloseApplication,
-            this.MTSB_CutBar3,
-            this.MTSB_IsUIKoreanLanguage});
+            this.MTSB_CloseApplication});
             this.MainToolStripBar.Location = new System.Drawing.Point(0, 0);
             this.MainToolStripBar.Name = "MainToolStripBar";
             this.MainToolStripBar.Size = new System.Drawing.Size(1184, 25);
@@ -238,23 +234,6 @@
             this.MTSB_CloseApplication.Size = new System.Drawing.Size(30, 22);
             this.MTSB_CloseApplication.Text = "Exit";
             this.MTSB_CloseApplication.Click += new System.EventHandler(this.MTSB_CloseApplication_Click);
-            // 
-            // MTSB_CutBar3
-            // 
-            this.MTSB_CutBar3.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
-            this.MTSB_CutBar3.Name = "MTSB_CutBar3";
-            this.MTSB_CutBar3.Size = new System.Drawing.Size(6, 25);
-            // 
-            // MTSB_IsUIKoreanLanguage
-            // 
-            this.MTSB_IsUIKoreanLanguage.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
-            this.MTSB_IsUIKoreanLanguage.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.MTSB_IsUIKoreanLanguage.Image = ((System.Drawing.Image)(resources.GetObject("MTSB_IsUIKoreanLanguage.Image")));
-            this.MTSB_IsUIKoreanLanguage.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.MTSB_IsUIKoreanLanguage.Name = "MTSB_IsUIKoreanLanguage";
-            this.MTSB_IsUIKoreanLanguage.Size = new System.Drawing.Size(100, 22);
-            this.MTSB_IsUIKoreanLanguage.Text = "KoreanLanguage";
-            this.MTSB_IsUIKoreanLanguage.Click += new System.EventHandler(this.MTSB_IsUIKoreanLanguage_Click);
             // 
             // SourceServerGroup
             // 
@@ -819,8 +798,6 @@
         private System.Windows.Forms.ToolStripSeparator MTSB_CutBar2;
         private System.Windows.Forms.ToolStripButton MTSB_AboutApplication;
         private System.Windows.Forms.Button ViewExecuteCompareCommand;
-        private System.Windows.Forms.ToolStripButton MTSB_IsUIKoreanLanguage;
-        private System.Windows.Forms.ToolStripSeparator MTSB_CutBar3;
         private System.Windows.Forms.Button SSG_CopyToTSG;
         private System.Windows.Forms.Button TSG_CopyToSSG;
         private System.Windows.Forms.GroupBox DatabaseListGroup;

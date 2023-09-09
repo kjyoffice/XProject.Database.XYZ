@@ -68,11 +68,11 @@ namespace XProject.Database.SchemaCompare.UI
             }
         }
 
-        private void ConnectTest(string selDBType, TextBox dataSource, TextBox portNo, TextBox userID, TextBox password, TextBox initialCatalog, TextBox rawConnectionString, CheckBox userManual, CheckBox trust, ToolStripButton isUIKorLang)
+        private void ConnectTest(string selDBType, TextBox dataSource, TextBox portNo, TextBox userID, TextBox password, TextBox initialCatalog, TextBox rawConnectionString, CheckBox userManual, CheckBox trust)
         {
             if (selDBType != string.Empty)
             {
-                if (this.ConnectionValueCheck(dataSource, portNo, userID, password, initialCatalog, rawConnectionString, userManual, trust, isUIKorLang) == true)
+                if (this.ConnectionValueCheck(dataSource, portNo, userID, password, initialCatalog, rawConnectionString, userManual, trust) == true)
                 {
                     var connectionString = this.CreateConnectionString(selDBType, dataSource, portNo, userID, password, initialCatalog, rawConnectionString, userManual, trust);
 
@@ -162,38 +162,30 @@ namespace XProject.Database.SchemaCompare.UI
                         else
                         {
                             isSuccess = false;
-                            errorMessage = "응???????? What??????????";
+                            errorMessage = "응????????";
                         }
 
                         // Result
                         if (isSuccess == true)
                         {
-                            var message = ((isUIKorLang.Checked == true) ? "서버에 연결 가능합니다." : "Server connect test OK.");
-
-                            MessageBox.Show(message, this.AppTitle, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            MessageBox.Show("서버에 연결 가능합니다.", this.AppTitle, MessageBoxButtons.OK, MessageBoxIcon.Information);
                         }
                         else
                         {
-                            var message = (((isUIKorLang.Checked == true) ? "서버에 연결할 수 없습니다." : "Server connect is failed") + Environment.NewLine + Environment.NewLine + errorMessage);
-
-                            MessageBox.Show(message, this.AppTitle, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            MessageBox.Show("서버에 연결할 수 없습니다.", this.AppTitle, MessageBoxButtons.OK, MessageBoxIcon.Error);
                         }
 
                         this.Cursor = Cursors.Default;
                     }
                     else
                     {
-                        var message = ((isUIKorLang.Checked == true) ? "연결 문자열이 없습니다." : "Not exist connectionstring");
-
-                        MessageBox.Show(message, this.AppTitle, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MessageBox.Show("연결 문자열이 없습니다.", this.AppTitle, MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
                 }
             }
             else
             {
-                var message = ((isUIKorLang.Checked == true) ? "선택된 데이터베이스가 없습니다." : "Selected database is empty.");
-
-                MessageBox.Show(message, this.AppTitle, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("선택된 데이터베이스가 없습니다.", this.AppTitle, MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
 
@@ -241,7 +233,7 @@ namespace XProject.Database.SchemaCompare.UI
             rawConnectionString[1].Visible = rawConnectionString[0].Visible;
         }
 
-        private bool ConnectionValueCheck(TextBox dataSource, TextBox portNo, TextBox userID, TextBox password, TextBox initialCatalog, TextBox rawConnectionString, CheckBox userManual, CheckBox trust, ToolStripButton isUIKorLang)
+        private bool ConnectionValueCheck(TextBox dataSource, TextBox portNo, TextBox userID, TextBox password, TextBox initialCatalog, TextBox rawConnectionString, CheckBox userManual, CheckBox trust)
         {
             var result = false;
             var isTrust = trust.Checked;
@@ -261,9 +253,7 @@ namespace XProject.Database.SchemaCompare.UI
                 }
                 else
                 {
-                    var message = ((isUIKorLang.Checked == true) ? "연결문자열을 입력하세요." : "Please input server connectionstring.");
-
-                    MessageBox.Show(message, this.AppTitle, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    MessageBox.Show("연결문자열을 입력하세요.", this.AppTitle, MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     rawConnectionString.Focus();
                 }
             }
@@ -283,41 +273,31 @@ namespace XProject.Database.SchemaCompare.UI
                                 }
                                 else
                                 {
-                                    var message = ((isUIKorLang.Checked == true) ? "데이터베이스를 입력하세요." : "Please input database.");
-
-                                    MessageBox.Show(message, this.AppTitle, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                                    MessageBox.Show("데이터베이스를 입력하세요.", this.AppTitle, MessageBoxButtons.OK, MessageBoxIcon.Warning);
                                     initialCatalog.Focus();
                                 }
                             }
                             else
                             {
-                                var message = ((isUIKorLang.Checked == true) ? "서버 로그인 비밀번호를 입력하세요." : "Please input server login password.");
-
-                                MessageBox.Show(message, this.AppTitle, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                                MessageBox.Show("서버 로그인 비밀번호를 입력하세요.", this.AppTitle, MessageBoxButtons.OK, MessageBoxIcon.Warning);
                                 password.Focus();
                             }
                         }
                         else
                         {
-                            var message = ((isUIKorLang.Checked == true) ? "서버 로그인 아이디를 입력하세요." : "Please input server login id.");
-
-                            MessageBox.Show(message, this.AppTitle, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            MessageBox.Show("서버 로그인 아이디를 입력하세요.", this.AppTitle, MessageBoxButtons.OK, MessageBoxIcon.Warning);
                             userID.Focus();
                         }
                     }
                     else
                     {
-                        var message = ((isUIKorLang.Checked == true) ? "포트 번호가 올바르지 않습니다." : "wrong port no.");
-
-                        MessageBox.Show(message, this.AppTitle, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        MessageBox.Show("포트 번호가 올바르지 않습니다.", this.AppTitle, MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         portNo.Select();
                     }
                 }
                 else
                 {
-                    var message = ((isUIKorLang.Checked == true) ? "서버를 입력하세요." : "Please input server.");
-
-                    MessageBox.Show(message, this.AppTitle, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    MessageBox.Show("서버를 입력하세요.", this.AppTitle, MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     dataSource.Focus();
                 }
             }
@@ -469,6 +449,53 @@ namespace XProject.Database.SchemaCompare.UI
             return result;
         }
 
+        private void ChangeUIControlKoreanLanguage()
+        {
+            this.Text = "SQL Server 스키마 비교";
+            this.AppTitle = "SQL Server 스키마 비교";
+
+            this.JustNotify1.Text = "\"소스서버의 스키마가 타겟서버로 적용된다.\"의 개념입니다.";
+            this.MTSB_NewWorkSource.Text = "새 비교";
+            this.MTSB_OpenWorkSource.Text = "열기";
+            this.MTSB_SaveWorkSource.Text = "저장";
+            this.MTSB_CloseApplication.Text = "종료";
+            this.MTSB_AboutApplication.Text = "정보";
+            this.ReportDirectoryGroup.Text = "리포트 디렉토리";
+            this.DatabaseListGroup.Text = "데이터베이스";
+            this.RDG_OpenReportDirectory.Text = "열기";
+            this.SwapSourceAndTargetServer.Text = "바꾸기";
+            this.ExecuteCompare.Text = "비교 시작";
+            this.ViewExecuteCompareCommand.Text = "비교 시작 명령 보기";
+            this.MTSB_OpenWorkSourceFileOpenDialog.Title = "열기";
+            this.MTSB_SaveWorkSourceSaveDialog.Title = "저장";
+
+            this.SourceServerGroup.Text = "소스서버";
+            this.SSG_DataSourceTitle.Text = "서버";
+            this.SSG_PortNoTitle.Text = "포트";
+            this.SSG_PortNoDescription.Text = "(** 기본포트면 비워도 됩니다.)";
+            this.SSG_RawConnectionStringTitle.Text = "연결문자열";
+            this.SSG_UserIDTitle.Text = "아이디";
+            this.SSG_PasswordTitle.Text = "비밀번호";
+            this.SSG_InitialCatalogTitle.Text = "데이터베이스";
+            this.SSG_UserManualConnectionString.Text = "직접 입력";
+            this.SSG_TrustedConnection.Text = "윈도우 인증";
+            this.SSG_ConnectTest.Text = "연결 테스트";
+            this.SSG_CopyToTSG.Text = "타겟서버로 복사";
+
+            this.TargetServerGroup.Text = "타겟서버";
+            this.TSG_DataSourceTitle.Text = "서버";
+            this.TSG_PortNoTitle.Text = "포트";
+            this.TSG_PortNoDescription.Text = "(** 기본포트면 비워도 됩니다.)";
+            this.TSG_RawConnectionStringTitle.Text = "연결문자열";
+            this.TSG_UserIDTitle.Text = "아이디";
+            this.TSG_PasswordTitle.Text = "비밀번호";
+            this.TSG_InitialCatalogTitle.Text = "데이터베이스";
+            this.TSG_UserManualConnectionString.Text = "직접 입력";
+            this.TSG_TrustedConnection.Text = "윈도우 인증";
+            this.TSG_ConnectTest.Text = "연결 테스트";
+            this.TSG_CopyToSSG.Text = "소스서버로 복사";
+        }
+
         // ------------------------------------------------------------------------------------------------
 
         public MainFrame(string defaultWorkSourceDataFilePath)
@@ -480,8 +507,7 @@ namespace XProject.Database.SchemaCompare.UI
             this.DLG_SQLServer.Tag = XValue.ProcessValue.DatabaseType_SQLServer.TypeID;
             this.DLG_MySQL.Tag = XValue.ProcessValue.DatabaseType_MySQL.TypeID;
             this.DLG_PostgreSQL.Tag = XValue.ProcessValue.DatabaseType_PostgreSQL.TypeID;
-            this.MTSB_IsUIKoreanLanguage.Checked = !XAppConfig.AppSettings.IsStartAppKoreaHanGulLanguage;
-            this.MTSB_IsUIKoreanLanguage_Click(null, null);
+            this.ChangeUIControlKoreanLanguage();
             this.MTSB_NewWorkSource_Click(null, null);
 
             // 프로그램이 준비되지 않았으니 비활성화
@@ -509,7 +535,6 @@ namespace XProject.Database.SchemaCompare.UI
 
         private void MainFrame_DragDrop(object sender, DragEventArgs e)
         {
-            var isUIKorLang = this.MTSB_IsUIKoreanLanguage;
             var dndFiles = (e.Data.GetData(DataFormats.FileDrop) as string[]);
 
             if (dndFiles.Length == 1)
@@ -519,9 +544,7 @@ namespace XProject.Database.SchemaCompare.UI
             }
             else
             {
-                var message = ((isUIKorLang.Checked == true) ? "1개의 파일만 가능합니다." : "Allow only one file.");
-
-                MessageBox.Show(message, this.AppTitle, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("1개의 파일만 가능합니다.", this.AppTitle, MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
 
@@ -540,10 +563,7 @@ namespace XProject.Database.SchemaCompare.UI
                 e.Cancel = true;
             }
             */
-            var isUIKorLang = this.MTSB_IsUIKoreanLanguage;
-            var message = ((isUIKorLang.Checked == true) ? "종료 전 현재 설정을 저장하시겠습니까?" : "Exit program before save this setting?");
-
-            if ((XAppConfig.AppSettings.IsAppCloseTimeSaveWorkSourceQuestion == true) && (MessageBox.Show(message, this.AppTitle, MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes))
+            if ((XAppConfig.AppSettings.IsAppCloseTimeSaveWorkSourceQuestion == true) && (MessageBox.Show("종료 전 현재 설정을 저장하시겠습니까?", this.AppTitle, MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes))
             {
                 this.MTSB_SaveWorkSource_Click(null, null);
             }
@@ -551,10 +571,7 @@ namespace XProject.Database.SchemaCompare.UI
 
         private void MTSB_NewWorkSource_Click(object sender, EventArgs e)
         {
-            var isUIKorLang = this.MTSB_IsUIKoreanLanguage;
-            var message = ((isUIKorLang.Checked == true) ? "현재 내용을 모두 지우시겠습니까?" : "Clear all this information?");
-
-            if ((sender == null) || ((sender != null) && (MessageBox.Show(message, this.AppTitle, MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)))
+            if ((sender == null) || ((sender != null) && (MessageBox.Show("현재 내용을 모두 지우시겠습니까?", this.AppTitle, MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)))
             {
                 var reportPath = XAppConfig.AppSettings.DefaultReportDirectoryPath;
                 var isDefaultUserManualConnectionStringMode = XAppConfig.AppSettings.IsDefaultUserManualConnectionStringMode;
@@ -634,7 +651,6 @@ namespace XProject.Database.SchemaCompare.UI
 
         private void MTSB_SaveWorkSource_Click(object sender, EventArgs e)
         {
-            var isUIKorLang = this.MTSB_IsUIKoreanLanguage.Checked;
             var saveFilePath = this.WorkSourceDataFilePath;
 
             // 이미 저장된 파일경로가 있으면 재사용하고 없으면 파일 선택하라고 한다 
@@ -652,7 +668,6 @@ namespace XProject.Database.SchemaCompare.UI
                 var wsd = new XModel.WorkSourceData();
                 wsd.ReportDirectoryPath = this.RDG_ReportDirectoryPath.Text.Trim();
                 wsd.DatabaseType = this.GetSelectedDatabaseType();
-                wsd.IsUIKoreanLanguage = this.MTSB_IsUIKoreanLanguage.Checked;
                 // SSG
                 wsd.SourceServer = new XModel.WorkSourceServer();
                 wsd.SourceServer.DataSource = this.SSG_DataSource.Text.Trim();
@@ -734,26 +749,12 @@ namespace XProject.Database.SchemaCompare.UI
                 // 폼 타이틀에 파일명 표시
                 this.ChangeWorkSourceDataFilePath(saveFilePath);
 
-                var message = ((isUIKorLang == true) ? "현재의 설정을 저장했습니다." : "Saved this setting");
-
-                MessageBox.Show(message, this.AppTitle, MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
-        }
-
-        private void MTSB_SaveWorkSource_ClearSaveFilePath_Click(object sender, EventArgs e)
-        {
-            var isUIKorLang = this.MTSB_IsUIKoreanLanguage;
-            var message = ((isUIKorLang.Checked == true) ? "매번 자동으로 저장되는 정보를 지우겠습니까?" : "Cancel anytime save information?");
-
-            if (MessageBox.Show(message, this.AppTitle, MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
-            {
-                this.ChangeWorkSourceDataFilePath(string.Empty);
+                MessageBox.Show("현재의 설정을 저장했습니다.", this.AppTitle, MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
 
         private void MTSB_OpenWorkSource_Click(object sender, EventArgs e)
         {
-            var isUIKorLang = this.MTSB_IsUIKoreanLanguage;
             var isOpenSuccess = false;
 
             // 드래그 앤 드롭으로도 이거 호출되니 파일 체크해야 함
@@ -776,9 +777,6 @@ namespace XProject.Database.SchemaCompare.UI
                             var databaseType = wsd.DatabaseType.ToUpper();
 
                             this.RDG_ReportDirectoryPath.Text = wsd.ReportDirectoryPath;
-
-                            // Language
-                            isUIKorLang.Checked = wsd.IsUIKoreanLanguage;
 
                             // Database Type List
                             this.DLG_SQLServer.Checked = false;
@@ -830,23 +828,17 @@ namespace XProject.Database.SchemaCompare.UI
                         }
                         catch (Exception ex)
                         {
-                            var message = (((isUIKorLang.Checked == true) ? "지원하지 않는 파일입니다." : "Not support file.") + Environment.NewLine + Environment.NewLine + ex.Message);
-
-                            MessageBox.Show(message, this.AppTitle, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            MessageBox.Show(("지원하지 않는 파일입니다." + Environment.NewLine + Environment.NewLine + ex.Message), this.AppTitle, MessageBoxButtons.OK, MessageBoxIcon.Error);
                         }
                     }
                     else
                     {
-                        var message = ((isUIKorLang.Checked == true) ? "지원하지 않는 파일형식 입니다." : "Not support file format.");
-
-                        MessageBox.Show(message, this.AppTitle, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MessageBox.Show("지원하지 않는 파일형식 입니다.", this.AppTitle, MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
                 }
                 else
                 {
-                    var message = ((isUIKorLang.Checked == true) ? "열려고 하는 파일이 없습니다." : "Not exist try open file.");
-
-                    MessageBox.Show(message, this.AppTitle, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("열려고 하는 파일이 없습니다.", this.AppTitle, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
 
@@ -864,9 +856,7 @@ namespace XProject.Database.SchemaCompare.UI
 
         private void MTSB_AboutApplication_Click(object sender, EventArgs e)
         {
-            var isUIKorLang = this.MTSB_IsUIKoreanLanguage;
-
-            using (var aaf = new XFrame.AboutApplicationFrame(isUIKorLang.Checked))
+            using (var aaf = new XFrame.AboutApplicationFrame())
             {
                 aaf.ShowDialog();
             }
@@ -882,7 +872,6 @@ namespace XProject.Database.SchemaCompare.UI
 
         private void RDG_OpenReportDirectory_Click(object sender, EventArgs e)
         {
-            var isUIKorLang = this.MTSB_IsUIKoreanLanguage;
             var reportPath = this.RDG_ReportDirectoryPath.Text;
 
             if (Directory.Exists(reportPath) == true)
@@ -891,9 +880,7 @@ namespace XProject.Database.SchemaCompare.UI
             }
             else
             {
-                var message = ((isUIKorLang.Checked == true) ? "디렉토리가 존재하지 않습니다." : "Not exist directory.");
-
-                MessageBox.Show(message, this.AppTitle, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("디렉토리가 존재하지 않습니다.", this.AppTitle, MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -909,7 +896,7 @@ namespace XProject.Database.SchemaCompare.UI
 
         private void SSG_ConnectTest_Click(object sender, EventArgs e)
         {
-            this.ConnectTest(this.GetSelectedDatabaseType(), this.SSG_DataSource, this.SSG_PortNo, this.SSG_UserID, this.SSG_Password, this.SSG_InitialCatalog, this.SSG_RawConnectionString, this.SSG_UserManualConnectionString, this.SSG_TrustedConnection, this.MTSB_IsUIKoreanLanguage);
+            this.ConnectTest(this.GetSelectedDatabaseType(), this.SSG_DataSource, this.SSG_PortNo, this.SSG_UserID, this.SSG_Password, this.SSG_InitialCatalog, this.SSG_RawConnectionString, this.SSG_UserManualConnectionString, this.SSG_TrustedConnection);
         }
 
         private void SSG_CopyToTSG_Click(object sender, EventArgs e)
@@ -944,7 +931,7 @@ namespace XProject.Database.SchemaCompare.UI
 
         private void TSG_ConnectTest_Click(object sender, EventArgs e)
         {
-            this.ConnectTest(this.GetSelectedDatabaseType(), this.TSG_DataSource, this.TSG_PortNo, this.TSG_UserID, this.TSG_Password, this.TSG_InitialCatalog, this.TSG_RawConnectionString, this.TSG_UserManualConnectionString, this.TSG_TrustedConnection, this.MTSB_IsUIKoreanLanguage);
+            this.ConnectTest(this.GetSelectedDatabaseType(), this.TSG_DataSource, this.TSG_PortNo, this.TSG_UserID, this.TSG_Password, this.TSG_InitialCatalog, this.TSG_RawConnectionString, this.TSG_UserManualConnectionString, this.TSG_TrustedConnection);
         }
 
         private void TSG_CopyToSSG_Click(object sender, EventArgs e)
@@ -1007,9 +994,8 @@ namespace XProject.Database.SchemaCompare.UI
         private void ExecuteCompare_Click(object sender, EventArgs e)
         {
             var isViewCommand = (((sender as Button)?.Tag ?? string.Empty).ToString().ToUpper() == "TRUE");
-            var isUIKorLang = this.MTSB_IsUIKoreanLanguage;
-            var isSSGSuccess = this.ConnectionValueCheck(this.SSG_DataSource, this.SSG_PortNo, this.SSG_UserID, this.SSG_Password, this.SSG_InitialCatalog, this.SSG_RawConnectionString, this.SSG_UserManualConnectionString, this.SSG_TrustedConnection, isUIKorLang);
-            var isTSGSuccess = ((isSSGSuccess == true) && this.ConnectionValueCheck(this.TSG_DataSource, this.TSG_PortNo, this.TSG_UserID, this.TSG_Password, this.TSG_InitialCatalog, this.TSG_RawConnectionString, this.TSG_UserManualConnectionString, this.TSG_TrustedConnection, isUIKorLang) == true);
+            var isSSGSuccess = this.ConnectionValueCheck(this.SSG_DataSource, this.SSG_PortNo, this.SSG_UserID, this.SSG_Password, this.SSG_InitialCatalog, this.SSG_RawConnectionString, this.SSG_UserManualConnectionString, this.SSG_TrustedConnection);
+            var isTSGSuccess = ((isSSGSuccess == true) && this.ConnectionValueCheck(this.TSG_DataSource, this.TSG_PortNo, this.TSG_UserID, this.TSG_Password, this.TSG_InitialCatalog, this.TSG_RawConnectionString, this.TSG_UserManualConnectionString, this.TSG_TrustedConnection) == true);
 
             if ((isSSGSuccess == true) && (isTSGSuccess == true))
             {
@@ -1030,16 +1016,12 @@ namespace XProject.Database.SchemaCompare.UI
 
                             if (File.Exists(appPath) == true)
                             {
-                                var appParameter = $"\"{ssgCS}\" \"{tsgCS}\" \"{reportPath}\" \"{isUIKorLang.Checked}\"";
+                                var appParameter = $"\"{ssgCS}\" \"{tsgCS}\" \"{reportPath}\"";
 
                                 if (isViewCommand == true)
                                 {
                                     var message = (
-                                        (
-                                            (isUIKorLang.Checked == true) ?
-                                            "Ctrl + C 눌러서 현재 대화상자 내용을 복사할 수 있습니다." :
-                                            "Press Ctrl + C, copy to this dialog content"
-                                        ) +
+                                        "Ctrl + C 눌러서 현재 대화상자 내용을 복사할 수 있습니다." +
                                         Environment.NewLine +
                                         "--------------------------------------------------" +
                                         Environment.NewLine +
@@ -1050,9 +1032,7 @@ namespace XProject.Database.SchemaCompare.UI
                                 }
                                 else
                                 {
-                                    var message = ((isUIKorLang.Checked == true) ? "스키마 비교를 시작 하시겠습니까?" : "Start schema compare?");
-
-                                    if (MessageBox.Show(message, this.AppTitle, MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                                    if (MessageBox.Show("스키마 비교를 시작 하시겠습니까?", this.AppTitle, MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
                                     {
                                         // 실행
                                         Process.Start(appPath, appParameter);
@@ -1061,147 +1041,23 @@ namespace XProject.Database.SchemaCompare.UI
                             }
                             else
                             {
-                                var message = ((isUIKorLang.Checked == true) ? "스키마 비교 프로그램이 존재하지 않습니다." : "Not exist schema compare program.");
-
-                                MessageBox.Show(message, this.AppTitle, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                MessageBox.Show("스키마 비교 프로그램이 존재하지 않습니다.", this.AppTitle, MessageBoxButtons.OK, MessageBoxIcon.Error);
                             }
                         }
                         else
                         {
-                            var message = ((isUIKorLang.Checked == true) ? "소스서버와 타겟서버의 연결문자열이 동일합니다." : "Same connectionstring to source server and target server.");
-
-                            MessageBox.Show(message, this.AppTitle, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            MessageBox.Show("소스서버와 타겟서버의 연결문자열이 동일합니다.", this.AppTitle, MessageBoxButtons.OK, MessageBoxIcon.Information);
                         }
                     }
                     else
                     {
-                        var message = ((isUIKorLang.Checked == true) ? "선택된 데이터베이스가 없습니다." : "Selected database is empty.");
-
-                        MessageBox.Show(message, this.AppTitle, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        MessageBox.Show("선택된 데이터베이스가 없습니다.", this.AppTitle, MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
                 }
                 else
                 {
-                    var message = ((isUIKorLang.Checked == true) ? "디렉토리가 존재하지 않습니다." : "Not exist directory.");
-
-                    MessageBox.Show(message, this.AppTitle, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("디렉토리가 존재하지 않습니다.", this.AppTitle, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
-            }
-        }
-
-        private void MTSB_IsUIKoreanLanguage_Click(object sender, EventArgs e)
-        {
-            var isUIKorLang = this.MTSB_IsUIKoreanLanguage;
-
-            // 얘는 체크박스가 아니지만 체크박스 처럼 돌아야 한다 그로인해 클릭시 체크 먼저 바꿔줌
-            isUIKorLang.Checked = !isUIKorLang.Checked;
-
-            var appTitle = ((isUIKorLang.Checked == true) ? "SQL Server 스키마 비교" : "SQL Server Schema Compare");
-
-            this.AppTitle = appTitle;
-            this.Text = appTitle;
-
-
-            if (isUIKorLang.Checked == true)
-            {
-                // 영문이었다가 한글로 바뀜
-                // 얘는 이 체크박스 바꾸면 영문으로 바뀐다고 알리기 위한거니 텍스트 반대로 씀
-                isUIKorLang.Text = "현재 한글, 영문으로 변경";
-            }
-            else
-            {
-                // 한글이었다가 영문으로 바뀜
-                // 얘는 이 체크박스 바꾸면 한글로 바뀐다고 알리기 위한거니 텍스트 반대로 씀
-                isUIKorLang.Text = "Now is english, change to korean";
-            }
-
-            if (isUIKorLang.Checked == true)
-            {
-                // 영문이었다가 한글로 바뀜
-                this.JustNotify1.Text = "\"소스서버의 스키마가 타겟서버로 적용된다.\"의 개념입니다.";
-                this.MTSB_NewWorkSource.Text = "새 비교";
-                this.MTSB_OpenWorkSource.Text = "열기";
-                this.MTSB_SaveWorkSource.Text = "저장";
-                this.MTSB_CloseApplication.Text = "종료";
-                this.MTSB_AboutApplication.Text = "정보";
-                this.ReportDirectoryGroup.Text = "리포트 디렉토리";
-                this.DatabaseListGroup.Text = "데이터베이스";
-                this.RDG_OpenReportDirectory.Text = "열기";
-                this.SwapSourceAndTargetServer.Text = "바꾸기";
-                this.ExecuteCompare.Text = "비교 시작";
-                this.ViewExecuteCompareCommand.Text = "비교 시작 명령 보기";
-                this.MTSB_OpenWorkSourceFileOpenDialog.Title = "열기";
-                this.MTSB_SaveWorkSourceSaveDialog.Title = "저장";
-
-                this.SourceServerGroup.Text = "소스서버";
-                this.SSG_DataSourceTitle.Text = "서버";
-                this.SSG_PortNoTitle.Text = "포트";
-                this.SSG_PortNoDescription.Text = "(** 기본포트면 비워도 됩니다.)";
-                this.SSG_RawConnectionStringTitle.Text = "연결문자열";
-                this.SSG_UserIDTitle.Text = "아이디";
-                this.SSG_PasswordTitle.Text = "비밀번호";
-                this.SSG_InitialCatalogTitle.Text = "데이터베이스";
-                this.SSG_UserManualConnectionString.Text = "직접 입력";
-                this.SSG_TrustedConnection.Text = "윈도우 인증";
-                this.SSG_ConnectTest.Text = "연결 테스트";
-                this.SSG_CopyToTSG.Text = "타겟서버로 복사";
-
-                this.TargetServerGroup.Text = "타겟서버";
-                this.TSG_DataSourceTitle.Text = "서버";
-                this.TSG_PortNoTitle.Text = "포트";
-                this.TSG_PortNoDescription.Text = "(** 기본포트면 비워도 됩니다.)";
-                this.TSG_RawConnectionStringTitle.Text = "연결문자열";
-                this.TSG_UserIDTitle.Text = "아이디";
-                this.TSG_PasswordTitle.Text = "비밀번호";
-                this.TSG_InitialCatalogTitle.Text = "데이터베이스";
-                this.TSG_UserManualConnectionString.Text = "직접 입력";
-                this.TSG_TrustedConnection.Text = "윈도우 인증";
-                this.TSG_ConnectTest.Text = "연결 테스트";
-                this.TSG_CopyToSSG.Text = "소스서버로 복사";
-            }
-            else
-            {
-                // 한글이었다가 영문으로 바뀜
-                this.JustNotify1.Text = "The schema of the SourceServer is applied to the TargetServer.";
-                this.MTSB_NewWorkSource.Text = "New";
-                this.MTSB_OpenWorkSource.Text = "Open";
-                this.MTSB_SaveWorkSource.Text = "Save";
-                this.MTSB_CloseApplication.Text = "Exit";
-                this.MTSB_AboutApplication.Text = "About";
-                this.ReportDirectoryGroup.Text = "Report directory";
-                this.DatabaseListGroup.Text = "Database";
-                this.RDG_OpenReportDirectory.Text = "Open";
-                this.SwapSourceAndTargetServer.Text = "Swap";
-                this.ExecuteCompare.Text = "Start Compare";
-                this.ViewExecuteCompareCommand.Text = "View Start Compare Command";
-                this.MTSB_OpenWorkSourceFileOpenDialog.Title = "Open";
-                this.MTSB_SaveWorkSourceSaveDialog.Title = "Save";
-
-                this.SourceServerGroup.Text = "SourceServer";
-                this.SSG_DataSourceTitle.Text = "Server";
-                this.SSG_PortNoTitle.Text = "Port";
-                this.SSG_PortNoDescription.Text = "(** Default port is allow empty)";
-                this.SSG_RawConnectionStringTitle.Text = $"Connection{Environment.NewLine}String";
-                this.SSG_UserIDTitle.Text = "ID";
-                this.SSG_PasswordTitle.Text = "Password";
-                this.SSG_InitialCatalogTitle.Text = "Database";
-                this.SSG_UserManualConnectionString.Text = "Manual";
-                this.SSG_TrustedConnection.Text = "Trusted";
-                this.SSG_ConnectTest.Text = "Connect Test";
-                this.SSG_CopyToTSG.Text = "Copy To TargetServer";
-
-                this.TargetServerGroup.Text = "TargetServer";
-                this.TSG_DataSourceTitle.Text = "Server";
-                this.TSG_PortNoTitle.Text = "Port";
-                this.TSG_PortNoDescription.Text = "(** Default port is allow empty)";
-                this.TSG_RawConnectionStringTitle.Text = $"Connection{Environment.NewLine}String";
-                this.TSG_UserIDTitle.Text = "ID";
-                this.TSG_PasswordTitle.Text = "Password";
-                this.TSG_InitialCatalogTitle.Text = "Database";
-                this.TSG_UserManualConnectionString.Text = "Manual";
-                this.TSG_TrustedConnection.Text = "Trusted";
-                this.TSG_ConnectTest.Text = "Connect Test";
-                this.TSG_CopyToSSG.Text = "Copy To SourceServer";
             }
         }
 

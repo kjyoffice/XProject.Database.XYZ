@@ -61,13 +61,5 @@ namespace XProject.Database.SchemaCompare.UI.XAppConfig
                 return Convert.ToBoolean(ConfigurationManager.AppSettings["IsDefaultUserManualConnectionStringMode"]);
             }
         }
-
-        public static bool IsStartAppKoreaHanGulLanguage
-        {
-            get
-            {
-                return Convert.ToBoolean(ConfigurationManager.AppSettings["IsStartAppKoreaHanGulLanguage"]);
-            }
-        }
     }
 }
