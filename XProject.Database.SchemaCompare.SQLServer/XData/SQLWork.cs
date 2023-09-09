@@ -297,18 +297,18 @@ namespace XProject.Database.SchemaCompare.SQLServer.XData
             // 인덱스 : 기본키, (클러스트/넌클러스트) 인덱스, 유니크
             return this.TableIndexData.GroupBy(
                     x => new {
-                        x.TABLE_NAME_Original,
-                        x.CONSTRAINT_NAME_Original
+                        x.Original.TABLE_NAME_Original,
+                        x.Original.CONSTRAINT_NAME_Original
                     }
                 )
                 .Select(
                     x => new XModel.SQLTableIndex(
                         x.Key.TABLE_NAME_Original,
                         x.Key.CONSTRAINT_NAME_Original,
-                        x.First().INDEX_TYPE_Original,
-                        x.First().CLUSTERED_TYPE_Original,
+                        x.First().Original.INDEX_TYPE_Original,
+                        x.First().Original.CLUSTERED_TYPE_Original,
                         x.First().KEY_ORDINAL,
-                        string.Join(", ", x.Select(y => (y.COLUMN_NAME_Original + " " + y.ORDERBY_TYPE_Original)))
+                        string.Join(", ", x.Select(y => (y.Original.COLUMN_NAME_Original + " " + y.Original.ORDERBY_TYPE_Original)))
                     )
                 ).ToList();
         }

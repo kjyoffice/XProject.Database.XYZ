@@ -164,8 +164,8 @@ namespace XProject.Database.SchemaCompare.SQLServer.XWork
                         Environment.NewLine,
                         unMatchNameList.Select(
                             x => (
-                                "- 소스 : " + x.Source.NotifyContent + Environment.NewLine +
-                                "- 타겟 : " + x.Target.NotifyContent + Environment.NewLine
+                                "- 소스 : " + x.Source.Original.NotifyContent + Environment.NewLine +
+                                "- 타겟 : " + x.Target.Original.NotifyContent + Environment.NewLine
                             )
                         )
                     )
@@ -176,9 +176,9 @@ namespace XProject.Database.SchemaCompare.SQLServer.XWork
             {
                 sb.AppendLine("***** 이름이 다름 (같은거지만 랜덤의 이름으로 다를 수 있음)");
                 sb.AppendLine("*** 소스");
-                sb.AppendLine(string.Join(Environment.NewLine, sourceNotInNameList.Select(x => ("- " + x.NotifyContent))));
+                sb.AppendLine(string.Join(Environment.NewLine, sourceNotInNameList.Select(x => ("- " + x.Original.NotifyContent))));
                 sb.AppendLine("*** 타겟");
-                sb.AppendLine(string.Join(Environment.NewLine, targetNotInNameList.Select(x => ("- "+ x.NotifyContent))));
+                sb.AppendLine(string.Join(Environment.NewLine, targetNotInNameList.Select(x => ("- "+ x.Original.NotifyContent))));
             }
 
             var result = sb.ToString();

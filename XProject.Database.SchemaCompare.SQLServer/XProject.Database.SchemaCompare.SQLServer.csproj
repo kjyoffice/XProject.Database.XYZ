@@ -56,6 +56,7 @@
     <Compile Include="XModel\SQLProcedure.cs" />
     <Compile Include="XModel\SQLTableConstraints_Original.cs" />
     <Compile Include="XModel\SQLTableForeignKey_Original.cs" />
+    <Compile Include="XModel\SQLTableIndex_Original.cs" />
     <Compile Include="XModel\SQLTable_Original.cs" />
     <Compile Include="XModel\SQLTable.cs" />
     <Compile Include="XModel\SQLTableColumn.cs" />
