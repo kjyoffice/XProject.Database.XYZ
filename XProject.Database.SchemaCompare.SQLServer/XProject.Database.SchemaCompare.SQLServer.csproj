@@ -52,6 +52,7 @@
     <Compile Include="XModel\ProcessXSupport.cs" />
     <Compile Include="XModel\SQLFunction_Original.cs" />
     <Compile Include="XModel\SQLFunction.cs" />
+    <Compile Include="XModel\SQLProcedure_Original.cs" />
     <Compile Include="XModel\SQLProcedure.cs" />
     <Compile Include="XModel\SQLTable.cs" />
     <Compile Include="XModel\SQLTableColumn.cs" />

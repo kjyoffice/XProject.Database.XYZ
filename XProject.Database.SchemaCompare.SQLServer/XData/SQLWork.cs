@@ -365,11 +365,11 @@ namespace XProject.Database.SchemaCompare.SQLServer.XData
         public List<XModel.SQLProcedure> ProcedureList()
         {
             // 프로시저
-            return this.ProcedureData.GroupBy(x => x.ROUTINE_NAME_Original)
+            return this.ProcedureData.GroupBy(x => x.Original.ROUTINE_NAME_Original)
                 .Select(
                     x => new XModel.SQLProcedure(
                         x.Key,
-                        string.Join(string.Empty, x.Select(y => y.ROUTINE_DEFINITION_Original)).Trim()
+                        string.Join(string.Empty, x.Select(y => y.Original.ROUTINE_DEFINITION_Original)).Trim()
                     )
                 ).ToList();
         }

@@ -31,7 +31,7 @@ namespace XProject.Database.SchemaCompare.SQLServer.XWork
             // 존재하지 않는 프로시저만
             pxs.WriteReport(string.Empty);
             pxs.WriteReport("<<<<<<<<<< 존재하지 않는 프로시저 >>>>>>>>>>");
-            pxs.WriteReport(string.Join(Environment.NewLine, notExistProcedureList.Select(x => x.Source.ROUTINE_NAME_Original)));
+            pxs.WriteReport(string.Join(Environment.NewLine, notExistProcedureList.Select(x => x.Source.Original.ROUTINE_NAME_Original)));
 
             // CREATE PROCEDURE 스키마 내보내기
             notExistProcedureList.ForEach(
@@ -39,8 +39,8 @@ namespace XProject.Database.SchemaCompare.SQLServer.XWork
                 ExportWork.ExportSchema(
                     pxs,
                     new List<string>() { "PROCEDURE", "CREATE" },
-                    x.Source.ROUTINE_NAME_Original, 
-                    x.Source.ROUTINE_DEFINITION_Original,
+                    x.Source.Original.ROUTINE_NAME_Original, 
+                    x.Source.Original.ROUTINE_DEFINITION_Original,
                     string.Empty
                 )
             );
@@ -48,7 +48,7 @@ namespace XProject.Database.SchemaCompare.SQLServer.XWork
             // 존재하지만 다른 프로시저
             pxs.WriteReport(string.Empty);
             pxs.WriteReport("<<<<<<<<<< 존재하지만 스키마가 다른 프로시저 >>>>>>>>>>");
-            pxs.WriteReport(string.Join(Environment.NewLine, existProcedureList.Select(x => x.Source.ROUTINE_NAME_Original)));
+            pxs.WriteReport(string.Join(Environment.NewLine, existProcedureList.Select(x => x.Source.Original.ROUTINE_NAME_Original)));
 
             // CREATE PROCEDURE 스키마 내보내기
             existProcedureList.ForEach(
@@ -56,9 +56,9 @@ namespace XProject.Database.SchemaCompare.SQLServer.XWork
                 ExportWork.ExportSchema(
                     pxs,
                     new List<string>() { "PROCEDURE", "ALTER" },
-                    x.Source.ROUTINE_NAME_Original, 
-                    x.Source.ROUTINE_DEFINITION_Original,
-                    x.Target.ROUTINE_DEFINITION_Original
+                    x.Source.Original.ROUTINE_NAME_Original, 
+                    x.Source.Original.ROUTINE_DEFINITION_Original,
+                    x.Target.Original.ROUTINE_DEFINITION_Original
                 )
             );
         }
