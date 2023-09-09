@@ -602,7 +602,7 @@
             this.JustNotify1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.JustNotify1.AutoSize = true;
             this.JustNotify1.ForeColor = System.Drawing.Color.Blue;
-            this.JustNotify1.Location = new System.Drawing.Point(12, 472);
+            this.JustNotify1.Location = new System.Drawing.Point(12, 488);
             this.JustNotify1.Margin = new System.Windows.Forms.Padding(0);
             this.JustNotify1.Name = "JustNotify1";
             this.JustNotify1.Size = new System.Drawing.Size(66, 12);
@@ -624,7 +624,7 @@
             // 
             this.ExecuteCompare.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.ExecuteCompare.Location = new System.Drawing.Point(12, 487);
+            this.ExecuteCompare.Location = new System.Drawing.Point(12, 503);
             this.ExecuteCompare.Name = "ExecuteCompare";
             this.ExecuteCompare.Size = new System.Drawing.Size(1160, 66);
             this.ExecuteCompare.TabIndex = 110;
@@ -648,7 +648,7 @@
             // 
             this.ViewExecuteCompareCommand.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.ViewExecuteCompareCommand.Location = new System.Drawing.Point(12, 559);
+            this.ViewExecuteCompareCommand.Location = new System.Drawing.Point(12, 575);
             this.ViewExecuteCompareCommand.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.ViewExecuteCompareCommand.Name = "ViewExecuteCompareCommand";
             this.ViewExecuteCompareCommand.Size = new System.Drawing.Size(1160, 26);
@@ -713,7 +713,7 @@
             this.AllowDrop = true;
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1184, 595);
+            this.ClientSize = new System.Drawing.Size(1184, 611);
             this.Controls.Add(this.DatabaseListGroup);
             this.Controls.Add(this.ViewExecuteCompareCommand);
             this.Controls.Add(this.ExecuteCompare);
@@ -725,7 +725,7 @@
             this.Controls.Add(this.ReportDirectoryGroup);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.KeyPreview = true;
-            this.MinimumSize = new System.Drawing.Size(1200, 600);
+            this.MinimumSize = new System.Drawing.Size(1200, 650);
             this.Name = "MainFrame";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "MainTitle";
