@@ -321,7 +321,7 @@ namespace XProject.Database.SchemaCompare.SQLServer.XWork
                 // 존재하지 않는 트리거
                 sb.AppendLine(string.Empty);
                 sb.AppendLine("***** 존재하지 않음");
-                sb.AppendLine(string.Join(Environment.NewLine, existTriggerList.Select(x => x.Source.TRIGGER_NAME_Original)));
+                sb.AppendLine(string.Join(Environment.NewLine, existTriggerList.Select(x => x.Source.Original.TRIGGER_NAME_Original)));
 
                 // CREATE TRIGGER 스키마 내보내기
                 existTriggerList.ForEach(
@@ -329,8 +329,8 @@ namespace XProject.Database.SchemaCompare.SQLServer.XWork
                     ExportWork.ExportSchema(
                         pxs,
                         new List<string>() { "TRIGGER", tableName, "CREATE" },
-                        x.Source.TRIGGER_NAME_Original, 
-                        x.Source.TRIGGER_SCHEMA_Original,
+                        x.Source.Original.TRIGGER_NAME_Original, 
+                        x.Source.Original.TRIGGER_SCHEMA_Original,
                         string.Empty
                     )
                 );
@@ -341,7 +341,7 @@ namespace XProject.Database.SchemaCompare.SQLServer.XWork
                 // 존재하지만 다른 트리거
                 sb.AppendLine(string.Empty);
                 sb.AppendLine("***** 이름은 같지만 스키마가 다름");
-                sb.AppendLine(string.Join(Environment.NewLine, existTriggerList.Select(x => x.Source.TRIGGER_NAME_Original)));
+                sb.AppendLine(string.Join(Environment.NewLine, existTriggerList.Select(x => x.Source.Original.TRIGGER_NAME_Original)));
 
                 // CREATE TRIGGER 스키마 내보내기
                 existTriggerList.ForEach(
@@ -349,9 +349,9 @@ namespace XProject.Database.SchemaCompare.SQLServer.XWork
                     ExportWork.ExportSchema(
                         pxs,
                         new List<string>() { "TRIGGER", tableName, "ALTER" },
-                        x.Source.TRIGGER_NAME_Original,
-                        x.Source.TRIGGER_SCHEMA_Original,
-                        x.Target.TRIGGER_SCHEMA_Original
+                        x.Source.Original.TRIGGER_NAME_Original,
+                        x.Source.Original.TRIGGER_SCHEMA_Original,
+                        x.Target.Original.TRIGGER_SCHEMA_Original
                     )
                 );
             }

@@ -349,15 +349,15 @@ namespace XProject.Database.SchemaCompare.SQLServer.XData
             return this.TableTriggerData.GroupBy(
                     x => new
                     {
-                        x.TABLE_NAME_Original,
-                        x.TRIGGER_NAME_Original
+                        x.Original.TABLE_NAME_Original,
+                        x.Original.TRIGGER_NAME_Original
                     }
                 )
                 .Select(
                     x => new XModel.SQLTableTrigger(
                         x.Key.TABLE_NAME_Original, 
                         x.Key.TRIGGER_NAME_Original,
-                        string.Join(string.Empty, x.Select(y => y.TRIGGER_SCHEMA_Original)).Trim()
+                        string.Join(string.Empty, x.Select(y => y.Original.TRIGGER_SCHEMA_Original)).Trim()
                     )
                 ).ToList();
         }
