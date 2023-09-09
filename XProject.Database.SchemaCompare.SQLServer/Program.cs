@@ -56,7 +56,7 @@ namespace XProject.Database.SchemaCompare.SQLServer
                         pxs.WriteReport(string.Empty);
                     }
 
-                    pxs.WriteReport($"------------------------- START : {DateTime.Now:yyyy-MM-dd HH:mm:ss.fffff} -------------------------");
+                    pxs.WriteReportCutBar("START");
 
                     pxs.SourceSQL.DefaultSetting();
                     pxs.TargetSQL.DefaultSetting();
@@ -65,8 +65,7 @@ namespace XProject.Database.SchemaCompare.SQLServer
                     XWork.ProcedureCompare.ExecuteNow(pxs);
                     XWork.FunctionCompare.ExecuteNow(pxs);
 
-                    pxs.WriteReport(string.Empty);
-                    pxs.WriteReport($"------------------------- END : {DateTime.Now:yyyy-MM-dd HH:mm:ss.fffff} -------------------------");
+                    pxs.WriteReportCutBar("END");
 
                     // 아웃풋 되는 스키마가 없으면 아예 폴더가 만들어지지 않는다
                     if (Directory.Exists(pxs.SchemaDirectory) == true)
@@ -98,10 +97,7 @@ namespace XProject.Database.SchemaCompare.SQLServer
                 }
                 catch (Exception ex)
                 {
-                    pxs.WriteReport(string.Empty);
-                    pxs.WriteReport("------------------------- ERROR -------------------------");
-                    pxs.WriteReport(ex.Message);
-                    pxs.WriteReport(ex.StackTrace);
+                    pxs.WriteReport(string.Empty, ex);
                 }
                 finally
                 {
