@@ -319,17 +319,17 @@ namespace XProject.Database.SchemaCompare.SQLServer.XData
             return TableForeignKeyData.GroupBy(
                     x => new
                     {
-                        x.TABLE_NAME_Original,
-                        x.CONSTRAINT_NAME_Original
+                        x.Original.TABLE_NAME_Original,
+                        x.Original.CONSTRAINT_NAME_Original
                     }
                 )
                 .Select(
                     x => new XModel.SQLTableForeignKey(
                         x.Key.TABLE_NAME_Original,
                         x.Key.CONSTRAINT_NAME_Original,
-                        string.Join(", ", x.Select(y => y.COLUMN_NAME_Original)),
-                        x.First().REFERENCE_TABLE_NAME_Original,
-                        string.Join(", ", x.Select(y => y.REFERENCE_COLUMN_NAME_Original))
+                        string.Join(", ", x.Select(y => y.Original.COLUMN_NAME_Original)),
+                        x.First().Original.REFERENCE_TABLE_NAME_Original,
+                        string.Join(", ", x.Select(y => y.Original.REFERENCE_COLUMN_NAME_Original))
                     )
                 )
                 .ToList();
