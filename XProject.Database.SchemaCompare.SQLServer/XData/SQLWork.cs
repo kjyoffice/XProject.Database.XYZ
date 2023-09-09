@@ -11,14 +11,14 @@ namespace XProject.Database.SchemaCompare.SQLServer.XData
     public class SQLWork
     {
         private SqlConnectionStringBuilder ConnectionString { get; set; }
-        private IEnumerable<XModel.SQLTable> TableData { get; set; }
-        private IEnumerable<XModel.SQLTableColumn> TableColumnData { get; set; }
-        private IEnumerable<XModel.SQLTableIndex> TableIndexData { get; set; }
-        private IEnumerable<XModel.SQLTableForeignKey> TableForeignKeyData { get; set; }
-        private IEnumerable<XModel.SQLTableConstraints> TableConstraintsData { get; set; }
-        private IEnumerable<XModel.SQLTableTrigger> TableTriggerData { get; set; }
-        private IEnumerable<XModel.SQLProcedure> ProcedureData { get; set; }
-        private IEnumerable<XModel.SQLFunction> FunctionData { get; set; }
+        private IEnumerable<XModel_DataOriginal.SQLTable> TableData { get; set; }
+        private IEnumerable<XModel_DataOriginal.SQLTableColumn> TableColumnData { get; set; }
+        private IEnumerable<XModel_DataOriginal.SQLTableIndex> TableIndexData { get; set; }
+        private IEnumerable<XModel_DataOriginal.SQLTableForeignKey> TableForeignKeyData { get; set; }
+        private IEnumerable<XModel_DataOriginal.SQLTableConstraints> TableConstraintsData { get; set; }
+        private IEnumerable<XModel_DataOriginal.SQLTableTrigger> TableTriggerData { get; set; }
+        private IEnumerable<XModel_DataOriginal.SQLProcedure> ProcedureData { get; set; }
+        private IEnumerable<XModel_DataOriginal.SQLFunction> FunctionData { get; set; }
         
         // ---------------------------------
 
@@ -272,24 +272,24 @@ namespace XProject.Database.SchemaCompare.SQLServer.XData
             );
             // 쿼리 실행
             var eds = this.ExecuteDataSet(query);
-            this.TableData = eds.Tables["TABLE1"].Rows.Cast<DataRow>().Select(x => new XModel.SQLTable(x));
-            this.TableColumnData = eds.Tables["TABLE11"].Rows.Cast<DataRow>().Select(x => new XModel.SQLTableColumn(x));
-            this.TableIndexData = eds.Tables["TABLE12"].Rows.Cast<DataRow>().Select(x => new XModel.SQLTableIndex(x));
-            this.TableForeignKeyData = eds.Tables["TABLE13"].Rows.Cast<DataRow>().Select(x => new XModel.SQLTableForeignKey(x));
-            this.TableConstraintsData = eds.Tables["TABLE14"].Rows.Cast<DataRow>().Select(x => new XModel.SQLTableConstraints(x));
-            this.TableTriggerData = eds.Tables["TABLE15"].Rows.Cast<DataRow>().Select(x => new XModel.SQLTableTrigger(x));
-            this.ProcedureData = eds.Tables["TABLE16"].Rows.Cast<DataRow>().Select(x => new XModel.SQLProcedure(x));
-            this.FunctionData = eds.Tables["TABLE17"].Rows.Cast<DataRow>().Select(x => new XModel.SQLFunction(x));
+            this.TableData = eds.Tables["TABLE1"].Rows.Cast<DataRow>().Select(x => new XModel_DataOriginal.SQLTable(x));
+            this.TableColumnData = eds.Tables["TABLE11"].Rows.Cast<DataRow>().Select(x => new XModel_DataOriginal.SQLTableColumn(x));
+            this.TableIndexData = eds.Tables["TABLE12"].Rows.Cast<DataRow>().Select(x => new XModel_DataOriginal.SQLTableIndex(x));
+            this.TableForeignKeyData = eds.Tables["TABLE13"].Rows.Cast<DataRow>().Select(x => new XModel_DataOriginal.SQLTableForeignKey(x));
+            this.TableConstraintsData = eds.Tables["TABLE14"].Rows.Cast<DataRow>().Select(x => new XModel_DataOriginal.SQLTableConstraints(x));
+            this.TableTriggerData = eds.Tables["TABLE15"].Rows.Cast<DataRow>().Select(x => new XModel_DataOriginal.SQLTableTrigger(x));
+            this.ProcedureData = eds.Tables["TABLE16"].Rows.Cast<DataRow>().Select(x => new XModel_DataOriginal.SQLProcedure(x));
+            this.FunctionData = eds.Tables["TABLE17"].Rows.Cast<DataRow>().Select(x => new XModel_DataOriginal.SQLFunction(x));
         }
 
         public List<XModel.SQLTable> TableList()
         {
-            return this.TableData.ToList();
+            return this.TableData.Select(x => new XModel.SQLTable(x)).ToList();
         }
 
         public List<XModel.SQLTableColumn> TableColumnList()
         {
-            return this.TableColumnData.ToList();
+            return this.TableColumnData.Select(x => new XModel.SQLTableColumn(x)).ToList();
         }
 
         public List<XModel.SQLTableIndex> TableIndexList()
@@ -297,18 +297,18 @@ namespace XProject.Database.SchemaCompare.SQLServer.XData
             // 인덱스 : 기본키, (클러스트/넌클러스트) 인덱스, 유니크
             return this.TableIndexData.GroupBy(
                     x => new {
-                        x.Original.TABLE_NAME,
-                        x.Original.CONSTRAINT_NAME
+                        x.TABLE_NAME,
+                        x.CONSTRAINT_NAME
                     }
                 )
                 .Select(
                     x => new XModel.SQLTableIndex(
                         x.Key.TABLE_NAME,
                         x.Key.CONSTRAINT_NAME,
-                        x.First().Original.INDEX_TYPE,
-                        x.First().Original.CLUSTERED_TYPE,
+                        x.First().INDEX_TYPE,
+                        x.First().CLUSTERED_TYPE,
                         x.First().KEY_ORDINAL,
-                        string.Join(", ", x.Select(y => (y.Original.COLUMN_NAME + " " + y.Original.ORDERBY_TYPE)))
+                        string.Join(", ", x.Select(y => (y.COLUMN_NAME + " " + y.ORDERBY_TYPE)))
                     )
                 ).ToList();
         }
@@ -319,17 +319,17 @@ namespace XProject.Database.SchemaCompare.SQLServer.XData
             return TableForeignKeyData.GroupBy(
                     x => new
                     {
-                        x.Original.TABLE_NAME,
-                        x.Original.CONSTRAINT_NAME
+                        x.TABLE_NAME,
+                        x.CONSTRAINT_NAME
                     }
                 )
                 .Select(
                     x => new XModel.SQLTableForeignKey(
                         x.Key.TABLE_NAME,
                         x.Key.CONSTRAINT_NAME,
-                        string.Join(", ", x.Select(y => y.Original.COLUMN_NAME)),
-                        x.First().Original.REFERENCE_TABLE_NAME,
-                        string.Join(", ", x.Select(y => y.Original.REFERENCE_COLUMN_NAME))
+                        string.Join(", ", x.Select(y => y.COLUMN_NAME)),
+                        x.First().REFERENCE_TABLE_NAME,
+                        string.Join(", ", x.Select(y => y.REFERENCE_COLUMN_NAME))
                     )
                 )
                 .ToList();
@@ -338,7 +338,7 @@ namespace XProject.Database.SchemaCompare.SQLServer.XData
         public List<XModel.SQLTableConstraints> TableConstraintsList()
         {
             // 제약조건 : 체크, 기본값
-            return this.TableConstraintsData.ToList();
+            return this.TableConstraintsData.Select(x => new XModel.SQLTableConstraints(x)).ToList();
         }
 
         public List<XModel.SQLTableTrigger> TableTriggerList()
@@ -349,15 +349,15 @@ namespace XProject.Database.SchemaCompare.SQLServer.XData
             return this.TableTriggerData.GroupBy(
                     x => new
                     {
-                        x.Original.TABLE_NAME,
-                        x.Original.TRIGGER_NAME
+                        x.TABLE_NAME,
+                        x.TRIGGER_NAME
                     }
                 )
                 .Select(
                     x => new XModel.SQLTableTrigger(
                         x.Key.TABLE_NAME, 
                         x.Key.TRIGGER_NAME,
-                        string.Join(string.Empty, x.Select(y => y.Original.TRIGGER_SCHEMA)).Trim()
+                        string.Join(string.Empty, x.Select(y => y.TRIGGER_SCHEMA)).Trim()
                     )
                 ).ToList();
         }
@@ -365,11 +365,11 @@ namespace XProject.Database.SchemaCompare.SQLServer.XData
         public List<XModel.SQLProcedure> ProcedureList()
         {
             // 프로시저
-            return this.ProcedureData.GroupBy(x => x.Original.ROUTINE_NAME)
+            return this.ProcedureData.GroupBy(x => x.ROUTINE_NAME)
                 .Select(
                     x => new XModel.SQLProcedure(
                         x.Key,
-                        string.Join(string.Empty, x.Select(y => y.Original.ROUTINE_DEFINITION)).Trim()
+                        string.Join(string.Empty, x.Select(y => y.ROUTINE_DEFINITION)).Trim()
                     )
                 ).ToList();
         }
@@ -377,11 +377,11 @@ namespace XProject.Database.SchemaCompare.SQLServer.XData
         public List<XModel.SQLFunction> FunctionList()
         {
             // 함수
-            return this.FunctionData.GroupBy(x => x.Original.FUNCTION_NAME)
+            return this.FunctionData.GroupBy(x => x.FUNCTION_NAME)
                 .Select(
                     x => new XModel.SQLFunction(
                         x.Key,
-                        string.Join(string.Empty, x.Select(y => y.Original.FUNCTION_DEFINITION)).Trim()
+                        string.Join(string.Empty, x.Select(y => y.FUNCTION_DEFINITION)).Trim()
                     )
                 ).ToList();
         }

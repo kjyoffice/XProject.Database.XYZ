@@ -9,7 +9,7 @@ namespace XProject.Database.SchemaCompare.SQLServer.XModel
 {
     public class SQLTableConstraints
     {
-        public XModel_Original.SQLTableConstraints_Original Original { get; private set; }
+        public XModel_DataOriginal.SQLTableConstraints Original { get; private set; }
         public string TABLE_NAME { get; private set; }
         public string CONSTRAINT_NAME { get; private set; }
         public string TYPE_DESC { get; private set; }
@@ -19,15 +19,14 @@ namespace XProject.Database.SchemaCompare.SQLServer.XModel
 
         // -----------------------------------------------------
 
-        public SQLTableConstraints(DataRow dr)
+        public SQLTableConstraints(XModel_DataOriginal.SQLTableConstraints original)
         {
-            var original = new XModel_Original.SQLTableConstraints_Original(dr);
-            var type_Desc = dr["TYPE_DESC"].ToString().ToUpper();
-            var constraint_Definition = dr["CONSTRAINT_DEFINITION"].ToString().ToUpper();
+            var type_Desc = original.TYPE_DESC.ToUpper();
+            var constraint_Definition = original.CONSTRAINT_DEFINITION.ToUpper();
 
             this.Original = original;
-            this.TABLE_NAME = dr["TABLE_NAME"].ToString().ToUpper();
-            this.CONSTRAINT_NAME = dr["CONSTRAINT_NAME"].ToString().ToUpper();
+            this.TABLE_NAME = original.TABLE_NAME.ToUpper();
+            this.CONSTRAINT_NAME = original.CONSTRAINT_NAME.ToUpper();
             this.TYPE_DESC = type_Desc;
             this.CONSTRAINT_DEFINITION = constraint_Definition;
             this.CheckSourceHash = XValue.HashValue.SHA512Hash(type_Desc, constraint_Definition);

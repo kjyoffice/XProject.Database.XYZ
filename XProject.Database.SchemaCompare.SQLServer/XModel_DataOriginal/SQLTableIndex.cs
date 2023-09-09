@@ -13,6 +13,7 @@ namespace XProject.Database.SchemaCompare.SQLServer.XModel_DataOriginal
         public string CONSTRAINT_NAME { get; private set; }
         public string INDEX_TYPE { get; private set; }
         public string CLUSTERED_TYPE { get; private set; }
+        public int KEY_ORDINAL { get; private set; }
         public string COLUMN_NAME { get; private set; }
         public string ORDERBY_TYPE { get; private set; }
 
@@ -24,6 +25,7 @@ namespace XProject.Database.SchemaCompare.SQLServer.XModel_DataOriginal
             this.CONSTRAINT_NAME = dr["CONSTRAINT_NAME"].ToString();
             this.INDEX_TYPE = dr["INDEX_TYPE"].ToString();
             this.CLUSTERED_TYPE = dr["CLUSTERED_TYPE"].ToString();
+            this.KEY_ORDINAL = Convert.ToInt32(dr["KEY_ORDINAL"]);
             this.COLUMN_NAME = dr["COLUMN_NAME"].ToString();
             this.ORDERBY_TYPE = dr["ORDERBY_TYPE"].ToString();
         }
