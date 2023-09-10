@@ -37,11 +37,11 @@ namespace XProject.Database.SchemaCompare.SQLServer.XWork
             foreach (var table in tableResult.ExistTableList)
             {
                 var compareResult = new Dictionary<string, string>() {
-                    { "컬럼 (COLUMN)", TableCompare.TableColumn(pxs, table.TABLE_NAME, allColumnList) },
-                    { "인덱스 (PRIMARY KEY / INDEX / UNIQUE)", TableCompare.TableIndex(pxs, table.TABLE_NAME, allIndexList) },
-                    { "외래키 (FOREIGN KEY)", TableCompare.TableForeignKey(pxs, table.TABLE_NAME, allForeignKeyList) },
-                    { "제약조건 (CHECK, DEFAULT)", TableCompare.TableConstraints(pxs, table.TABLE_NAME, allConstraintList) },
-                    { "트리거 (TRIGGER)", TableCompare.TableTrigger(pxs, table.TABLE_NAME, allTriggerList) }
+                    { "컬럼 (COLUMN)", TableCompare.TableColumn(pxs, table, allColumnList) },
+                    { "인덱스 (PRIMARY KEY / INDEX / UNIQUE)", TableCompare.TableIndex(pxs, table, allIndexList) },
+                    { "외래키 (FOREIGN KEY)", TableCompare.TableForeignKey(pxs, table, allForeignKeyList) },
+                    { "제약조건 (CHECK, DEFAULT)", TableCompare.TableConstraints(pxs, table, allConstraintList) },
+                    { "트리거 (TRIGGER)", TableCompare.TableTrigger(pxs, table, allTriggerList) }
                 }.Where(x => (x.Value != string.Empty));
 
                 // 차이가 있는 테이블만 뿌린다
@@ -85,11 +85,11 @@ namespace XProject.Database.SchemaCompare.SQLServer.XWork
             return result;
         }
 
-        private static string TableColumn(XModel.ProcessXSupport pxs, string tableName, XModel_SQLSchema_SourceAndTarget.SQLTableColumn satstc)
+        private static string TableColumn(XModel.ProcessXSupport pxs, XModel_SQLSchema.SQLTable table, XModel_SQLSchema_SourceAndTarget.SQLTableColumn satstc)
         {
             // 테이블 이름으로 검색된 컬럼 리스트
-            var sourceDataList = satstc.Source.Where(x => (x.TABLE_NAME == tableName)).ToList();
-            var targetDataList = satstc.Target.Where(x => (x.TABLE_NAME == tableName)).ToList();
+            var sourceDataList = satstc.Source.Where(x => (x.TABLE_NAME == table.TABLE_NAME)).ToList();
+            var targetDataList = satstc.Target.Where(x => (x.TABLE_NAME == table.TABLE_NAME)).ToList();
             // 컬럼 정보는 1:1로 매칭되므로 LEFT OUTER JOIN진행
             var compareResultList = sourceDataList.GroupJoin(
                     targetDataList,
@@ -128,11 +128,11 @@ namespace XProject.Database.SchemaCompare.SQLServer.XWork
             return result;
         }
 
-        private static string TableIndex(XModel.ProcessXSupport pxs, string tableName, XModel_SQLSchema_SourceAndTarget.SQLTableIndex satsti)
+        private static string TableIndex(XModel.ProcessXSupport pxs, XModel_SQLSchema.SQLTable table, XModel_SQLSchema_SourceAndTarget.SQLTableIndex satsti)
         {
             // 테이블 이름으로 검색된 인덱스 리스트
-            var sourceDataList = satsti.Source.Where(x => (x.TABLE_NAME == tableName));
-            var targetDataList = satsti.Target.Where(x => (x.TABLE_NAME == tableName));
+            var sourceDataList = satsti.Source.Where(x => (x.TABLE_NAME == table.TABLE_NAME));
+            var targetDataList = satsti.Target.Where(x => (x.TABLE_NAME == table.TABLE_NAME));
             // INNER JOIN 
             var matchNameList = sourceDataList.Join(
                 targetDataList,
@@ -182,11 +182,11 @@ namespace XProject.Database.SchemaCompare.SQLServer.XWork
             return result;
         }
 
-        private static string TableForeignKey(XModel.ProcessXSupport pxs, string tableName, XModel_SQLSchema_SourceAndTarget.SQLTableForeignKey satstfk)
+        private static string TableForeignKey(XModel.ProcessXSupport pxs, XModel_SQLSchema.SQLTable table, XModel_SQLSchema_SourceAndTarget.SQLTableForeignKey satstfk)
         {
             // 테이블 이름으로 외래키 리스트 받기 
-            var sourceDataList = satstfk.Source.Where(x => (x.TABLE_NAME == tableName)).ToList();
-            var targetDataList = satstfk.Target.Where(x => (x.TABLE_NAME == tableName)).ToList();
+            var sourceDataList = satstfk.Source.Where(x => (x.TABLE_NAME == table.TABLE_NAME)).ToList();
+            var targetDataList = satstfk.Target.Where(x => (x.TABLE_NAME == table.TABLE_NAME)).ToList();
             // INNER JOIN 
             var matchNameList = sourceDataList.Join(
                 targetDataList,
@@ -236,11 +236,11 @@ namespace XProject.Database.SchemaCompare.SQLServer.XWork
             return result;
         }
 
-        private static string TableConstraints(XModel.ProcessXSupport pxs, string tableName, XModel_SQLSchema_SourceAndTarget.SQLTableConstraints satstc)
+        private static string TableConstraints(XModel.ProcessXSupport pxs, XModel_SQLSchema.SQLTable table, XModel_SQLSchema_SourceAndTarget.SQLTableConstraints satstc)
         {
             // 테이블 이름으로 검색된 제약조건 리스트
-            var sourceDataList = satstc.Source.Where(x => (x.TABLE_NAME == tableName)).ToList();
-            var targetDataList = satstc.Target.Where(x => (x.TABLE_NAME == tableName)).ToList();
+            var sourceDataList = satstc.Source.Where(x => (x.TABLE_NAME == table.TABLE_NAME)).ToList();
+            var targetDataList = satstc.Target.Where(x => (x.TABLE_NAME == table.TABLE_NAME)).ToList();
             // INNER JOIN 
             var matchNameList = sourceDataList.Join(
                 targetDataList,
@@ -290,11 +290,11 @@ namespace XProject.Database.SchemaCompare.SQLServer.XWork
             return result;
         }
 
-        private static string TableTrigger(XModel.ProcessXSupport pxs, string tableName, XModel_SQLSchema_SourceAndTarget.SQLTableTrigger satstt)
+        private static string TableTrigger(XModel.ProcessXSupport pxs, XModel_SQLSchema.SQLTable table, XModel_SQLSchema_SourceAndTarget.SQLTableTrigger satstt)
         {
             // 테이블 이름으로 검색된 트리거 리스트
-            var sourceDataList = satstt.Source.Where(x => (x.TABLE_NAME == tableName)).ToList();
-            var targetDataList = satstt.Target.Where(x => (x.TABLE_NAME == tableName)).ToList();
+            var sourceDataList = satstt.Source.Where(x => (x.TABLE_NAME == table.TABLE_NAME)).ToList();
+            var targetDataList = satstt.Target.Where(x => (x.TABLE_NAME == table.TABLE_NAME)).ToList();
             // 트리거 정보는 1:1로 매칭되므로 LEFT OUTER JOIN진행
             var compareResultList = sourceDataList.GroupJoin(
                 targetDataList,
@@ -324,7 +324,7 @@ namespace XProject.Database.SchemaCompare.SQLServer.XWork
                     x =>
                     ExportWork.ExportSchema(
                         pxs,
-                        new List<string>() { "TRIGGER", tableName, "CREATE" },
+                        new List<string>() { "TRIGGER", table.TABLE_NAME, "CREATE" },
                         x.Source.Original.TRIGGER_NAME, 
                         x.Source.Original.TRIGGER_SCHEMA,
                         string.Empty
@@ -344,7 +344,7 @@ namespace XProject.Database.SchemaCompare.SQLServer.XWork
                     x =>
                     ExportWork.ExportSchema(
                         pxs,
-                        new List<string>() { "TRIGGER", tableName, "ALTER" },
+                        new List<string>() { "TRIGGER", table.TABLE_NAME, "ALTER" },
                         x.Source.Original.TRIGGER_NAME,
                         x.Source.Original.TRIGGER_SCHEMA,
                         x.Target.Original.TRIGGER_SCHEMA
