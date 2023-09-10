@@ -9,7 +9,7 @@ namespace XProject.Database.SchemaCompare.SQLServer.XModel_SQLSchema
 {
     public class SQLTableTrigger
     {
-        public XModel_UseOriginal.SQLTableTrigger Original { get; private set; }
+        public XModel_SQLSchema_UseOriginal.SQLTableTrigger Original { get; private set; }
         public string TABLE_NAME { get; private set; }
         public string TRIGGER_NAME { get; private set; }
         public string TRIGGER_SCHEMA { get; private set; }
@@ -19,7 +19,7 @@ namespace XProject.Database.SchemaCompare.SQLServer.XModel_SQLSchema
 
         public SQLTableTrigger(string table_Name, string trigger_Name, List<XModel_SQLSchema_Original.SQLTableTrigger> sttList)
         {
-            var original = new XModel_UseOriginal.SQLTableTrigger(table_Name, trigger_Name, sttList);
+            var original = new XModel_SQLSchema_UseOriginal.SQLTableTrigger(table_Name, trigger_Name, sttList);
             var trigger_Schema = original.TRIGGER_SCHEMA.ToUpper();
 
             this.Original = original;

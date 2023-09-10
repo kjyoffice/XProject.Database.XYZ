@@ -9,7 +9,7 @@ namespace XProject.Database.SchemaCompare.SQLServer.XModel_SQLSchema
 {
     public class SQLFunction
     {
-        public XModel_UseOriginal.SQLFunction Original { get; private set; }
+        public XModel_SQLSchema_UseOriginal.SQLFunction Original { get; private set; }
         public string FUNCTION_NAME { get; private set; }
         public string FUNCTION_DEFINITION { get; private set; }
         public string CheckSource { get; private set; }
@@ -18,7 +18,7 @@ namespace XProject.Database.SchemaCompare.SQLServer.XModel_SQLSchema
 
         public SQLFunction(List<XModel_SQLSchema_Original.SQLFunction> sfList)
         {
-            var original = new XModel_UseOriginal.SQLFunction(sfList);
+            var original = new XModel_SQLSchema_UseOriginal.SQLFunction(sfList);
             var function_Definition = original.FUNCTION_DEFINITION.ToUpper();
 
             this.Original = original;

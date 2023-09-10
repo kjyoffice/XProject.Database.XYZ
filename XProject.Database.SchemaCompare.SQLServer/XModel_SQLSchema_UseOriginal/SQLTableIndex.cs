@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace XProject.Database.SchemaCompare.SQLServer.XModel_UseOriginal
+namespace XProject.Database.SchemaCompare.SQLServer.XModel_SQLSchema_UseOriginal
 {
     public class SQLTableIndex
     {

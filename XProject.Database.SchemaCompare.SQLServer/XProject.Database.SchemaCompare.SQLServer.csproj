@@ -67,11 +67,11 @@
     <Compile Include="XModel_SQLSchema\SQLTableIndex.cs" />
     <Compile Include="XModel_SQLSchema\SQLTableTrigger.cs" />
     <Compile Include="XModel\TableResult.cs" />
-    <Compile Include="XModel_UseOriginal\SQLFunction.cs" />
-    <Compile Include="XModel_UseOriginal\SQLProcedure.cs" />
-    <Compile Include="XModel_UseOriginal\SQLTableForeignKey.cs" />
-    <Compile Include="XModel_UseOriginal\SQLTableIndex.cs" />
-    <Compile Include="XModel_UseOriginal\SQLTableTrigger.cs" />
+    <Compile Include="XModel_SQLSchema_UseOriginal\SQLFunction.cs" />
+    <Compile Include="XModel_SQLSchema_UseOriginal\SQLProcedure.cs" />
+    <Compile Include="XModel_SQLSchema_UseOriginal\SQLTableForeignKey.cs" />
+    <Compile Include="XModel_SQLSchema_UseOriginal\SQLTableIndex.cs" />
+    <Compile Include="XModel_SQLSchema_UseOriginal\SQLTableTrigger.cs" />
     <Compile Include="XValue\HashValue.cs" />
     <Compile Include="XValue\ProcessValue.cs" />
     <Compile Include="XWork\ExportWork.cs" />

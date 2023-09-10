@@ -9,7 +9,7 @@ namespace XProject.Database.SchemaCompare.SQLServer.XModel_SQLSchema
 {
     public class SQLTableForeignKey
     {
-        public XModel_UseOriginal.SQLTableForeignKey Original { get; private set; }
+        public XModel_SQLSchema_UseOriginal.SQLTableForeignKey Original { get; private set; }
         public string TABLE_NAME { get; private set; }
         public string CONSTRAINT_NAME { get; private set; }
         public string COLUMN_NAME { get; private set; }
@@ -22,7 +22,7 @@ namespace XProject.Database.SchemaCompare.SQLServer.XModel_SQLSchema
 
         public SQLTableForeignKey(string table_Name, string constraint_Name, List<XModel_SQLSchema_Original.SQLTableForeignKey> stfkList)
         {
-            var original = new XModel_UseOriginal.SQLTableForeignKey(table_Name, constraint_Name, stfkList);
+            var original = new XModel_SQLSchema_UseOriginal.SQLTableForeignKey(table_Name, constraint_Name, stfkList);
             var column_Name = original.COLUMN_NAME.ToUpper();
             var reference_Table_Name = original.REFERENCE_TABLE_NAME.ToUpper();
             var reference_Column_Name = original.REFERENCE_COLUMN_NAME.ToUpper();

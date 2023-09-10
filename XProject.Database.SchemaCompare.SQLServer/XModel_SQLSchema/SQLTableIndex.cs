@@ -9,7 +9,7 @@ namespace XProject.Database.SchemaCompare.SQLServer.XModel_SQLSchema
 {
     public class SQLTableIndex
     {
-        public XModel_UseOriginal.SQLTableIndex Original { get; private set; }
+        public XModel_SQLSchema_UseOriginal.SQLTableIndex Original { get; private set; }
         public string TABLE_NAME { get; private set; }
         public string CONSTRAINT_NAME { get; private set; }
         public string INDEX_TYPE { get; private set; }
@@ -23,7 +23,7 @@ namespace XProject.Database.SchemaCompare.SQLServer.XModel_SQLSchema
 
         public SQLTableIndex(string table_Name, string constraint_Name, List<XModel_SQLSchema_Original.SQLTableIndex> stiList)
         {
-            var original = new XModel_UseOriginal.SQLTableIndex(table_Name, constraint_Name, stiList);
+            var original = new XModel_SQLSchema_UseOriginal.SQLTableIndex(table_Name, constraint_Name, stiList);
             var index_Type = original.INDEX_TYPE.ToUpper();
             var clustered_Type = original.CLUSTERED_TYPE.ToUpper();
             var column_Name_And_OrderBy_Type = original.COLUMN_NAME_And_ORDERBY_TYPE.ToUpper();
