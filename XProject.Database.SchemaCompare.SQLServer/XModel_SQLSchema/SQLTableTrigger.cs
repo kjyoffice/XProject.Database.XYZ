@@ -17,7 +17,7 @@ namespace XProject.Database.SchemaCompare.SQLServer.XModel_SQLSchema
 
         // -----------------------------------------------------
 
-        public SQLTableTrigger(string table_Name, string trigger_Name, List<XModel_DataOriginal.SQLTableTrigger> sttList)
+        public SQLTableTrigger(string table_Name, string trigger_Name, List<XModel_SQLSchema_Original.SQLTableTrigger> sttList)
         {
             var original = new XModel_UseOriginal.SQLTableTrigger(table_Name, trigger_Name, sttList);
             var trigger_Schema = original.TRIGGER_SCHEMA.ToUpper();

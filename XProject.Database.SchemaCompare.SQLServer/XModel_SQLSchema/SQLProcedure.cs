@@ -16,7 +16,7 @@ namespace XProject.Database.SchemaCompare.SQLServer.XModel_SQLSchema
 
         // -----------------------------------------------------
 
-        public SQLProcedure(List<XModel_DataOriginal.SQLProcedure> spList)
+        public SQLProcedure(List<XModel_SQLSchema_Original.SQLProcedure> spList)
         {
             var original = new XModel_UseOriginal.SQLProcedure(spList);
             var routine_Definition = original.ROUTINE_DEFINITION.ToUpper();

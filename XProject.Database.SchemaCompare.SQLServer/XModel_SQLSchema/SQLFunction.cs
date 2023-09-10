@@ -16,7 +16,7 @@ namespace XProject.Database.SchemaCompare.SQLServer.XModel_SQLSchema
 
         // -----------------------------------------------------
 
-        public SQLFunction(List<XModel_DataOriginal.SQLFunction> sfList)
+        public SQLFunction(List<XModel_SQLSchema_Original.SQLFunction> sfList)
         {
             var original = new XModel_UseOriginal.SQLFunction(sfList);
             var function_Definition = original.FUNCTION_DEFINITION.ToUpper();

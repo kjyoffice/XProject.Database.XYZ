@@ -11,14 +11,14 @@ namespace XProject.Database.SchemaCompare.SQLServer.XData
     public class SQLWork
     {
         private SqlConnectionStringBuilder ConnectionString { get; set; }
-        private IEnumerable<XModel_DataOriginal.SQLTable> TableData { get; set; }
-        private IEnumerable<XModel_DataOriginal.SQLTableColumn> TableColumnData { get; set; }
-        private IEnumerable<XModel_DataOriginal.SQLTableIndex> TableIndexData { get; set; }
-        private IEnumerable<XModel_DataOriginal.SQLTableForeignKey> TableForeignKeyData { get; set; }
-        private IEnumerable<XModel_DataOriginal.SQLTableConstraints> TableConstraintsData { get; set; }
-        private IEnumerable<XModel_DataOriginal.SQLTableTrigger> TableTriggerData { get; set; }
-        private IEnumerable<XModel_DataOriginal.SQLProcedure> ProcedureData { get; set; }
-        private IEnumerable<XModel_DataOriginal.SQLFunction> FunctionData { get; set; }
+        private IEnumerable<XModel_SQLSchema_Original.SQLTable> TableData { get; set; }
+        private IEnumerable<XModel_SQLSchema_Original.SQLTableColumn> TableColumnData { get; set; }
+        private IEnumerable<XModel_SQLSchema_Original.SQLTableIndex> TableIndexData { get; set; }
+        private IEnumerable<XModel_SQLSchema_Original.SQLTableForeignKey> TableForeignKeyData { get; set; }
+        private IEnumerable<XModel_SQLSchema_Original.SQLTableConstraints> TableConstraintsData { get; set; }
+        private IEnumerable<XModel_SQLSchema_Original.SQLTableTrigger> TableTriggerData { get; set; }
+        private IEnumerable<XModel_SQLSchema_Original.SQLProcedure> ProcedureData { get; set; }
+        private IEnumerable<XModel_SQLSchema_Original.SQLFunction> FunctionData { get; set; }
         
         // ---------------------------------
 
@@ -272,14 +272,14 @@ namespace XProject.Database.SchemaCompare.SQLServer.XData
             );
             // 쿼리 실행
             var eds = this.ExecuteDataSet(query);
-            this.TableData = eds.Tables["TABLE1"].Rows.Cast<DataRow>().Select(x => new XModel_DataOriginal.SQLTable(x));
-            this.TableColumnData = eds.Tables["TABLE11"].Rows.Cast<DataRow>().Select(x => new XModel_DataOriginal.SQLTableColumn(x));
-            this.TableIndexData = eds.Tables["TABLE12"].Rows.Cast<DataRow>().Select(x => new XModel_DataOriginal.SQLTableIndex(x));
-            this.TableForeignKeyData = eds.Tables["TABLE13"].Rows.Cast<DataRow>().Select(x => new XModel_DataOriginal.SQLTableForeignKey(x));
-            this.TableConstraintsData = eds.Tables["TABLE14"].Rows.Cast<DataRow>().Select(x => new XModel_DataOriginal.SQLTableConstraints(x));
-            this.TableTriggerData = eds.Tables["TABLE15"].Rows.Cast<DataRow>().Select(x => new XModel_DataOriginal.SQLTableTrigger(x));
-            this.ProcedureData = eds.Tables["TABLE16"].Rows.Cast<DataRow>().Select(x => new XModel_DataOriginal.SQLProcedure(x));
-            this.FunctionData = eds.Tables["TABLE17"].Rows.Cast<DataRow>().Select(x => new XModel_DataOriginal.SQLFunction(x));
+            this.TableData = eds.Tables["TABLE1"].Rows.Cast<DataRow>().Select(x => new XModel_SQLSchema_Original.SQLTable(x));
+            this.TableColumnData = eds.Tables["TABLE11"].Rows.Cast<DataRow>().Select(x => new XModel_SQLSchema_Original.SQLTableColumn(x));
+            this.TableIndexData = eds.Tables["TABLE12"].Rows.Cast<DataRow>().Select(x => new XModel_SQLSchema_Original.SQLTableIndex(x));
+            this.TableForeignKeyData = eds.Tables["TABLE13"].Rows.Cast<DataRow>().Select(x => new XModel_SQLSchema_Original.SQLTableForeignKey(x));
+            this.TableConstraintsData = eds.Tables["TABLE14"].Rows.Cast<DataRow>().Select(x => new XModel_SQLSchema_Original.SQLTableConstraints(x));
+            this.TableTriggerData = eds.Tables["TABLE15"].Rows.Cast<DataRow>().Select(x => new XModel_SQLSchema_Original.SQLTableTrigger(x));
+            this.ProcedureData = eds.Tables["TABLE16"].Rows.Cast<DataRow>().Select(x => new XModel_SQLSchema_Original.SQLProcedure(x));
+            this.FunctionData = eds.Tables["TABLE17"].Rows.Cast<DataRow>().Select(x => new XModel_SQLSchema_Original.SQLFunction(x));
         }
 
         public List<XModel_SQLSchema.SQLTable> TableList()

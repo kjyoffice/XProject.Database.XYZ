@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Data;
 
-namespace XProject.Database.SchemaCompare.SQLServer.XModel_DataOriginal
+namespace XProject.Database.SchemaCompare.SQLServer.XModel_SQLSchema_Original
 {
     public class SQLTableColumn
     {

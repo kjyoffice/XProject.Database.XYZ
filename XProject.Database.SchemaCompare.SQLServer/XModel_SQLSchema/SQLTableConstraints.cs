@@ -9,7 +9,7 @@ namespace XProject.Database.SchemaCompare.SQLServer.XModel_SQLSchema
 {
     public class SQLTableConstraints
     {
-        public XModel_DataOriginal.SQLTableConstraints Original { get; private set; }
+        public XModel_SQLSchema_Original.SQLTableConstraints Original { get; private set; }
         public string TABLE_NAME { get; private set; }
         public string CONSTRAINT_NAME { get; private set; }
         public string TYPE_DESC { get; private set; }
@@ -19,7 +19,7 @@ namespace XProject.Database.SchemaCompare.SQLServer.XModel_SQLSchema
 
         // -----------------------------------------------------
 
-        public SQLTableConstraints(XModel_DataOriginal.SQLTableConstraints original)
+        public SQLTableConstraints(XModel_SQLSchema_Original.SQLTableConstraints original)
         {
             var type_Desc = original.TYPE_DESC.ToUpper();
             var constraint_Definition = original.CONSTRAINT_DEFINITION.ToUpper();

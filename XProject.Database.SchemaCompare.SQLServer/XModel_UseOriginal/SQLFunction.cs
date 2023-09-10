@@ -14,7 +14,7 @@ namespace XProject.Database.SchemaCompare.SQLServer.XModel_UseOriginal
 
         // -----------------------------------------------------
 
-        public SQLFunction(List<XModel_DataOriginal.SQLFunction> sfList)
+        public SQLFunction(List<XModel_SQLSchema_Original.SQLFunction> sfList)
         {
             var sf1 = sfList[0];
 

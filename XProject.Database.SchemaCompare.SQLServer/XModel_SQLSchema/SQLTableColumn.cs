@@ -9,7 +9,7 @@ namespace XProject.Database.SchemaCompare.SQLServer.XModel_SQLSchema
 {
     public class SQLTableColumn
     {
-        public XModel_DataOriginal.SQLTableColumn Original { get; private set; }
+        public XModel_SQLSchema_Original.SQLTableColumn Original { get; private set; }
         public string TABLE_NAME { get; private set; }
         public string COLUMN_NAME { get; private set; }
         public string IS_NULLABLE { get; private set; }
@@ -27,7 +27,7 @@ namespace XProject.Database.SchemaCompare.SQLServer.XModel_SQLSchema
 
         // -----------------------------------------------------
 
-        private void CreateColumnSchema(XModel_DataOriginal.SQLTableColumn original, string data_Type, string is_Nullable, string is_Identity)
+        private void CreateColumnSchema(XModel_SQLSchema_Original.SQLTableColumn original, string data_Type, string is_Nullable, string is_Identity)
         {
             var sb = new StringBuilder();
 
@@ -123,7 +123,7 @@ namespace XProject.Database.SchemaCompare.SQLServer.XModel_SQLSchema
 
         // -----------------------------------------------------
 
-        public SQLTableColumn(XModel_DataOriginal.SQLTableColumn original)
+        public SQLTableColumn(XModel_SQLSchema_Original.SQLTableColumn original)
         {
             var is_Nullable = original.IS_NULLABLE.ToUpper();
             var data_Type = original.DATA_TYPE.ToUpper();
