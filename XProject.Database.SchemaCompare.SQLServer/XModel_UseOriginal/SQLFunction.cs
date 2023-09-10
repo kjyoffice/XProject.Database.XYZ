@@ -14,9 +14,11 @@ namespace XProject.Database.SchemaCompare.SQLServer.XModel_UseOriginal
 
         // -----------------------------------------------------
 
-        public SQLFunction(IEnumerable<XModel_DataOriginal.SQLFunction> sfList)
+        public SQLFunction(List<XModel_DataOriginal.SQLFunction> sfList)
         {
-            this.FUNCTION_NAME = sfList.First().FUNCTION_NAME;
+            var sf1 = sfList[0];
+
+            this.FUNCTION_NAME = sf1.FUNCTION_NAME;
             this.FUNCTION_DEFINITION = string.Join(string.Empty, sfList.Select(x => x.FUNCTION_DEFINITION)).Trim();
         }
     }

@@ -21,7 +21,7 @@ namespace XProject.Database.SchemaCompare.SQLServer.XModel
 
         // -----------------------------------------------------
 
-        public SQLTableIndex(string table_Name, string constraint_Name, IEnumerable<XModel_DataOriginal.SQLTableIndex> stiList)
+        public SQLTableIndex(string table_Name, string constraint_Name, List<XModel_DataOriginal.SQLTableIndex> stiList)
         {
             var original = new XModel_UseOriginal.SQLTableIndex(table_Name, constraint_Name, stiList);
             var index_Type = original.INDEX_TYPE.ToUpper();

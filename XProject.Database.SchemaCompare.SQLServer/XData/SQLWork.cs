@@ -295,13 +295,13 @@ namespace XProject.Database.SchemaCompare.SQLServer.XData
         public List<XModel.SQLTableIndex> TableIndexList()
         {
             // 인덱스 : 기본키, (클러스트/넌클러스트) 인덱스, 유니크
-            return this.TableIndexData.GroupBy(x => new { x.TABLE_NAME, x.CONSTRAINT_NAME }).Select(x => new XModel.SQLTableIndex(x.Key.TABLE_NAME, x.Key.CONSTRAINT_NAME, x)).ToList();
+            return this.TableIndexData.GroupBy(x => new { x.TABLE_NAME, x.CONSTRAINT_NAME }).Select(x => new XModel.SQLTableIndex(x.Key.TABLE_NAME, x.Key.CONSTRAINT_NAME, x.ToList())).ToList();
         }
 
         public List<XModel.SQLTableForeignKey> TableForeignKeyList()
         {
             // 외래키
-            return TableForeignKeyData.GroupBy(x => new { x.TABLE_NAME, x.CONSTRAINT_NAME }).Select(x => new XModel.SQLTableForeignKey(x.Key.TABLE_NAME, x.Key.CONSTRAINT_NAME, x)).ToList();
+            return TableForeignKeyData.GroupBy(x => new { x.TABLE_NAME, x.CONSTRAINT_NAME }).Select(x => new XModel.SQLTableForeignKey(x.Key.TABLE_NAME, x.Key.CONSTRAINT_NAME, x.ToList())).ToList();
         }
 
         public List<XModel.SQLTableConstraints> TableConstraintsList()
@@ -315,18 +315,18 @@ namespace XProject.Database.SchemaCompare.SQLServer.XData
             // 트리거
             // 긴 트리거 내용인 경우 COLID를 순서대로 n개의 ROW에 스키마가 저장
             // 그로인해 트리거 이름당 1개의 SCHEMA로 만들기 위함
-            return this.TableTriggerData.GroupBy(x => new { x.TABLE_NAME, x.TRIGGER_NAME }).Select(x => new XModel.SQLTableTrigger(x.Key.TABLE_NAME, x.Key.TRIGGER_NAME, x)).ToList();
+            return this.TableTriggerData.GroupBy(x => new { x.TABLE_NAME, x.TRIGGER_NAME }).Select(x => new XModel.SQLTableTrigger(x.Key.TABLE_NAME, x.Key.TRIGGER_NAME, x.ToList())).ToList();
         }
 
         public List<XModel.SQLProcedure> ProcedureList()
         {
-            return this.ProcedureData.GroupBy(x => x.ROUTINE_NAME).Select(x => new XModel.SQLProcedure(x)).ToList();
+            return this.ProcedureData.GroupBy(x => x.ROUTINE_NAME).Select(x => new XModel.SQLProcedure(x.ToList())).ToList();
         }
 
         public List<XModel.SQLFunction> FunctionList()
         {
             // 함수
-            return this.FunctionData.GroupBy(x => x.FUNCTION_NAME).Select(x => new XModel.SQLFunction(x)).ToList();
+            return this.FunctionData.GroupBy(x => x.FUNCTION_NAME).Select(x => new XModel.SQLFunction(x.ToList())).ToList();
         }
     }
 }

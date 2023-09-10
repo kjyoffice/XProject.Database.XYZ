@@ -14,9 +14,11 @@ namespace XProject.Database.SchemaCompare.SQLServer.XModel_UseOriginal
 
         // -----------------------------------------------------
 
-        public SQLProcedure(IEnumerable<XModel_DataOriginal.SQLProcedure> spList)
+        public SQLProcedure(List<XModel_DataOriginal.SQLProcedure> spList)
         {
-            this.ROUTINE_NAME = spList.First().ROUTINE_NAME;
+            var sp1 = spList[0];
+
+            this.ROUTINE_NAME = sp1.ROUTINE_NAME;
             this.ROUTINE_DEFINITION = string.Join(string.Empty, spList.Select(x => x.ROUTINE_DEFINITION)).Trim();
         }
     }

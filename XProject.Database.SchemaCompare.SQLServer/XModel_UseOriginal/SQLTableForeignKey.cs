@@ -17,9 +17,9 @@ namespace XProject.Database.SchemaCompare.SQLServer.XModel_UseOriginal
 
         // -----------------------------------------------------
 
-        public SQLTableForeignKey(string table_Name, string constraint_Name, IEnumerable<XModel_DataOriginal.SQLTableForeignKey> stfkList)
+        public SQLTableForeignKey(string table_Name, string constraint_Name, List<XModel_DataOriginal.SQLTableForeignKey> stfkList)
         {
-            var stfk1 = stfkList.First();
+            var stfk1 = stfkList[0];
 
             this.TABLE_NAME = table_Name;
             this.CONSTRAINT_NAME = constraint_Name;
