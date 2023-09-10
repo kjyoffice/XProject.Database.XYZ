@@ -295,33 +295,13 @@ namespace XProject.Database.SchemaCompare.SQLServer.XData
         public List<XModel.SQLTableIndex> TableIndexList()
         {
             // 인덱스 : 기본키, (클러스트/넌클러스트) 인덱스, 유니크
-            return this.TableIndexData.GroupBy(x => new { x.TABLE_NAME, x.CONSTRAINT_NAME })
-                .Select(
-                    x => new XModel.SQLTableIndex(
-                        x.Key.TABLE_NAME,
-                        x.Key.CONSTRAINT_NAME,
-                        x.First().INDEX_TYPE,
-                        x.First().CLUSTERED_TYPE,
-                        x.First().KEY_ORDINAL,
-                        string.Join(", ", x.Select(y => (y.COLUMN_NAME + " " + y.ORDERBY_TYPE)))
-                    )
-                ).ToList();
+            return this.TableIndexData.GroupBy(x => new { x.TABLE_NAME, x.CONSTRAINT_NAME }).Select(x => new XModel.SQLTableIndex(x.Key.TABLE_NAME, x.Key.CONSTRAINT_NAME, x)).ToList();
         }
 
         public List<XModel.SQLTableForeignKey> TableForeignKeyList()
         {
             // 외래키
-            return TableForeignKeyData.GroupBy(x => new { x.TABLE_NAME, x.CONSTRAINT_NAME })
-                .Select(
-                    x => new XModel.SQLTableForeignKey(
-                        x.Key.TABLE_NAME,
-                        x.Key.CONSTRAINT_NAME,
-                        string.Join(", ", x.Select(y => y.COLUMN_NAME)),
-                        x.First().REFERENCE_TABLE_NAME,
-                        string.Join(", ", x.Select(y => y.REFERENCE_COLUMN_NAME))
-                    )
-                )
-                .ToList();
+            return TableForeignKeyData.GroupBy(x => new { x.TABLE_NAME, x.CONSTRAINT_NAME }).Select(x => new XModel.SQLTableForeignKey(x.Key.TABLE_NAME, x.Key.CONSTRAINT_NAME, x)).ToList();
         }
 
         public List<XModel.SQLTableConstraints> TableConstraintsList()
