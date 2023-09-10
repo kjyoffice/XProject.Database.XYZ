@@ -80,5 +80,45 @@ namespace XProject.Database.SchemaCompare.SQLServer.XModel
             sw.Close();
             sw.Dispose();
         }
+
+        public XModel_SQLSchema_SourceAndTarget.SQLTable TableList()
+        {
+            return new XModel_SQLSchema_SourceAndTarget.SQLTable(this.SourceSQL, this.TargetSQL);
+        }
+
+        public XModel_SQLSchema_SourceAndTarget.SQLTableColumn TableColumnList()
+        {
+            return new XModel_SQLSchema_SourceAndTarget.SQLTableColumn(this.SourceSQL, this.TargetSQL);
+        }
+
+        public XModel_SQLSchema_SourceAndTarget.SQLTableIndex TableIndexList()
+        {
+            return new XModel_SQLSchema_SourceAndTarget.SQLTableIndex(this.SourceSQL, this.TargetSQL);
+        }
+
+        public XModel_SQLSchema_SourceAndTarget.SQLTableForeignKey TableForeignKeyList()
+        {
+            return new XModel_SQLSchema_SourceAndTarget.SQLTableForeignKey(this.SourceSQL, this.TargetSQL);
+        }
+
+        public XModel_SQLSchema_SourceAndTarget.SQLTableConstraints TableConstraintsList()
+        {
+            return new XModel_SQLSchema_SourceAndTarget.SQLTableConstraints(this.SourceSQL, this.TargetSQL);
+        }
+
+        public XModel_SQLSchema_SourceAndTarget.SQLTableTrigger TableTriggerList()
+        {
+            return new XModel_SQLSchema_SourceAndTarget.SQLTableTrigger(this.SourceSQL, this.TargetSQL);
+        }
+
+        public XModel_SQLSchema_SourceAndTarget.SQLProcedure ProcedureList()
+        {
+            return new XModel_SQLSchema_SourceAndTarget.SQLProcedure(this.SourceSQL, this.TargetSQL);
+        }
+
+        public XModel_SQLSchema_SourceAndTarget.SQLFunction FunctionList()
+        {
+            return new XModel_SQLSchema_SourceAndTarget.SQLFunction(this.SourceSQL, this.TargetSQL);
+        }
     }
 }
