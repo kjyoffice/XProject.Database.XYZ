@@ -37,16 +37,15 @@ namespace XProject.Database.SchemaCompare.SQLServer
 
                     pxs.WriteReport($"> 리포트 디렉토리 : {pxs.ReportDirectoryPath}");
                     pxs.WriteReport(string.Empty);
-                    pxs.WriteReport($"> 소스서버 : {pxs.SourceSQL.ServerInfo}");
-                    pxs.WriteReport($"> 타겟서버 : {pxs.TargetSQL.ServerInfo}");
+                    pxs.WriteReport($"> 소스서버 : {pxs.SourceServerInfo}");
+                    pxs.WriteReport($"> 타겟서버 : {pxs.TargetServerInfo}");
                     pxs.WriteReport(string.Empty);
                     pxs.WriteReport($"*** \"소스서버의 스키마가 타겟서버로 적용된다.\"의 개념으로 이해하면 됩니다.");
                     pxs.WriteReport(string.Empty);
 
                     pxs.WriteReportCutBar("START");
 
-                    pxs.SourceSQL.DefaultSetting();
-                    pxs.TargetSQL.DefaultSetting();
+                    pxs.DefaultSetting();
 
                     XWork.TableCompare.ExecuteNow(pxs);
                     XWork.ProcedureCompare.ExecuteNow(pxs);

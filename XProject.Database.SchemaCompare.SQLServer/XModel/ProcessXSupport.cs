@@ -14,8 +14,10 @@ namespace XProject.Database.SchemaCompare.SQLServer.XModel
         public string ReportFilePath { get; private set; }
         public string SchemaDirectory { get; private set; }
         private StreamWriter ReportStreamWriter { get; set; }
-        public XData.SQLWork SourceSQL { get; private set; }
-        public XData.SQLWork TargetSQL { get; private set; }
+        private XData.SQLWork SourceSQL { get; set; }
+        private XData.SQLWork TargetSQL { get; set; }
+        public string SourceServerInfo { get; private set; }
+        public string TargetServerInfo { get; private set; }
 
         // -------------------------------------------------------
 
@@ -31,20 +33,29 @@ namespace XProject.Database.SchemaCompare.SQLServer.XModel
             this.SchemaDirectory = Path.Combine(Path.GetDirectoryName(reportFilePath), Path.GetFileNameWithoutExtension(reportFilePath));
             this.ReportStreamWriter = null;
             this.SourceSQL = null;
+            this.SourceServerInfo = string.Empty;
             this.TargetSQL = null;
+            this.TargetServerInfo = string.Empty;
         }
 
         public void StartSupport()
         {
             var axs = this.AXS;
             var reportFilePath = this.ReportFilePath;
+            
             var sw = new StreamWriter(reportFilePath, false, Encoding.UTF8);
             sw.AutoFlush = true;
 
+            // 서버 선택
+            var source = new XData.SQLWork(axs.SourceServerConnectionString);
+            var target = new XData.SQLWork(axs.TargetServerConnectionString);
+
             this.ReportStreamWriter = sw;
             // 서버 선택
-            this.SourceSQL = new XData.SQLWork(axs.SourceServerConnectionString);
-            this.TargetSQL = new XData.SQLWork(axs.TargetServerConnectionString);
+            this.SourceSQL = source;
+            this.TargetSQL = target;
+            this.SourceServerInfo = source.ServerInfo;
+            this.TargetServerInfo = target.ServerInfo;
         }
 
         public void WriteReport(string message)
@@ -79,6 +90,12 @@ namespace XProject.Database.SchemaCompare.SQLServer.XModel
 
             sw.Close();
             sw.Dispose();
+        }
+
+        public void DefaultSetting()
+        {
+            this.SourceSQL.DefaultSetting();
+            this.TargetSQL.DefaultSetting();
         }
 
         public XModel_SQLSchema_SourceAndTarget.SQLTable TableList()

@@ -13,8 +13,9 @@ namespace XProject.Database.SchemaCompare.SQLServer.XWork
         public static void ExecuteNow(XModel.ProcessXSupport pxs)
         {
             // 프로시저 리스트 가져와서 소스를 기준으로 LEFT OUTER JOIN
-            var compareResult = pxs.SourceSQL.ProcedureList().GroupJoin(
-                pxs.TargetSQL.ProcedureList(),
+            var satsp = pxs.ProcedureList();
+            var compareResult = satsp.Source.GroupJoin(
+                satsp.Target,
                 x => x.ROUTINE_NAME,
                 y => y.ROUTINE_NAME,
                 (x, y) => new

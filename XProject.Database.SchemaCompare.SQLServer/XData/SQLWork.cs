@@ -11,6 +11,7 @@ namespace XProject.Database.SchemaCompare.SQLServer.XData
     public class SQLWork
     {
         private SqlConnectionStringBuilder ConnectionString { get; set; }
+        public string ServerInfo { get; private set; }
         private IEnumerable<XModel_SQLSchema_Original.SQLTable> TableData { get; set; }
         private IEnumerable<XModel_SQLSchema_Original.SQLTableColumn> TableColumnData { get; set; }
         private IEnumerable<XModel_SQLSchema_Original.SQLTableIndex> TableIndexData { get; set; }
@@ -19,16 +20,6 @@ namespace XProject.Database.SchemaCompare.SQLServer.XData
         private IEnumerable<XModel_SQLSchema_Original.SQLTableTrigger> TableTriggerData { get; set; }
         private IEnumerable<XModel_SQLSchema_Original.SQLProcedure> ProcedureData { get; set; }
         private IEnumerable<XModel_SQLSchema_Original.SQLFunction> FunctionData { get; set; }
-        
-        // ---------------------------------
-
-        public string ServerInfo
-        {
-            get
-            {
-                return (this.ConnectionString.DataSource + " / " + this.ConnectionString.InitialCatalog);
-            }
-        }
 
         // ---------------------------------
 
@@ -56,7 +47,10 @@ namespace XProject.Database.SchemaCompare.SQLServer.XData
 
         public SQLWork(string connectionString)
         {
-            this.ConnectionString = new SqlConnectionStringBuilder(connectionString);
+            var scsb = new SqlConnectionStringBuilder(connectionString);
+
+            this.ConnectionString = scsb;
+            this.ServerInfo = (scsb.DataSource + " / " + scsb.InitialCatalog);
             this.TableData = null;
             this.TableColumnData = null;
             this.TableIndexData = null;
