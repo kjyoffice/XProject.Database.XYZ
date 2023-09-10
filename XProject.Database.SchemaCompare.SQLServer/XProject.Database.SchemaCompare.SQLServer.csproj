@@ -74,7 +74,7 @@
     <Compile Include="XModel_SQLSchema\SQLTableForeignKey.cs" />
     <Compile Include="XModel_SQLSchema\SQLTableIndex.cs" />
     <Compile Include="XModel_SQLSchema\SQLTableTrigger.cs" />
-    <Compile Include="XModel\TableResult.cs" />
+    <Compile Include="XModel_SQLSchema_UseSupport\SQLTableResult.cs" />
     <Compile Include="XModel_SQLSchema_UseOriginal\SQLFunction.cs" />
     <Compile Include="XModel_SQLSchema_UseOriginal\SQLProcedure.cs" />
     <Compile Include="XModel_SQLSchema_UseOriginal\SQLTableForeignKey.cs" />

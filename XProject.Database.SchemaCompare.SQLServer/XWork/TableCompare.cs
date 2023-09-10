@@ -61,7 +61,7 @@ namespace XProject.Database.SchemaCompare.SQLServer.XWork
             }
         }
 
-        private static XModel.TableResult Table(XModel.ProcessXSupport pxs)
+        private static XModel_SQLSchema_UseSupport.SQLTableResult Table(XModel.ProcessXSupport pxs)
         {
             // 테이블 리스트 가져와서 소스를 기준으로 LEFT OUTER JOIN
             var sat = pxs.TableList();
@@ -75,7 +75,7 @@ namespace XProject.Database.SchemaCompare.SQLServer.XWork
                     Target = y.FirstOrDefault()
                 }
             ).ToList();
-            var result = new XModel.TableResult(
+            var result = new XModel_SQLSchema_UseSupport.SQLTableResult(
                 // 타겟에 존재하는 테이블 - 즉 양쪽 다 있다
                 compareResult.Where(x => (x.Target != null)).Select(x => x.Source).ToList(),
                 // 타겟에 존재하지 않는 테이블 리스트
