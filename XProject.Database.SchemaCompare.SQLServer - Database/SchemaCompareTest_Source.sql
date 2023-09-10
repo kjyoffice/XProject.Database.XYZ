@@ -1,9 +1,11 @@
 -- 데이터베이스는 직접 만드는걸 권장
 -- 이유 : 디비는 SSMS에서 만드는게 손에 익어서 ㅎㅎㅎ
 --CREATE DATABASE SchemaCompareTest_Source;
+--CREATE DATABASE SchemaCompareTest_Target_SourceSame;
 --GO
 
 USE SchemaCompareTest_Source;
+--USE SchemaCompareTest_Target_SourceSame;
 GO
 
 CREATE TABLE TestTable1(
@@ -70,6 +72,19 @@ CREATE INDEX IDX_TestTable1_Sub1__ColumnAnB ON TestTable1_Sub1(ColumnA, ColumnB)
 GO
 
 CREATE VIEW VIEW_TestTable1 AS (
+	SELECT 
+	ROW_NUMBER() OVER(ORDER BY B.OpenIndexNo ASC) AS IndexNo,
+	A.TTPK1,
+	A.TTPK2,
+	B.OpenIndexNo
+	FROM TestTable1 AS A
+	INNER JOIN TestTable1_Sub1 AS B ON (A.TTPK1 = B.TTPK1) AND (A.TTPK2 = B.TTPK2) AND (B.IsDelete = 'FALSE')
+	WHERE (A.TTPK1 IN ('HELLO', 'WORLD'))
+	AND (A.IsDelete = 'FALSE')
+);
+GO
+
+CREATE VIEW VIEW_TestTable2 AS (
 	SELECT 
 	ROW_NUMBER() OVER(ORDER BY B.OpenIndexNo ASC) AS IndexNo,
 	A.TTPK1,
@@ -178,7 +193,6 @@ BEGIN
 	RETURN CONVERT(VARCHAR(19), GETDATE(), 121);
 END;
 GO
-
 
 CREATE OR ALTER FUNCTION TestFunction2(
 	@UserName AS VARCHAR(100)
