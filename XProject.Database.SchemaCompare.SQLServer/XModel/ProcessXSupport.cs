@@ -51,46 +51,34 @@ namespace XProject.Database.SchemaCompare.SQLServer.XModel
         {
             var sw = this.ReportStreamWriter;
 
-            if (sw != null)
-            {
-                sw.WriteLine(message);
-            }
+            sw.WriteLine(message);
         }
 
         public void WriteReportCutBar(string title)
         {
             var sw = this.ReportStreamWriter;
 
-            if (sw != null)
-            {
-                sw.WriteLine(string.Empty);
-                sw.WriteLine($"------------------------- {title} : {DateTime.Now:yyyy-MM-dd HH:mm:ss.fffff} -------------------------");
-            }
+            sw.WriteLine(string.Empty);
+            sw.WriteLine($"------------------------- {title} : {DateTime.Now:yyyy-MM-dd HH:mm:ss.fffff} -------------------------");
         }
 
         public void WriteReport(string message, Exception ex)
         {
             var sw = this.ReportStreamWriter;
 
-            if (sw != null)
-            {
-                sw.WriteLine(message);
-                sw.WriteLine(string.Empty);
-                sw.WriteLine("------------------------- ERROR -------------------------");
-                sw.WriteLine(ex.Message);
-                sw.WriteLine(ex.StackTrace);
-            }
+            sw.WriteLine(message);
+            sw.WriteLine(string.Empty);
+            sw.WriteLine("------------------------- ERROR -------------------------");
+            sw.WriteLine(ex.Message);
+            sw.WriteLine(ex.StackTrace);
         }
 
         public void SupportEnd()
         {
             var sw = this.ReportStreamWriter;
 
-            if (sw != null)
-            {
-                sw.Close();
-                sw.Dispose();
-            }
+            sw.Close();
+            sw.Dispose();
         }
     }
 }
