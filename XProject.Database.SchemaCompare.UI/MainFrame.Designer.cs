@@ -682,6 +682,7 @@
             this.DLG_PostgreSQL.TabStop = true;
             this.DLG_PostgreSQL.Text = "PostgreSQL";
             this.DLG_PostgreSQL.UseVisualStyleBackColor = true;
+            this.DLG_PostgreSQL.Visible = false;
             this.DLG_PostgreSQL.Click += new System.EventHandler(this.DLG_DatabaseTypeX_Click);
             // 
             // DLG_MySQL
@@ -694,6 +695,7 @@
             this.DLG_MySQL.TabStop = true;
             this.DLG_MySQL.Text = "MySQL";
             this.DLG_MySQL.UseVisualStyleBackColor = true;
+            this.DLG_MySQL.Visible = false;
             this.DLG_MySQL.Click += new System.EventHandler(this.DLG_DatabaseTypeX_Click);
             // 
             // DLG_SQLServer
