@@ -2,13 +2,15 @@
 
 데이터베이스 자잘한 도구 모음
 
-# XProject.Database.SchemaCompare.SQLServer
+- 데이터베이스 스키마 비교를 위한 UI.
 
-SQL Server 스키마 비교.
+![alt text](_Screenshot/CurrentScreenshot.png "CurrentScreenshot")
 
-# XProject.Database.SchemaCompare.UI
+## 바로 실행
 
-데이터베이스 스키마 비교를 위한 UI.
+- [다운로드 - Version 20240119](https://github.com/kjyoffice/XProject.Database.XYZ/releases)
+- 압축 해제
+- 실행, XProject.Database.SchemaCompare.UI.exe
 
 ## 빌드
 
