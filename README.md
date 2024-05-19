@@ -8,7 +8,7 @@
 
 ## 바로 실행
 
-- [다운로드 - Version 20240119](https://github.com/kjyoffice/XProject.Database.XYZ/releases)
+- [다운로드 - Version 20240520](https://github.com/kjyoffice/XProject.Database.XYZ/releases)
 - 압축 해제
 - 실행, XProject.Database.SchemaCompare.UI.exe
 
