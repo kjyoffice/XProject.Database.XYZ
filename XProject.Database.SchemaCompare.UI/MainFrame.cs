@@ -9,7 +9,8 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
 using System.Diagnostics;
-using System.Data.SqlClient;
+
+using Microsoft.Data.SqlClient;
 
 namespace XProject.Database.SchemaCompare.UI
 {
@@ -320,6 +321,7 @@ namespace XProject.Database.SchemaCompare.UI
                     var scsb = new SqlConnectionStringBuilder();
                     scsb.DataSource = dataSource.Text.Trim();
                     scsb.InitialCatalog = initialCatalog.Text.Trim();
+                    scsb.TrustServerCertificate = true;
 
                     if (trust.Checked == true)
                     {
@@ -510,9 +512,13 @@ namespace XProject.Database.SchemaCompare.UI
             this.ChangeUIControlKoreanLanguage();
             this.MTSB_NewWorkSource_Click(null, null);
 
+            // -----------------------------------------------------
             // 프로그램이 준비되지 않았으니 비활성화
             this.DLG_MySQL.Enabled = false;
+            this.DLG_MySQL.Visible = false;
             this.DLG_PostgreSQL.Enabled = false;
+            this.DLG_PostgreSQL.Visible = false;
+            // -----------------------------------------------------
         }
 
         private void MainFrame_Load(object sender, EventArgs e)
