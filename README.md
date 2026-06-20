@@ -15,13 +15,6 @@
 - 빌드
 - 실행
 
-## 빌드 - NewNow
-
-- [VisualStudio 2026 Community or Higher](https://visualstudio.com/)
-- .NET 10 
-- 빌드
-- 실행
-
 ## 권장 프로그램
 
 - [Visual Studio Code](https://code.visualstudio.com/)
