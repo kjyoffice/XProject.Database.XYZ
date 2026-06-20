@@ -1,3 +1,11 @@
+### 관리 중단
+
+이 리포지토리는 더 이상 관리되지 않으며 다음 리포지토리로 이전되었습니다.
+
+### [DatabaseSchemaCompare.SQLServer](https://github.com/kjyoffice/DatabaseSchemaCompare.SQLServer)
+
+---
+
 # XProject.Database.XYZ
 
 데이터베이스 자잘한 도구 모음
